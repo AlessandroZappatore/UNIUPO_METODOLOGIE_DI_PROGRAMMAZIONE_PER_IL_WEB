@@ -5,6 +5,8 @@ let x=copy.shift();
 let y=copy.shift();
 console.log("Array originale = "+voti);
 
+let votiOrdine=[18,19,20,21,22,23,24,25,26,27,28,29,30];
+console.log(votiOrdine);
 console.log("Array copia = "+copy);
 let sum=0;
 for(let element of voti){

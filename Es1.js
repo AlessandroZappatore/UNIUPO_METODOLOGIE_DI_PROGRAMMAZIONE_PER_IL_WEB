@@ -2,11 +2,11 @@
 const voti=[18, 21, 26, 28, 30, 28, 30];
 let copy=Array.from(voti);
 const votiOrdine=[18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+const N=2;
 
-const i=12-votiOrdine.indexOf(voti[0]);
-const j=12-votiOrdine.indexOf(voti[1]);
-
-copy.splice(0, 2, votiOrdine[i], votiOrdine[j]);
+for(let i=0; i<N; i++){
+    copy.splice(i, 1, votiOrdine[12-votiOrdine.indexOf(voti[i])]);
+}
 
 let res="";
 let sum=0;

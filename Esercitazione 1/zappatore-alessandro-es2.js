@@ -19,7 +19,7 @@ for(let element of array){
 
 const risultato=[];
 for(let [i, ele] of acronimi.entries()){
-    risultato.push(`${ele}/${array[i]}`);
+    risultato.push(`${ele}--${array[i]}`);
 }
 
 console.log(risultato.sort());

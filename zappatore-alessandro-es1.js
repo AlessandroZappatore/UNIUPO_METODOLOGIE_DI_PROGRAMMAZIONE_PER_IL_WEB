@@ -1,6 +1,7 @@
 "use strict" ;
-const voti=[18, 21, 26, 28, 30, 28, 30];
+const voti=[18, 21, 26, 28, 30, 28, 19, 30];
 let copy=Array.from(voti);
+copy.sort();
 const votiOrdine=[18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 const N=2;
 

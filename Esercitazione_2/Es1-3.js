@@ -1,26 +1,36 @@
 "use strict";
 const readline = require("readline-sync");
-const { format, isValid } = require("date-fns");
+const { format, isValid, getUnixTime } = require("date-fns");
 
 function printMenu() {
   console.log("1. Inserire un nuovo task");
   console.log("2. Rimuovere i task in base alla descrizione");
-  console.log("3. Rimuovere i task in base alla data")
+  console.log("3. Rimuovere i task in base alla data");
   console.log("4. Mostrare tutti i task esistenti, in ordine alfabetico");
   console.log("5. Chiudere il programma");
 }
 
-function inputDate(){
+function inputDate() {
   let data = null;
   do {
-    data = readline.question(
-      "Inserire la data (YYYY-MM-DD) (oppure lasciare vuoto per nessuna scadenza): ");
+    data = readline
+      .question(
+        "Inserire la data e ora (YYYY-MM-DD HH:MM) (oppure lasciare vuoto per nessuna scadenza): "
+      )
+      .trim();
+
     if (data && !isValid(new Date(data))) {
       console.error(
-        "Formato data non valido. Inserire nel formato YYYY-MM-DD oppure lasciare vuoto per nessuna scadenza.");
+        "Formato data non valido. Inserire nel formato YYYY-MM-DD oppure lasciare vuoto per nessuna scadenza."
+      );
+    }
+    if (!data.includes(" ")) {
+      data += " 23:59";
     }
   } while (data && !isValid(new Date(data)));
-  const formattedDate = data ? format(new Date(data), "yyyy-MM-dd") : null;
+  const formattedDate = data
+    ? format(new Date(data), "yyyy-MM-dd HH:mm")
+    : null;
   return formattedDate;
 }
 
@@ -35,7 +45,7 @@ function addTask(tasks) {
 
   const visibilita = readline.keyInYNStrict("Il task e' privato?: ");
 
-  const data=inputDate();
+  const data = inputDate();
 
   let task = {
     descption: descrizione,
@@ -44,10 +54,14 @@ function addTask(tasks) {
     deadline: data,
   };
   tasks.push(task);
+
+  /*DA AGGIUNGERE LA CANCELLAZIONE DEI TASK PASSATI*/
 }
 
 function deleteTaskByDescription(tasks) {
-  let descrizione = readline.question("Inserire la descrizione del task da eliminare: ");
+  let descrizione = readline.question(
+    "Inserire la descrizione del task da eliminare: "
+  );
   let toBeRemoved = [];
   for (let task of tasks) {
     if (task.descption === descrizione) {
@@ -60,28 +74,52 @@ function deleteTaskByDescription(tasks) {
   }
 }
 
-function deleteTaskByDate(tasks){
-    const deleteData=inputDate();
-    let toBeRemoved=[];
-    for(let task of tasks){
-      if(task.deadline === deleteData){
-        toBeRemoved.push(task);
-      }
+function deleteTaskByDate(tasks) {
+  const deleteData = inputDate();
+  let toBeRemoved = [];
+  for (let task of tasks) {
+    if (task.deadline === deleteData) {
+      toBeRemoved.push(task);
     }
+  }
 
-    for(let element of toBeRemoved){
-      tasks.splice(tasks.indexOf(element), 1);
-    }
+  for (let element of toBeRemoved) {
+    tasks.splice(tasks.indexOf(element), 1);
+  }
 }
 
 function printTasks(tasks) {
+  if (tasks.length === 0) {
+    console.log("Nessun task presente!");
+    return;
+  }
+
   tasks.sort((a, b) => a.descption.localeCompare(b.descption));
-  console.log(tasks);
+
+  console.log("** I tuoi task **");
+  console.log("--------------------");
+
+  tasks.forEach((task, index) => {
+    let taskString = `${index + 1}. ${task.descption}`;
+    if (task.important) {
+      taskString += " (Importante)";
+    }
+    if (task.private) {
+      taskString += " (Privato)";
+    } else {
+      taskString += " (Pubblico)";
+    }
+    if (task.deadline) {
+      taskString += ` - Scadenza: ${task.deadline}`;
+    }
+    console.log(taskString);
+  });
 }
 
 let choice = 0;
 let tasks = [];
-do {
+console.log("------------------------TASK-MANAGER------------------------");
+const menu = setInterval(() => {
   printMenu();
   choice = readline.question("Scelta: ");
 
@@ -98,7 +136,10 @@ do {
     case "4":
       printTasks(tasks);
       break;
+    case "5":
+      clearInterval(menu);
     default:
       break;
   }
-} while (choice != 5);
+  console.log("------------------------------------------------------------");
+}, 500);

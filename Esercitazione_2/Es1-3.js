@@ -11,27 +11,13 @@ function printMenu() {
 }
 
 function inputDate() {
-  let data = null;
-  do {
-    data = readline
-      .question(
-        "Inserire la data e ora (YYYY-MM-DD HH:MM) (oppure lasciare vuoto per nessuna scadenza): "
-      )
-      .trim();
+  let data=readline.question("Inserire la data (YYYY-MM-DD): ").trim();
+  if(!data.includes(" ")){
+    data+=" 22:59:59z";
+  }
 
-    if (data && !isValid(new Date(data))) {
-      console.error(
-        "Formato data non valido. Inserire nel formato YYYY-MM-DD oppure lasciare vuoto per nessuna scadenza."
-      );
-    }
-    if (!data.includes(" ")) {
-      data += " 23:59";
-    }
-  } while (data && !isValid(new Date(data)));
-  const formattedDate = data
-    ? format(new Date(data), "yyyy-MM-dd HH:mm")
-    : null;
-  return formattedDate;
+  const deadline=new Date(data);
+  return deadline;
 }
 
 function addTask(tasks) {
@@ -55,7 +41,12 @@ function addTask(tasks) {
   };
   tasks.push(task);
 
-  /*DA AGGIUNGERE LA CANCELLAZIONE DEI TASK PASSATI*/
+  if(!Number.isNaN(data.getTime())){
+    const now=new Date();
+    setTimeout(function(task){
+      tasks.splice(tasks.indexOf(task), 1);
+    }, data.getTime()-now.getTime(), task);
+  }
 }
 
 function deleteTaskByDescription(tasks) {
@@ -103,6 +94,9 @@ function printTasks(tasks) {
     let taskString = `${index + 1}. ${task.descption}`;
     if (task.important) {
       taskString += " (Importante)";
+    }
+    else{
+      taskString += " (Non importante)";
     }
     if (task.private) {
       taskString += " (Privato)";

@@ -13,7 +13,7 @@ function printMenu() {
 function inputDate() {
   let data=readline.question("Inserire la data (YYYY-MM-DD): ").trim();
   if(!data.includes(" ")){
-    data+=" 22:59:59z";
+    data+=" 23:59:59z";
   }
 
   const deadline=new Date(data);

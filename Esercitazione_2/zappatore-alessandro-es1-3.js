@@ -1,6 +1,7 @@
 "use strict";
 const readline = require("readline-sync");
 const { format, endOfDay, getUnixTime, differenceInMilliseconds } = require("date-fns");
+const MAX_32_BIT_INTEGER=2147483647;
 
 function printMenu() {
   console.log("1. Inserire un nuovo task");
@@ -41,10 +42,10 @@ function addTask(tasks) {
   };
   tasks.push(task);
 
-  
-  if(getUnixTime(data)){
-    const now=format(new Date(), "yyyy-MM-dd HH:mm:ss");
-    setTimeout(deletePast, differenceInMilliseconds(data, now), task, tasks);
+  const now=format(new Date(), "yyyy-MM-dd HH:mm:ss");
+  let difference=differenceInMilliseconds(data, now);
+  if(difference<MAX_32_BIT_INTEGER){
+    setTimeout(deletePast, difference, task, tasks);
   }
 }
 

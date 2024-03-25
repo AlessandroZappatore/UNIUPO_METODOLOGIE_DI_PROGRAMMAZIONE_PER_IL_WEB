@@ -41,12 +41,15 @@ function addTask(tasks) {
   };
   tasks.push(task);
 
-  if(!Number.isNaN(data.getTime())){
+  
+  if(data.getTime()){
     const now=new Date();
-    setTimeout(function(task){
-      tasks.splice(tasks.indexOf(task), 1);
-    }, data.getTime()-now.getTime(), task);
+    setTimeout(deletePast, data.getTime()-now.getTime(), task, tasks);
   }
+}
+
+function deletePast(task, tasks){
+  tasks.splice(tasks.indexOf(task), 1);
 }
 
 function deleteTaskByDescription(tasks) {
@@ -66,10 +69,12 @@ function deleteTaskByDescription(tasks) {
 }
 
 function deleteTaskByDate(tasks) {
-  const deleteData = inputDate();
+  let deleteData = inputDate();
+  const deleteDataTime = getUnixTime(deleteData);
   let toBeRemoved = [];
   for (let task of tasks) {
-    if (task.deadline === deleteData) {
+    const taskDeadlineTime = getUnixTime(task.deadline);
+    if (taskDeadlineTime === deleteDataTime) {
       toBeRemoved.push(task);
     }
   }
@@ -104,7 +109,7 @@ function printTasks(tasks) {
       taskString += " (Pubblico)";
     }
     if (task.deadline) {
-      taskString += ` - Scadenza: ${task.deadline}`;
+      taskString += ` - Scadenza: ${task.deadline.toISOString()}`;
     }
     console.log(taskString);
   });
@@ -136,4 +141,4 @@ const menu = setInterval(() => {
       break;
   }
   console.log("------------------------------------------------------------");
-}, 1000);
+}, 200);

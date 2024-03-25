@@ -1,6 +1,6 @@
 "use strict";
 const readline = require("readline-sync");
-const { format, isValid, getUnixTime } = require("date-fns");
+const { format, endOfDay, getUnixTime, differenceInMilliseconds } = require("date-fns");
 
 function printMenu() {
   console.log("1. Inserire un nuovo task");
@@ -11,13 +11,13 @@ function printMenu() {
 }
 
 function inputDate() {
-  let data=readline.question("Inserire la data (YYYY-MM-DD): ").trim();
-  if(!data.includes(" ")){
-    data+=" 23:59:59z";
-  }
+    let data=readline.question("Inserire la data (YYYY-MM-DD HH:mm:ss): ").trim();
+    if(!data.includes(" ")){
+        data=endOfDay(data);
+    }
+    let result=format(new Date(data), "yyyy-MM-dd HH:mm:ss");
 
-  const deadline=new Date(data);
-  return deadline;
+  return result;
 }
 
 function addTask(tasks) {
@@ -42,9 +42,9 @@ function addTask(tasks) {
   tasks.push(task);
 
   
-  if(data.getTime()){
-    const now=new Date();
-    setTimeout(deletePast, data.getTime()-now.getTime(), task, tasks);
+  if(getUnixTime(data)){
+    const now=format(new Date(), "yyyy-MM-dd HH:mm:ss");
+    setTimeout(deletePast, differenceInMilliseconds(data, now), task, tasks);
   }
 }
 
@@ -109,7 +109,7 @@ function printTasks(tasks) {
       taskString += " (Pubblico)";
     }
     if (task.deadline) {
-      taskString += ` - Scadenza: ${task.deadline.toISOString()}`;
+      taskString += ` - Scadenza: ${task.deadline}`;
     }
     console.log(taskString);
   });

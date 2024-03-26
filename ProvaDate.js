@@ -1,6 +1,6 @@
 "use strict";
 const readline = require("readline-sync");
-const {format, endOfDay, differenceInMilliseconds} = require("date-fns");
+const {format, endOfDay, differenceInMilliseconds, addDays, addMinutes} = require("date-fns");
 
 let data=readline.question("Inserire la data (YYYY-MM-DD): ").trim();
 if(!data.includes(" ")){
@@ -14,5 +14,9 @@ const now=format(new Date(), "yyyy-MM-dd HH:mm:ss");
 console.log(result);
 console.log(now);
 
+result=format(addDays(result, 2), "yyyy-MM-dd HH:mm:ss");
+console.log("A day added: "+result);
 
-console.log("Differenza "+ differenceInMilliseconds(result, now));
+result=format(addMinutes(result, 30),  "yyyy-MM-dd HH:mm:ss");
+console.log("30 minutes added: "+result);
+//console.log("Differenza "+ differenceInMilliseconds(result, now));

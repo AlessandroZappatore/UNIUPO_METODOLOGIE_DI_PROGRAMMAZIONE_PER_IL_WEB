@@ -117,7 +117,7 @@ console.log(fourth(4));
 
 const oneSec = setTimeout(()=>{
     console.log("HEY");
-}, 0);
+}, 2000);
 
 // import the library
 /*const readlineSync = require('readline-sync');

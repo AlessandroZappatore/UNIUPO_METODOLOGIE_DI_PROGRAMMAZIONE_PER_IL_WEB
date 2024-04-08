@@ -1,7 +1,6 @@
 "use strict";
 const readline = require("readline-sync");
 const { format, endOfDay, getUnixTime, differenceInMilliseconds } = require("date-fns");
-const MAX_32_BIT_INTEGER=2147483647;
 
 function printMenu() {
   console.log("1. Inserire un nuovo task");
@@ -41,16 +40,6 @@ function addTask(tasks) {
     deadline: data,
   };
   tasks.push(task);
-
-  const now=format(new Date(), "yyyy-MM-dd HH:mm:ss");
-  let difference=differenceInMilliseconds(data, now);
-  if(difference<MAX_32_BIT_INTEGER){
-    setTimeout(deletePast, difference, task, tasks);
-  }
-}
-
-function deletePast(task, tasks){
-  tasks.splice(tasks.indexOf(task), 1);
 }
 
 function deleteTaskByDescription(tasks) {
@@ -118,6 +107,7 @@ function printTasks(tasks) {
 
 let choice = 0;
 let tasks = [];
+
 console.log("------------------------TASK-MANAGER------------------------");
 const menu = setInterval(() => {
   printMenu();
@@ -137,9 +127,19 @@ const menu = setInterval(() => {
       printTasks(tasks);
       break;
     case "5":
+      clearInterval(deletePast);
       clearInterval(menu);
     default:
       break;
   }
   console.log("------------------------------------------------------------");
 }, 200);
+
+const deletePast=setInterval(()=>{
+  let now=format(new Date(), "yyyy-MM-dd HH:mm:ss");
+  tasks.forEach((task, index)=>{
+    if(differenceInMilliseconds(task.deadline, now)<=0){
+      tasks.splice(index, 1);
+    }
+  })
+}, 1000);

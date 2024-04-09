@@ -1,6 +1,11 @@
 "use strict";
 const readline = require("readline-sync");
-const { format, endOfDay, getUnixTime, differenceInMilliseconds } = require("date-fns");
+const {
+  format,
+  endOfDay,
+  getUnixTime,
+  differenceInMilliseconds,
+} = require("date-fns");
 
 function printMenu() {
   console.log("1. Inserire un nuovo task");
@@ -11,18 +16,20 @@ function printMenu() {
 }
 
 function inputDate() {
-    let data=readline.question("Inserire la data (YYYY-MM-DD HH:mm:ss): ").trim();
-    if(!data.includes(" ")){
-        data=endOfDay(data);
-    }
-    let result=format(new Date(data), "yyyy-MM-dd HH:mm:ss");
+  let data = readline
+    .question("Inserire la data (YYYY-MM-DD HH:mm:ss): ")
+    .trim();
+  if (!data.includes(" ")) {
+    data = endOfDay(data);
+  }
+  let result = format(new Date(data), "yyyy-MM-dd HH:mm:ss");
 
   return result;
 }
 
 function addTask(tasks) {
   let descrizione = readline.question("Inserire la descrizione: ");
-  while (descrizione == "")
+  while (descrizione === "")
     descrizione = readline.question(
       "Descrizione obbligatoria, inserirne una: "
     );
@@ -89,8 +96,7 @@ function printTasks(tasks) {
     let taskString = `${index + 1}. ${task.descption}`;
     if (task.important) {
       taskString += " (Importante)";
-    }
-    else{
+    } else {
       taskString += " (Non importante)";
     }
     if (task.private) {
@@ -105,6 +111,7 @@ function printTasks(tasks) {
   });
 }
 
+//Inserire controllo moduli
 let choice = 0;
 let tasks = [];
 
@@ -113,7 +120,7 @@ const menu = setInterval(() => {
   printMenu();
   choice = readline.question("Scelta: ");
 
-  switch (choice) {
+  switch (choice.trim()) {
     case "1":
       addTask(tasks);
       break;
@@ -135,11 +142,11 @@ const menu = setInterval(() => {
   console.log("------------------------------------------------------------");
 }, 200);
 
-const deletePast=setInterval(()=>{
-  let now=format(new Date(), "yyyy-MM-dd HH:mm:ss");
-  tasks.forEach((task, index)=>{
-    if(differenceInMilliseconds(task.deadline, now)<=0){
+const deletePast = setInterval(() => {
+  let now = format(new Date(), "yyyy-MM-dd HH:mm:ss");
+  tasks.forEach((task, index) => {
+    if (differenceInMilliseconds(task.deadline, now) <= 0) {
       tasks.splice(index, 1);
     }
-  })
+  });
 }, 1000);

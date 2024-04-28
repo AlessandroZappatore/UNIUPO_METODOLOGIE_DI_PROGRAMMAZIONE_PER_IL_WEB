@@ -1,0 +1,5 @@
+h1{font-size: 200%; font-family:'Times new roman'; color:green; position: relative; left: 50%;right: 10%;}
+h2{font-size: 18px; font-family: arial; color: red; position: relative; left: 25%; z-index: -2;}
+table{font-size: 16px; font-family: arial; color: black; margin: auto;}
+body{position: relative; left: 2%;}
+

@@ -1,31 +1,31 @@
-.below-nav{
-    margin-top: 4rem;
+.below-nav {
+  margin-top: 4rem;
 }
 
-.project{
-    margin-top: 7rem;
+.project {
+  margin-top: 7rem;
 }
 
-.list-group-item.active{
-    color: white;
-    background-color: #03C03C;
-    border-color: darkgreen;
+.list-group-item.active {
+  color: white;
+  background-color: #03c03c;
+  border-color: darkgreen;
 }
 
 .list-group-item-action:hover {
-    background-color: lightgrey;
-    border-color: darkgrey;
+  background-color: lightgrey;
+  border-color: darkgrey;
 }
 
-.badge.text-bg-upo{
-    background-color: red;
-    color: white;
+.badge.text-bg-upo {
+  background-color: red;
+  color: white;
 }
 
-.add-button{
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    margin: 0 2rem 2rem 0;
-    border-radius: 100%;
+.add-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0 2rem 2rem 0;
+  border-radius: 100%;
 }

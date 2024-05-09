@@ -1,85 +1,164 @@
-.navbar{
-    background-color: #fff;
-    height: 80px;
-    margin: 20px;
-    border-radius: 16px;
-    padding: 0.5rem;
+.navbar {
+  background-color: #fff;
+  height: 80px;
+  margin: 20px;
+  border-radius: 16px;
+  padding: 0.5rem;
 }
 
-.navbar-brand{
-    font-weight: 500;
-    color:red;
-    font-size: 24px;
-    transition: 0.3s color;
+.navbar-brand {
+  font-weight: 500;
+  color: red;
+  font-size: 24px;
+  transition: 0.3s color;
 }
 
-.login-button{
-    background-color: #009970;
-    color: #fff;
-    font-size: 14px;
-    padding: 8px 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: 0.3s background-color;
+.login-button {
+  background-color: #008744;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: 0.3s background-color;
 }
 
-.login-button:hover{
-    background-color: #00b383;
+.login-button:hover {
+  background-color: #00b383;
 }
 
-.navbar-toggler{
-    border: none;
-    font-size: 1.25rem;
+.navbar-nav{
+  margin-left: 13rem;
 }
 
-.navbar-toggler:focus, .btn-close{
-    box-shadow: none;
-    outline: none;
+
+.navbar-toggler {
+  border: none;
+  font-size: 1.25rem;
 }
 
-.nav-link{
-    color: #666777;
-    font-weight: 500;
-    position: relative;
+.navbar-toggler:focus,
+.btn-close {
+  box-shadow: none;
+  outline: none;
 }
 
-.nav-link:hover, .nav-link.active{
-    color: #000;
+.nav-link {
+  color: #666777;
+  font-weight: 500;
+  position: relative;
 }
 
-@media (min-width: 991px){
-    .nav-link::before{
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        height: 2px;
-        background-color: red;
-        visibility: hidden;
-        transition: 0.1 s ease-in-out;
-    }
-
-    .nav-link:hover::before, .nav-link.active::before{
-        width: 100%;
-        visibility: visible;
-    }
+.nav-link:hover,
+.nav-link.active {
+  color: #000;
 }
 
-.hero-section{
-    background: url(ml.jpg) no-repeat center;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
-}
-
-.hero-section::before{
-    background-color: rgba(0,0,0,0.6);
+@media (min-width: 991px) {
+  .nav-link::before {
     content: "";
     position: absolute;
-    top: 0;
-    right: 0;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    visibility: hidden;
+    transition: 0.1 s ease-in-out;
+  }
+
+  .nav-link:hover::before,
+  .nav-link.active::before {
+    width: 100%;
+    visibility: visible;
+  }
+}
+
+.hero-section {
+  background: url(ml.jpg) no-repeat center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
+
+.hero-section::before {
+  background-color: rgba(0, 0, 0, 0.6);
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.card {
+  width: 17rem;
+  height: 23rem;
+  background: rgb(0, 0, 0);
+  transition: all 0.4s;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  font-size: 30px;
+  font-weight: 900;
+  margin-top: 2rem;
+  margin-left: 4.8rem;
+}
+
+.card:hover {
+  border-radius: 15px;
+  cursor: pointer;
+  transform: scale(1.2);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  background: rgb(32, 32, 36);
+}
+
+.card-content {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  transition: all 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  border-radius: 15px;
+}
+
+.card-content img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.card:hover .card-content {
+  height: 0px;
+  opacity: 0;
+}
+
+#ultime-uscite {
+  color: white;
+  position: relative;
+  margin-top: 10rem;
+  font-weight: 1000;
+}
+
+.second-content {
+  height: 0%;
+  width: 100%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  transition: all 0.4s;
+  font-size: 0px;
+  transform: rotate(90deg) scale(-1);
+}
+
+.card:hover .second-content {
+  opacity: 1;
+  height: 100%;
+  font-size: 1.8rem;
+  transform: rotate(0deg);
 }

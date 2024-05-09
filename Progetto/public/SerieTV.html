@@ -16,11 +16,18 @@
   <body>
     <nav class="navbar navbar-expand-lg fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="HomePage.html">
+        <a class="navbar-brand" href="HomePage.html" id="logo">
           <img
-            src="wiw-high-resolution-logo-transparent.png"
+            src="img/wiw-high-resolution-logo-transparent.png"
             alt="WIW logo"
             height="50em"
+            id="normal-logo"
+          />
+          <img
+            src="img/wiw-high-resolution-logo-black-transparent.png"
+            alt="WIW logo hover"
+            height="50em"
+            id="hover-logo"
           />
         </a>
 
@@ -42,22 +49,22 @@
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
               <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="HomePage.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="Film.html">Film</a>
+              </li>
+              <li class="nav-item">
                 <a
                   class="nav-link mx-lg-2 active"
                   aria-current="page"
-                  href="HomePage.html"
-                  >Home</a
+                  href="SerieTV.html"
+                  >Serie TV</a
                 >
               </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-lg-2" href="Film.html">Film</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-lg-2" href="SerieTV.html">Serie TV</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-lg-2" href="#">Contatti</a>
-                </li> 
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="#">Contatti</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -83,42 +90,7 @@
       </div>
     </nav>
 
-    <section class="hero-section">
-      <section class="card-section">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12 text-center">
-              <h1 id="ultime-uscite">ULTIME USCITE</h1>
-            </div>
-            <div class="col-md-4 mx-auto">
-              <div class="card">
-                <div class="card-content">
-                  <img src="Interstellar.jpg" alt="Interstellar" />
-                </div>
-                <div class="second-content">
-                  <a href="#" class="btn btn-primary">Altro</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 mx-auto">
-              <div class="card">
-                <div class="card-content">
-                  <img src="sole-a-catinelle.jpg" alt="Sole a catinelle" />
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 mx-auto">
-              <div class="card">
-                <div class="card-content">
-                  <img src="stranger-things.jpg" alt="Stranger things" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </section>
-
+    <section class="hero-section"></section>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

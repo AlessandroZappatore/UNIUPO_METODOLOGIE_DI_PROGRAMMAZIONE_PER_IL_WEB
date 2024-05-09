@@ -16,11 +16,18 @@
   <body>
     <nav class="navbar navbar-expand-lg fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="HomePage.html">
+        <a class="navbar-brand" href="HomePage.html" id="logo">
           <img
-            src="wiw-high-resolution-logo-transparent.png"
-            alt="Bootstrap"
+            src="img/wiw-high-resolution-logo-transparent.png"
+            alt="WIW logo"
             height="50em"
+            id="normal-logo"
+          />
+          <img
+            src="img/wiw-high-resolution-logo-black-transparent.png"
+            alt="WIW logo hover"
+            height="50em"
+            id="hover-logo"
           />
         </a>
 
@@ -45,15 +52,15 @@
                 <a class="nav-link mx-lg-2" href="HomePage.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="Film.html">Film</a>
-              </li>
-              <li class="nav-item">
                 <a
                   class="nav-link mx-lg-2 active"
                   aria-current="page"
-                  href="SerieTV.html"
-                  >Serie TV</a
+                  href="Film.html"
+                  >Film</a
                 >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="SerieTV.html">Serie TV</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link mx-lg-2" href="#">Contatti</a>
@@ -61,6 +68,14 @@
             </ul>
           </div>
         </div>
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </form>
         <a href="#" class="login-button">Login</a>
         <button
           class="navbar-toggler pe-0"

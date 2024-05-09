@@ -27,10 +27,9 @@
   background-color: #00b383;
 }
 
-.navbar-nav{
+.navbar-nav {
   margin-left: 13rem;
 }
-
 
 .navbar-toggler {
   border: none;
@@ -76,7 +75,7 @@
 }
 
 .hero-section {
-  background: url(ml.jpg) no-repeat center;
+  background: url(img/ml.jpg) no-repeat center;
   background-size: cover;
   width: 100%;
   height: 100vh;
@@ -161,4 +160,33 @@
   height: 100%;
   font-size: 1.8rem;
   transform: rotate(0deg);
+}
+
+.btn-altro {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.card-inner {
+  color: white;
+}
+
+.text-container {
+  color: white;
+  max-width: 80%;
+  margin: 0 auto;
+  font-size: small;
+}
+
+#hover-logo {
+  display: none;
+}
+
+#logo:hover #normal-logo {
+  display: none;
+}
+
+#logo:hover #hover-logo {
+  display: inline-block;
 }

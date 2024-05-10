@@ -28,7 +28,7 @@
 }
 
 .navbar-nav {
-  margin-left: 13rem;
+  margin-left: 0rem;
 }
 
 .navbar-toggler {
@@ -75,21 +75,15 @@
 }
 
 .hero-section {
-  background: url(img/ml.jpg) no-repeat center;
+  background: url(img/cinema.png) no-repeat center;
   background-size: cover;
   width: 100%;
-  height: 100vh;
+  height: 160vh;
 }
 
-.hero-section::before {
-  background-color: rgba(0, 0, 0, 0.6);
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
+
+
+
 
 .card {
   width: 17rem;
@@ -101,13 +95,13 @@
   font-size: 30px;
   font-weight: 900;
   margin-top: 2rem;
-  margin-left: 4.8rem;
+  position: relative;
 }
 
 .card:hover {
   border-radius: 15px;
   cursor: pointer;
-  transform: scale(1.2);
+  transform: scale(1.25);
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
   background: rgb(32, 32, 36);
 }
@@ -189,4 +183,8 @@
 
 #logo:hover #hover-logo {
   display: inline-block;
+}
+
+#card-section-top-3{
+  margin-top: -5rem;
 }

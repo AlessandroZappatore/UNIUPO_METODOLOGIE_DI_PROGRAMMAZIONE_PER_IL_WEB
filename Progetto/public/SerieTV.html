@@ -2,7 +2,7 @@
 <html lang="it">
   <head>
     <title>WIW - What I Watched</title>
-    <link rel="shortcut icon" href="popcorn.png" />
+    <link rel="shortcut icon" href="img/popcorn.png" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -47,35 +47,41 @@
             ></button>
           </div>
           <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="HomePage.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="Film.html">Film</a>
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link mx-lg-2 active"
-                  aria-current="page"
-                  href="SerieTV.html"
-                  >Serie TV</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="#">Contatti</a>
-              </li>
-            </ul>
+            <div class="mx-auto">
+              <ul class="navbar-nav justify-content-center flex-grow-1 pe-3" id="center-button">
+              
+                <li class="nav-item">
+                  <a
+                    class="nav-link mx-lg-2 "
+                    
+                    href="HomePage.html"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-lg-2" href="Film.html">Film</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-lg-2 active" aria-current="page" href="SerieTV.html">Serie TV</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-lg-2" href="#">Contatti</a>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <form class="d-flex" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+            </form>
           </div>
         </div>
-        <form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </form>
+        
         <a href="#" class="login-button">Login</a>
         <button
           class="navbar-toggler pe-0"
@@ -89,6 +95,7 @@
         </button>
       </div>
     </nav>
+
 
     <section class="hero-section"></section>
     <script

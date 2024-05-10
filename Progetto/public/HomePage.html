@@ -2,7 +2,7 @@
 <html lang="it">
   <head>
     <title>WIW - What I Watched</title>
-    <link rel="shortcut icon" href="popcorn.png" />
+    <link rel="shortcut icon" href="img/popcorn.png" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -47,26 +47,30 @@
             ></button>
           </div>
           <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a
-                  class="nav-link mx-lg-2 active"
-                  aria-current="page"
-                  href="HomePage.html"
-                  >Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="Film.html">Film</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="SerieTV.html">Serie TV</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="#">Contatti</a>
-              </li>
+            <div class="mx-auto">
+              <ul class="navbar-nav justify-content-center flex-grow-1 pe-3" id="center-button">
               
-            </ul>
+                <li class="nav-item">
+                  <a
+                    class="nav-link mx-lg-2 active"
+                    aria-current="page"
+                    href="HomePage.html"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-lg-2" href="Film.html">Film</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-lg-2" href="SerieTV.html">Serie TV</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-lg-2" href="#">Contatti</a>
+                </li>
+                
+              </ul>
+            </div>
+            
             <form class="d-flex" role="search">
               <input
                 class="form-control me-2"
@@ -99,8 +103,8 @@
             <div class="col-12 text-center">
               <h1 id="ultime-uscite">ULTIME USCITE</h1>
             </div>
-            <div class="col-md-4 mx-auto">
-              <div class="card">
+            <div class="col-md-4">
+              <div class="card mx-auto">
                 <div class="card-content">
                   <img src="img/Interstellar.jpg" alt="Interstellar" />
                 </div>
@@ -118,12 +122,83 @@
                     </p>
                     <a href="#" class="btn btn-primary btn-altro">Altro</a>
                   </div>
-                  <a href="#" class="btn btn-primary btn-altro">Altro</a>
                 </div>
               </div>
             </div>
-            <div class="col-md-4 mx-auto">
-              <div class="card">
+            <div class="col-md-4">
+              <div class="card mx-auto">
+                <div class="card-content">
+                  <img src="img/sole-a-catinelle.jpg" alt="Sole a catinelle" />
+                </div>
+                <div class="second-content">
+                  <div class="text-container">
+                    <h3>Sole a catinelle</h3>
+                    <p>Regista: Gennaro Nunziante</p>
+                    <p>Anno: 2013</p>
+                    <p>Genere: Commedia</p>
+                    <p>
+                      Luca è un venditore porta a porta senza lavoro e pieno di
+                      debiti. Per riallacciare i rapporti con suo figlio
+                      organizza una bella vacanza estiva all'insegna del
+                    <a href="#" class="btn btn-primary btn-altro">Altro</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mx-auto">
+                <div class="card-content">
+                  <img src="img/stranger-things.jpg" alt="Stranger things" />
+                </div>
+                <div class="second-content">
+                  <div class="text-container">
+                    <h3>Stranger things 3</h3>
+                    <p>Regista: Matt Duffer, Ross Duffer, Shawn Levy</p>
+                    <p>Anno: 2019</p>
+                    <p>Genere: Fantascienza</p>
+                    <p>
+                      La scomparsa di un ragazzino in una cittadina porta alla
+                      luce un mistero in cui si mescolano esperimenti segreti,
+                      spaventose forze soprannaturali e una strana bambina.
+                    </p>
+                    <a href="#" class="btn btn-primary btn-altro">Altro</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="card-section" id="card-section-top-3">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 text-center">
+              <h1 id="ultime-uscite">TOP 3</h1>
+            </div>
+            <div class="col-md-4">
+              <div class="card mx-auto">
+                <div class="card-content">
+                  <img src="img/Interstellar.jpg" alt="Interstellar" />
+                </div>
+                <div class="second-content">
+                  <div class="card-inner"></div>
+                  <div class="text-container">
+                    <h3>Interstellar</h3>
+                    <p>Regista: Christopher Nolan</p>
+                    <p>Anno: 2014</p>
+                    <p>Genere: Fantascienza</p>
+                    <p>
+                      L'umanità è sull'orlo dell'estinzione e un gruppo di
+                      astronauti viaggia attraverso un wormhole alla ricerca di
+                      un altro pianeta abitabile.
+                    </p>
+                    <a href="#" class="btn btn-primary btn-altro">Altro</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mx-auto">
                 <div class="card-content">
                   <img src="img/sole-a-catinelle.jpg" alt="Sole a catinelle" />
                 </div>
@@ -141,12 +216,11 @@
                     </p>
                     <a href="#" class="btn btn-primary btn-altro">Altro</a>
                   </div>
-                  <a href="#" class="btn btn-primary btn-altro">Altro</a>
                 </div>
               </div>
             </div>
-            <div class="col-md-4 mx-auto">
-              <div class="card">
+            <div class="col-md-4">
+              <div class="card mx-auto">
                 <div class="card-content">
                   <img src="img/stranger-things.jpg" alt="Stranger things" />
                 </div>
@@ -163,7 +237,6 @@
                     </p>
                     <a href="#" class="btn btn-primary btn-altro">Altro</a>
                   </div>
-                  <a href="#" class="btn btn-primary btn-altro">Altro</a>
                 </div>
               </div>
             </div>
@@ -171,6 +244,8 @@
         </div>
       </section>
     </section>
+
+    
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

@@ -145,7 +145,6 @@
   align-items: center;
   border-radius: 15px;
   transition: all 0.4s;
-  font-size: 0px;
   transform: rotate(90deg) scale(-1);
 }
 

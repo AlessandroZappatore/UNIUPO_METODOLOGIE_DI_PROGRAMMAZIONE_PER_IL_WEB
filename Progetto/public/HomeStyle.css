@@ -92,7 +92,7 @@
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .hero-section{
+  .hero-section {
     height: 500vh;
   }
 }
@@ -207,7 +207,6 @@
   display: inline-block;
 }
 
-#card-section-top-3{
+#card-section-top-3 {
   margin-top: -5rem;
 }
-

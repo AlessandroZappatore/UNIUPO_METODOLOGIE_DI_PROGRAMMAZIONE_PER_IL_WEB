@@ -4,6 +4,7 @@ GET /tasks
 REQ body: empty
 RES body: lista task in JSON
 Error: 404, {}
+STATUS: 20x
 EXAMPLE GET /tasks
 
 {
@@ -29,8 +30,8 @@ EXAMPLE GET /tasks
 • Creare un nuovo task, fornendo tutte le informazioni rilevanti (eccetto l’id).
 
 POST /tasks
-REQ body: JSON
-RES body:
+REQ body: JSON del task
+RES body: empty
 Error: 500
 EXAMPLE POST /tasks
 
@@ -42,32 +43,27 @@ EXAMPLE POST /tasks
 
 }
 
-res -> tasks/:id (popolato nella risposta)
-oppure
-
-500 server error
-
 • Recuperare un singolo task, dato il suo id.
 GET /tasks/:id
-REQ body: JSON id del task
+REQ body: empty
 RES body: task in JSON con id fornito
-Error: 404, {}
+Error: 404, 500, {}
 EXAMPLE GET /tasks/1
 {
-  "id": "1"
+  "id": "1",
+  "descrizione": "Studiare Express", 
+  ..., 
+  "progetto": "MetWeb", 
+  ....
 }
-
-res -> tasks/:id
-oppure 
-404 error 
 
 • Aggiornare un task esistente, fornendo tutte le informazioni rilevanti (tutte le proprietà tranne l’id
 sovrascriveranno le proprietà correnti del task esistente con lo stesso ‘id’).
 PUT /tasks/:id
 REQ body: JSON
-RES body: 
+RES body: empty
 Error: 404, {}
-EXAMPLE: PUT /tasks/1
+EXAMPLE: PUT /tasks/1 body:{JSON}
 
 {
   "id": "1",
@@ -78,26 +74,21 @@ EXAMPLE: PUT /tasks/1
 
 • Cancellare un task, dato il suo id.
 DELETE /tasks/:id
-REQ body: JSON id del task
-RES body:
+REQ body: empty
+RES body: 200
 Error: 404
 EXAMPLE: DELETE/tasks/1
 
 {
-  "id"="1",
 }
 
-res -> tasks/:id (cancellato nella risposta)
-oppure
-404 error
-
 • Segnare un task come “completato”.
-PUT /tasks/:id
-REQ body: JSON id del task
-RES body: 
+PATCH /tasks/:id/completed
+REQ body: empty
+RES body: empty
 Error: 404
-EXAMPLE: PUT/tasks/1
+EXAMPLE: PUT/tasks/1 
 
 {
-  
+  "completed" = True/False,
 }

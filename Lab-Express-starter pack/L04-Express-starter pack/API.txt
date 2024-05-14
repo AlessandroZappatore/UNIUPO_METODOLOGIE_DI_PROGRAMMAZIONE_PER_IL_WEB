@@ -1,0 +1,45 @@
+** Recuperare la lista di tutti i task disponibili.
+  
+GET /tasks -> JSON
+
+STATUS 20x 
+
+{
+  [
+  {
+   "id": 1,
+   "descrizione": 'Prenotare il treno per Milano',
+   "private": True,
+   ....
+  }, 
+
+  {
+   "id": 2, 
+   "descrizione": 'Leggere l'ultimo libro di Dan Brown',
+   "private": True,
+   ....
+
+  }, 
+   ...
+  ]
+}
+
+** Creare un nuovo task, fornendo tutte le informazioni rilevanti (eccetto l’id).
+
+POST /tasks
+
+req.body -> JSON 
+
+{
+  "descrizione": "Studiare Express", 
+  ..., 
+  "progetto": "MetWeb", 
+  ....
+
+}
+
+res -> tasks/:id (popolato nella risposta)
+oppure
+
+500 server error
+

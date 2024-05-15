@@ -152,7 +152,7 @@
   opacity: 0;
 }
 
-#ultime-uscite {
+#titoli-herosection {
   color: white;
   position: relative;
   margin-top: 10rem;
@@ -211,4 +211,8 @@
 
 #card-section-top-3 {
   margin-top: -5rem;
+}
+
+.profile-button{
+  background-color: orange;
 }

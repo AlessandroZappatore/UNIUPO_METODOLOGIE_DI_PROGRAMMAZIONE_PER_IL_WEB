@@ -29,7 +29,7 @@
           <div class="center-link">
             <ul class="navbar-nav flex-grow-1 pe-3" id="center-button">
               <li class="nav-item">
-                <a class="nav-link mx-lg-2 " href="index.html">Home</a>
+                <a class="nav-link mx-lg-2" href="index.html">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link mx-lg-2" href="Film.html">Film</a>
@@ -38,7 +38,7 @@
                 <a class="nav-link mx-lg-2" href="SerieTV.html">Serie TV</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link mx-lg-2 active" aria-current="page" href="Contatti.html">Contatti</a>
+                <a class="nav-link mx-lg-2" href="Contatti.html">Contatti</a>
               </li>
             </ul>
           </div>
@@ -57,50 +57,80 @@
       </button>
     </div>
   </nav>
-  <section class="hero-section-contatti">
+  <section class="hero-section-registrazione">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
-      <div class="row border rounded-5 p-3 bg-white shadow box-area">
+      <div class="row border rounded-5 p-3 bg-white shadow box-area-contenuto">
         <div class="col-md-5 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
           style="background: #0d6efd">
           <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">What I
             Watched</p>
           <div class="featured-image mb-3">
-            <img src="img/Online consulting-bro.svg" class="img-fluid" style="width: 250px;">
+            <img src="img/registration.svg" class="img-fluid" style="width: 250px;">
           </div>
 
           <small class="text-white text-wrap text-center"
-            style="width: 17rem;font-family: 'Courier New', Courier, monospace;">In caso di necessità non esitare a
-            contattarci</small>
+            style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Iscriviti alla nostra piattaforma per avere accesso a tutte le funzionalità</small>
         </div>
         <div class="col-md-7 right-box">
           <div class="row align-items-center">
             <div class="header-text mb-4 text-center">
-              <h2>Contattaci</h2>
+              <h2>Benvenuto</h2>
+              <p>Effettua qui la registrazione</p>
             </div>
 
             <div class="input-group mb-3">
               <span class="input-group-text">&nbsp;@ </span>
               <div class="form-floating">
                 <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Email">
-                <label for="floatingInputGroup1">La tua email</label>
-              </div>
-            </div>
-
-            <div class="form-floating">
-              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                style="height: 100px"></textarea>
-              <label for="floatingTextarea2">&nbsp;&nbsp;&nbsp;La tua richiesta</label>
-            </div>
-
-            <div class="input-group mb-5 d-flex justify-content-between">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="formCheck" checked>
-                <label for="formCheck" class="form-check-label text-secondary"><small>Accetto l'informativa
-                    privacy</small></label>
+                <label for="floatingInputGroup1">Email</label>
               </div>
             </div>
             <div class="input-group mb-3">
-              <button class="btn btn-lg btn-primary w-100 fs-6">Invia</button>
+              <span class="input-group-text">🖊️ </span>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Email">
+                <label for="floatingInputGroup1">Nome</label>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text">🖊️ </span>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Email">
+                <label for="floatingInputGroup1">Cognome</label>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text">👤 </span>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Email">
+                <label for="floatingInputGroup1">Nome utente</label>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text">🔑</span>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingInputGroup1" placeholder="Password">
+                <label for="floatingInputGroup1">Password</label>
+              </div>
+            </div>
+
+            <div class="text-center film-serie-check mb-3">
+              <div class="form-check form-check-inline" title="Utente standard - Ricercare i contenuti per rigista, titolo, genere, attori. Segnare i film/serie come viste e aggiungerle al proprio profilo. Aggiungere commenti e valutazioni ai contenuti visti.">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                  value="option1" checked >
+                <label class="form-check-label" for="inlineRadio1">Utente standard</label>
+              </div>
+              <div class="form-check form-check-inline" title="Utente amministratore - Tutte le funzionalità dell'utente standard. Aggiungere nuovi contenuti alla piattaforma. Moderare i commenti degli utenti.">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                  value="option2" >
+                <label class="form-check-label" for="inlineRadio2">Utente amministratore</label>
+              </div>
+            </div>
+            
+
+            <div class="input-group mb-3">
+              <button class="btn btn-lg btn-primary w-100 fs-6">Registrati</button>
             </div>
           </div>
         </div>

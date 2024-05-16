@@ -119,27 +119,28 @@
   border-radius: 30px;
 }
 
-.left-box{
+.left-box {
   background: #0d6efd;
 }
 
-.left-box-visual{
+.left-box-visual {
   background: rgb(32, 32, 36);
 }
 
-.left-box-title{
-  font-family: 'Courier New', Courier, monospace; 
+.left-box-title {
+  font-family: 'Courier New', Courier, monospace;
   font-weight: 600;
 }
 
-.left-box-img{
+.left-box-img {
   width: 250px;
 }
 
-.left-box-img-visual{
+.left-box-img-visual {
   width: 300px;
 }
-.left-box-subtitle{
+
+.left-box-subtitle {
   width: 100%;
   font-family: 'Courier New', Courier, monospace;
 }
@@ -154,7 +155,7 @@
     overflow: hidden;
   }
 
-  .left-box-visual{
+  .left-box-visual {
     height: 300px;
     overflow: hidden;
   }
@@ -179,7 +180,7 @@
   background: url(img/cinema.png) no-repeat center;
   background-size: cover;
   width: 100%;
-  height: 190vh;
+  height: 210vh;
 }
 
 
@@ -187,10 +188,10 @@
   background: url(img/cinema.png) no-repeat center;
   background-size: cover;
   width: 100%;
-  height: 150vh;
+  height: 205vh;
 }
 
-.box-trama{
+.box-trama {
   max-height: 250px;
 }
 
@@ -329,6 +330,6 @@
   background-color: black;
 }
 
-.img-commento{
-  width: 10%;
+.img-commento {
+  width: 2.8rem;
 }

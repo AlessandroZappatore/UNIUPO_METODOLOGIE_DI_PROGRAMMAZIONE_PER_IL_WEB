@@ -112,3 +112,22 @@ exports.setCompleted = function (id) {
     });
   });
 };
+
+exports.updateTask = function(id, newTask){
+    return new Promise((resolve, reject) => {
+        const sql = 'UPDATE Task SET description = ?, important = ?, privateTask = ?, projectName = ?, deadline = DATETIME(?), completed = ? WHERE taskId = ?';
+        db.run(sql,  [newTask.description, newTask.important, newTask.privateTask, newTask.project, newTask.deadline, newTask.completed, id], 
+        function (err) {
+            if(err){
+                reject(err);
+            } else { 
+                if (this.changes === 0)
+                    resolve({error: 'Task not found.'});
+                else {
+                    resolve();
+                }
+            }
+        })
+    });
+    
+}

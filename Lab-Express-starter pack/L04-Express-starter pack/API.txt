@@ -1,4 +1,4 @@
-• Recuperare la lista di tutti i task disponibili.
+• Recuperare la lista di tutti i task disponibili. FATTO
 
 GET /tasks
 REQ body: empty
@@ -27,7 +27,7 @@ EXAMPLE GET /tasks
   ]
 }
 
-• Creare un nuovo task, fornendo tutte le informazioni rilevanti (eccetto l’id).
+• Creare un nuovo task, fornendo tutte le informazioni rilevanti (eccetto l’id). FATTO
 
 POST /tasks
 REQ body: JSON del task
@@ -43,7 +43,7 @@ EXAMPLE POST /tasks
 
 }
 
-• Recuperare un singolo task, dato il suo id.
+• Recuperare un singolo task, dato il suo id. FATTO
 GET /tasks/:id
 REQ body: empty
 RES body: task in JSON con id fornito
@@ -72,7 +72,7 @@ EXAMPLE: PUT /tasks/1 body:{JSON}
   "private": True,
 }
 
-• Cancellare un task, dato il suo id.
+• Cancellare un task, dato il suo id. FATTO
 DELETE /tasks/:id
 REQ body: empty
 RES body: 200
@@ -82,7 +82,7 @@ EXAMPLE: DELETE/tasks/1
 {
 }
 
-• Segnare un task come “completato”.
+• Segnare un task come “completato”. FATTO
 PATCH /tasks/:id/completed
 REQ body: empty
 RES body: empty
@@ -90,5 +90,9 @@ Error: 404
 EXAMPLE: PUT/tasks/1 
 
 {
-  "completed" = True/False,
+
 }
+
+• Recuperare una lista di tutti i task che rispettino una certa proprietà, per esempio tutti i task
+“importanti”, tutti quelli con una certa scadenza, ecc. Pensa alle funzionalità dei “filtri” e dei
+“progetti” dei laboratori precedenti per una lista completa di opzioni.

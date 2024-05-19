@@ -3,13 +3,12 @@
 const express = require("express");
 const morgan = require("morgan");
 const Task = require("./task");
-const dao = require("./dao");
+const tm = require("./dao");
 //validation middle-ware
 const { check, validationResult } = require("express-validator");
 
 // create application
 const app = express();
-const tm = new dao();
 
 //set port
 const port = 3000;
@@ -35,7 +34,7 @@ app.get("/tasks", (req, res) => {
 });
 
 app.get("/tasks/:id",(req, res) =>{
-  tm.getTask(req.param.id).then((task) =>{
+  tm.getTask(req.params.id).then((task) =>{
     if(task.error){
       res.status(404).json(task);
     } else{
@@ -49,8 +48,8 @@ app.get("/tasks/:id",(req, res) =>{
 });
 
 app.delete("/tasks/:id", (req, res) =>{
-  const id = req.param.id;
-  tm.deleteTask(req.param.id).then((result) =>{
+  const id = req.params.id;
+  tm.deleteTask(req.params.id).then((result) =>{
       res.status(204).end();
   }).catch((err) =>{
     res.status(500).json({
@@ -61,17 +60,22 @@ app.delete("/tasks/:id", (req, res) =>{
 
 app.post('/tasks', [
   check('description').isLength({min: 5}),
-  check('description').notEmpty,
+  check('description').notEmpty(),
   check('private').isBoolean(),
   check('important').isBoolean(),
   check('completed').isBoolean(),
   check('deadline').isDate(),
-  check('projectName').isString(),
-] ,(req, res) =>{
+  check('projectName').isString()
+], (req, res) =>{
   console.log(req);
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()){
+    return res.status(422).json({errors: errors.array()});
+  }
 
   tm.addTask(req.body).then((id) =>{
-    res.status(201).header('Location', '/tasks/${id}').end();
+    res.status(201).header('Location', `/tasks/${id}`).end();
   }).catch((err) =>{
     res.status(500).json({
       'errors': [{'param':'Server', 'msg':err}]
@@ -80,7 +84,7 @@ app.post('/tasks', [
 });
 
 app.patch('/tasks/:id/completed', (req, res)=>{
-  tm.setCompleted(req.param.id).then((err)=>{
+  tm.setCompleted(req.params.id).then((err)=>{
     if(err){
       res.status(404).json(err);
     }

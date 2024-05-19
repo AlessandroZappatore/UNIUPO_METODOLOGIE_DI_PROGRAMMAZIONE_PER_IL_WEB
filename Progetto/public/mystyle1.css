@@ -152,7 +152,7 @@
   opacity: 0;
 }
 
-#ultime-uscite {
+#titoli-herosection {
   color: white;
   position: relative;
   margin-top: 10rem;
@@ -191,8 +191,10 @@
 .text-container {
   color: white;
   max-width: 80%;
+  max-height: 80%;
   margin: 0 auto;
   font-size: small;
+  scrollbar-width: none;
 }
 
 #hover-logo {
@@ -209,4 +211,8 @@
 
 #card-section-top-3 {
   margin-top: -5rem;
+}
+
+.profile-button {
+  background-color: orange;
 }

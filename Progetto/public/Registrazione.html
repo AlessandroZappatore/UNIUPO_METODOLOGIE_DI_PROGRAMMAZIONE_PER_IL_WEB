@@ -27,22 +27,22 @@
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <ul class="navbar-nav flex-grow-1 pe-3" id="center-button">
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2 " href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="Film.html">Film</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="SerieTV.html">Serie TV</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="Contatti.html">Contatti</a>
-            </li>
-
-          </ul>
-
+          <div class="center-link">
+            <ul class="navbar-nav flex-grow-1 pe-3" id="center-button">
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="Film.html">Film</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="SerieTV.html">Serie TV</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="Contatti.html">Contatti</a>
+              </li>
+            </ul>
+          </div>
 
           <form class="d-flex ms-auto" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -59,113 +59,98 @@
   </nav>
   <!-- Fine navbar -->
 
-  <section class="hero-section-contenuto">
-
-    <!-- Inizio contenitore aggiunta contenuti -->
+  <section class="hero-section-registrazione">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
       <div class="row border rounded-5 p-3 bg-white shadow box-area-contenuto">
 
-        <!-- Inizio contenitore sinistro-->
-        <div class="col-md-4 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
-          <p class="text-white fs-2 left-box-title text-center">What I
+        <!-- Inizio contenitore sinistro -->
+        <div class="col-md-5 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
+          <p class="text-white fs-2 left-box-title">What I
             Watched</p>
           <div class="featured-image mb-3">
-            <img src="img/Image upload-amico.svg" class="img-fluid left-box-img">
+            <img src="img/registration.svg" class="img-fluid left-box-img">
           </div>
           <small class="text-white text-wrap text-center left-box-subtitle">
-            Aggiungi i nuovi film o serie TV che
-            non sono ancora presenti nella nostra piattaforma</small>
+            Iscriviti alla nostra piattaforma per
+            avere accesso a tutte le funzionalità</small>
         </div>
-        <!-- Fine contenitore sinistro-->
+        <!-- Fine contenitore sinsitro -->
 
-        <!-- Inizio contenitore Destro-->
-        <div class="col-md-8 right-box">
+        <!-- Inizio contenitore destro -->
+        <div class="col-md-7 right-box">
           <div class="row align-items-center">
-
             <div class="header-text mb-4 text-center">
-              <h2>Aggiungi un nuovo contenuto</h2>
+              <h2>Benvenuto</h2>
+              <p>Effettua qui la registrazione</p>
             </div>
 
-            <!-- Check box film o serie TV -->
-            <div class="text-center film-serie-check mb-3">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                  value="option1">
-                <label class="form-check-label" for="inlineRadio1">Film</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                  value="option2">
-                <label class="form-check-label" for="inlineRadio2">Serie TV</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">&nbsp;@</span>
+              <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInputGroup1" placeholder="Email">
+                <label for="floatingInputGroup1">Email</label>
               </div>
             </div>
 
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="Titolo">
-              <label for="floatingInput">&nbsp;&nbsp;&nbsp;Titolo</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">🖊️</span>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Nome">
+                <label for="floatingInputGroup1">Nome</label>
+              </div>
             </div>
 
-            <select class="form-select mb-3" aria-label="Default select example">
-              <option selected>Genere</option>
-              <option value="1">Commedia</option>
-              <option value="2">Fantasy</option>
-              <option value="3">Fantascienza</option>
-              <option value="4">Animazione</option>
-              <option value="5">Storia</option>
-              <option value="6">Azione</option>
-              <option value="6">Crime</option>
-            </select>
-
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="Registi">
-              <label for="floatingInput">&nbsp;&nbsp;&nbsp;Registi</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="Attori">
-              <label for="floatingInput">&nbsp;&nbsp;&nbsp;Attori</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">🖊️</span>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Cognome">
+                <label for="floatingInputGroup1">Cognome</label>
+              </div>
             </div>
 
             <div class="form-group mb-3">
-              <label class="control-label">Data di uscita</label>
+              <label class="control-label">Data di nascita</label>
               <div>
-                <input type="date" class="form-control input-lg" name="Data-uscita">
+                <input type="date" class="form-control input-lg" name="Data-nascita">
               </div>
             </div>
 
-            <!-- Sezione che si attiva solo se è abilitato il check su serie TV -->
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="numero-stagioni" placeholder="Numero di stagioni" disabled>
-              <label for="numero-stagioni">&nbsp;&nbsp;&nbsp;Numero di stagioni</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">👤</span>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Nome utente">
+                <label for="floatingInputGroup1">Nome utente</label>
+              </div>
             </div>
 
-            <!-- Sezione che si attiva solo se è abilitato il check su serie TV -->
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="numero-episodi" placeholder="Numero di episodi" disabled>
-              <label for="numero-episodi">&nbsp;&nbsp;&nbsp;Numero di episodi</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">🔑</span>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingInputGroup1" placeholder="Password">
+                <label for="floatingInputGroup1">Password</label>
+              </div>
             </div>
 
-            <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="floatingInput" placeholder="Durata">
-              <label for="floatingInput">&nbsp;&nbsp;&nbsp;Durata</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="Dove vederlo">
-              <label for="floatingInput">&nbsp;&nbsp;&nbsp;Dove vederlo</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <textarea class="form-control box-trama" style="height: 100px" placeholder="Trama"
-                id="floatingTextarea2"></textarea>
-              <label for="floatingTextarea2">&nbsp;&nbsp;&nbsp;Una breve trama</label>
+            <div class="text-center film-serie-check mb-3">
+              <div class="form-check form-check-inline"
+                title="Utente standard - Ricercare i contenuti per rigista, titolo, genere, attori. Segnare i film/serie come viste e aggiungerle al proprio profilo. Aggiungere commenti e valutazioni ai contenuti visti.">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
+                  checked>
+                <label class="form-check-label" for="inlineRadio1">Utente standard</label>
+              </div>
+              <div class="form-check form-check-inline"
+                title="Utente amministratore - Tutte le funzionalità dell'utente standard. Aggiungere nuovi contenuti alla piattaforma. Moderare i commenti degli utenti.">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                  value="option2">
+                <label class="form-check-label" for="inlineRadio2">Utente amministratore</label>
+              </div>
             </div>
 
             <!-- Upload per le foto -->
             <form class="file-upload-form mb-3 mx-auto">
               <label for="file" class="file-upload-label">
                 <div class="file-upload-design">
-                  <p>Carica qui il poster</p>
+                  <p>Carica qui la tua foto profilo</p>
                   <svg viewBox="0 0 640 512" height="1em">
                     <path
                       d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z">
@@ -179,17 +164,18 @@
               </label>
             </form>
 
-            <div class="input-group mb-3 ">
-              <button class="btn btn-lg btn-primary w-100 fs-6">Crea</button>
+            <div class="input-group mb-3">
+              <button class="btn btn-lg btn-primary w-100 fs-6">Registrati</button>
             </div>
           </div>
         </div>
-        <!-- Fine contenitore Destro-->
+        <!-- Fine contenitore destro -->
       </div>
     </div>
-    <!-- Fine contenitore aggiunta contenuti -->
 
   </section>
+
+
 
   <!-- Inizio footer -->
   <footer class="footer text-bg-dark p-3">
@@ -252,27 +238,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-
-  <!-- Script per far attivare le sezioni solo quando è presente il check su serie TV -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const radioButtons = document.querySelectorAll('input[name="inlineRadioOptions"]');
-      const stagioniInput = document.getElementById('numero-stagioni');
-      const episodiInput = document.getElementById('numero-episodi');
-
-      radioButtons.forEach(function (button) {
-        button.addEventListener('change', function () {
-          if (this.value === 'option2') {
-            stagioniInput.disabled = false;
-            episodiInput.disabled = false;
-          } else {
-            stagioniInput.disabled = true;
-            episodiInput.disabled = true;
-          }
-        });
-      });
-    });
-  </script>
 </body>
 
 </html>

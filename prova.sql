@@ -3,4 +3,7 @@
 --INSERT INTO emp(empid, empname, email) 
 --VALUES (1, 'Sam', 'test@test.com');
 
-SELECT * FROM emp;
+--SELECT * FROM emp;
+
+--CREATE TABLE utente(email NOT NULL PRIMARY KEY, profile_img BLOB, nome NOT NULL, cognome NOT NULL);
+SELECT * FROM utente;

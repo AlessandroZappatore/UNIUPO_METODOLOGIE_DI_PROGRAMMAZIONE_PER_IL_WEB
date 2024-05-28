@@ -1,0 +1,73 @@
+<%- include('header', {message}); %>
+
+<section class="hero-section-contatti">
+
+    <!-- Inizio contenitore login -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+      <div class="row border rounded-5 p-3 bg-white shadow box-area">
+
+        <!-- Inizio contenitore sinistro -->
+        <div class="col-md-5 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
+          <p class="text-white fs-2 left-box-title">What I
+            Watched</p>
+          <div class="featured-image mb-3">
+            <img src="img/login.svg" class="img-fluid left-box-img">
+          </div>
+          <small class="text-white text-wrap text-center left-box-subtitle">
+            Accedi a tutte le funzioni della nostra
+            piattaforma</small>
+        </div>
+        <!-- Fine contenitore sinistro -->
+
+        <!-- Inizio contenitore destro -->
+        <div class="col-md-7 right-box">
+          <div class="row align-items-center">
+
+            <div class="header-text mb-4 text-center">
+              <h2>Bentornato</h2>
+              <p>Effettua qui il login</p>
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text">&nbsp;@ </span>
+              <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInputGroup1" placeholder="Email">
+                <label for="floatingInputGroup1">Email</label>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text">🔑</span>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingInputGroup1" placeholder="Password">
+                <label for="floatingInputGroup1">Password</label>
+              </div>
+            </div>
+
+            <div class="input-group mb-5 d-flex justify-content-between">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="formCheck" checked>
+                <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
+              </div>
+              <div class="forgot">
+                <small><a href="#">Password dimenticata?</a></small>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-lg btn-primary w-100 fs-6">Login</button>
+            </div>
+
+            <div class="row">
+              <small>Non hai un account? <a href="Registrazione.html">Iscriviti</a></small>
+            </div>
+          </div>
+        </div>
+        <!-- Fine contenitore destro -->
+      </div>
+    </div>
+    <!-- Fine contenitore login-->
+
+  </section>
+
+  <%- include('footer'); %>

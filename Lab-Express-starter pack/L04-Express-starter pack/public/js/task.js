@@ -1,3 +1,5 @@
+import moment from "moment";
+
     class Task  {
    
     // static counter = 1;
@@ -21,11 +23,18 @@
 
     static from(json){
         const t = Object.assign(new Task(), json);
+        t.descriptionText = json.descrption;
+        delete t.descrption;
+        if(t.deadline){
+            t.deadline=moment.utc(t.deadline);
+        }
         return t;
     }
 
     static to(json){
         const json = Object.assign(new Object(), json);
+        json.descriptionText = json.descrption;
+        delete json.descrption;
         if(json.deadline){
             json.deadline=json.deadline.format("dddd, MMMM Do YYYY, h:mm:ss a");
         }

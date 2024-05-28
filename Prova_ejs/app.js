@@ -8,22 +8,17 @@ const moment = require('moment');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
+const userDao = require('./models/utente-dao.js');
 
-
+const filmRouter = require('./routes/films.js');
+const sessionRouter = require('./routes/sessions.js');
+const { Passport } = require('passport');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-app.use(function (req, res, next) {
-  app.locals.moment = moment;
-  app.locals.title = '';
-  app.locals.message = '';
-  app.locals.active = '';
-  next();
-});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,10 +27,45 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 passport.use(new LocalStrategy(
-  function(username, password, done){
-    
+  function(username, password, done) {
+    userDao.getUser(username, password).then(({user, check}) => {
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!check) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    })
   }
-))
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  userDao.getUserById(id).then(user => {
+    done(null, user);
+  });
+});
+
+app.use(session({
+  //store: new FileStore(), // by default, Passport uses a MemoryStore to keep track of the sessions - if you want to use this, launch nodemon with the option: --ignore sessions/
+  secret: 'a secret sentence not to share with anybody and anywhere, used to sign the session ID cookie',
+  resave: false,
+  saveUninitialized: false 
+}));
+
+const isLoggedIn = (req, res, next) => {
+  if(req.isAuthenticated())
+    next();
+  else
+    res.redirect('/login');
+}
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -11,7 +11,7 @@
           <p class="text-white fs-2 left-box-title">What I
             Watched</p>
           <div class="featured-image mb-3">
-            <img src="img/login.svg" class="img-fluid left-box-img">
+            <img src="../public/images/static/login.svg" class="img-fluid left-box-img">
           </div>
           <small class="text-white text-wrap text-center left-box-subtitle">
             Accedi a tutte le funzioni della nostra
@@ -27,11 +27,11 @@
               <h2>Bentornato</h2>
               <p>Effettua qui il login</p>
             </div>
-
+          <form method="POST" action="/sessions" id="login-form">
             <div class="input-group mb-3">
               <span class="input-group-text">&nbsp;@ </span>
               <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInputGroup1" placeholder="Email">
+                <input type="email" name="username" class="form-control" id="floatingInputGroup1" placeholder="Email">
                 <label for="floatingInputGroup1">Email</label>
               </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="input-group mb-3">
               <span class="input-group-text">🔑</span>
               <div class="form-floating">
-                <input type="password" class="form-control" id="floatingInputGroup1" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="floatingInputGroup1" placeholder="Password">
                 <label for="floatingInputGroup1">Password</label>
               </div>
             </div>
@@ -57,7 +57,7 @@
             <div class="input-group mb-3">
               <button type="submit" class="btn btn-lg btn-primary w-100 fs-6">Login</button>
             </div>
-
+          </form>
             <div class="row">
               <small>Non hai un account? <a href="Registrazione.html">Iscriviti</a></small>
             </div>

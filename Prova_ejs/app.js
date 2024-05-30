@@ -26,6 +26,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  //store: new FileStore(), // by default, Passport uses a MemoryStore to keep track of the sessions - if you want to use this, launch nodemon with the option: --ignore sessions/
+  secret: 'a secret sentence not to share with anybody and anywhere, used to sign the session ID cookie',
+  resave: false,
+  saveUninitialized: false 
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 passport.use(new LocalStrategy(
   function(username, password, done) {
     userDao.getUser(username, password).then(({user, check}) => {
@@ -50,13 +60,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-app.use(session({
-  //store: new FileStore(), // by default, Passport uses a MemoryStore to keep track of the sessions - if you want to use this, launch nodemon with the option: --ignore sessions/
-  secret: 'a secret sentence not to share with anybody and anywhere, used to sign the session ID cookie',
-  resave: false,
-  saveUninitialized: false 
-}));
-
 const isLoggedIn = (req, res, next) => {
   if(req.isAuthenticated())
     next();
@@ -64,8 +67,8 @@ const isLoggedIn = (req, res, next) => {
     res.redirect('/login');
 }
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use('/', filmRouter); // Monta il router per i film
+app.use('/', sessionRouter); // Monta il router per le sessioni
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,7 +4,7 @@ const dao = require('../models/contenuto-dao');
 
 router.get('/', function(req, res, next){
     dao.getAllFilms().then((courses) =>{
-        res.render('films', {title: 'Film', films});
+        res.render('login');
     });
 });
 

@@ -39,3 +39,17 @@ exports.getUser = function(email, password) {
       });
   });
 };
+
+exports.createUser = function(email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine) {
+    return new Promise(async (resolve, reject) => {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const sql = 'INSERT INTO utente (email, Nome, Cognome, Data_nascita, Nome_utente, Password, Tipologia, profiloImmagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+      db.run(sql, [email, nome, cognome, dataDiNascita, nomeUtente, hashedPassword, tipoUtente, profiloImmagine], function(err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(this.lastID); // ritorna l'id del nuovo utente creato
+        }
+      });
+    });
+  };

@@ -3,7 +3,7 @@
 
 <head>
     <title>WIW - What I Watched</title>
-    <link rel="shortcut icon" href="img/popcorn.png" />
+    <link rel="shortcut icon" href="/images/static/popcorn.png" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -27,7 +27,7 @@
                         <p class="text-white fs-2 text-center left-box-title">What I
                             Watched</p>
                         <div class="featured-image mb-3">
-                            <img src="img/Interstellar.jpg" class="img-fluid rounded-4 left-box-img-visual">
+                            <img src="" class="img-fluid rounded-4 left-box-img-visual">
                         </div>
                     </div>
                     <!-- Fine contenitore sinsitro -->
@@ -64,37 +64,37 @@
 
                         <div class="row align-items-center">
                             <div class="header-text mb-4 text-center">
-                                <h2>Interstellar</h2>
+                                <h2><%= contenuto.titolo %></h2>
                             </div>
 
                             <div class="text-center film-serie-check mb-3">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="inlineRadio1" value="option1" checked disabled>
-                                    <label class="form-check-label" for="inlineRadio1"><b>Film</b></label>
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                    id="inlineRadio1" value="film" <%= contenuto.tipologia === 'film' ? 'checked' : '' %> disabled>
+                                  <label class="form-check-label" for="inlineRadio1"><b>Film</b></label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="inlineRadio2" value="option2" disabled>
-                                    <label class="form-check-label" for="inlineRadio2">Serie TV</label>
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                    id="inlineRadio2" value="serieTV" <%= contenuto.tipologia === 'serieTV' ? 'checked' : '' %> disabled>
+                                  <label class="form-check-label" for="inlineRadio2">Serie TV</label>
                                 </div>
-                            </div>
+                              </div>
+                              
 
                             <div>
-                                <p><b>Genere:</b> Fantascienza</p>
-                                <p><b>Regista:</b> Christopher Nolan </p>
-                                <p><b>Attori:</b> Matthew McConaughey, Anne Hathaway, Michael Caine, John Lithgow,
-                                    Jessica Chastain, Casey
-                                    Affleck, Mackenzie Foy, Wes Bentley, Matt Damon, Timothée Chalamet, William Devane,
-                                    David Oyelowo, Bill
-                                    Irwin</p>
-                                <p><b>Data di uscita:</b> 5 Novembre 2014</p>
-                                <p><b>Durata:</b> 169 minuti</p>
-                                <p><b>Dove vederlo:</b> NOW TV</p>
-                                <p><b>Trama: </b>L'umanità è sull'orlo dell'estinzione e un gruppo di
-                                    astronauti viaggia attraverso un wormhole alla ricerca di
-                                    un altro pianeta abitabile.</p>
+                                <p><b>Genere:</b> <%= contenuto.genere %></p>
+                                <p><b>Regista:</b> <%= contenuto.registi %> </p>
+                                <p><b>Attori:</b> <%= contenuto.attori %></p>
+                                <p><b>Data di uscita:</b> <%= contenuto.data_uscita %></p>
+                                <p><b>Durata:</b> <%= contenuto.durata %> minuti</p>
+                                <p><b>Dove vederlo:</b> <%= contenuto.dove_vederlo %></p>
+                                <p><b>Trama: </b><%= contenuto.trama %></p>
+                                <% if (contenuto.tipologia === 'serieTV') { %>
+                                    <p><b>Numero di episodi:</b> <%= contenuto.num_episodi %></p>
+                                    <p><b>Numero di stagioni:</b> <%= contenuto.num_stagioni %></p>
+                                <% } %>
                             </div>
+                            
 
                             <!-- Pulsante per avere accesso ai commenti del contenuto -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -134,102 +134,15 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="ModalFilmLabel">Commenti: Interstellar</h1>
+                                            <h1 class="modal-title fs-5" id="ModalFilmLabel">Commenti: <%= contenuto.titolo  %></h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <ul class="list-group">
-
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-sm-2 text-center">
-                                                            <img src="img/Utente-1.png" class="img-commento"
-                                                                alt="profilo">
-                                                        </div>
-                                                        <div class="col-sm-8">
-                                                            <b>Commento di Utente 1:</b>
-                                                            Film molto bello
-                                                        </div>
-
-                                                        <!-- Tasto per eliminare il commento, nel progetto finale sarà utilizzabile solo dall'utente che ha creato il commento e dagli utenti amministratori -->
-                                                        <div class="col-sm-2 text-end">
-                                                            <button class="btn btn-danger btn-sm"
-                                                                title="Elimina commento" id="deleteButton">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem"
-                                                                    height="1rem" fill="currentColor"
-                                                                    class="bi bi-trash" viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                    <path
-                                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-sm-2 text-center">
-                                                            <img src="img/Utente-4.png" class="img-commento"
-                                                                alt="profilo">
-                                                        </div>
-                                                        <div class="col-sm-8">
-                                                            <b>Commento di Utente 4:</b>
-                                                            Uno dei miei film preferiti
-                                                        </div>
-
-                                                        <!-- Tasto per eliminare il commento, nel progetto finale sarà utilizzabile solo dall'utente che ha creato il commento e dagli utenti amministratori -->
-                                                        <div class="col-sm-2 text-end">
-                                                            <button class="btn btn-danger btn-sm"
-                                                                title="Elimina commento" id="deleteButton">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem"
-                                                                    height="1rem" fill="currentColor"
-                                                                    class="bi bi-trash" viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                    <path
-                                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-sm-2 text-center">
-                                                            <img src="img/Utente-134.png" class="img-commento"
-                                                                alt="profilo">
-                                                        </div>
-                                                        <div class="col-sm-8">
-                                                            <b>Commento di Utente 134:</b>
-                                                            Un film che sa regalare momenti di emozione intensa, una
-                                                            colonna sonora bellissima, immagini
-                                                            che
-                                                            rimangono nella memoria. Punto debole, personalmente, la
-                                                            sceneggiatura un po' troppo
-                                                            pretenziosa
-                                                            in certi punti.
-                                                        </div>
-
-                                                        <!-- Tasto per eliminare il commento, nel progetto finale sarà utilizzabile solo dall'utente che ha creato il commento e dagli utenti amministratori -->
-                                                        <div class="col-sm-2 text-end">
-                                                            <button class="btn btn-danger btn-sm"
-                                                                title="Elimina commento" id="deleteButton">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem"
-                                                                    height="1rem" fill="currentColor"
-                                                                    class="bi bi-trash" viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                    <path
-                                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                <% comments.forEach((comment) => { %>
+                                                    <%- include('commento', {comment}); -%>              
+                                                  <% }); %>
                                             </ul>
                                         </div>
                                         <div class="modal-footer">

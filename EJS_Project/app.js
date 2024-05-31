@@ -5,20 +5,33 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const multer = require('multer');
 const userDao = require('./models/user-dao.js');
+const contentDao = require('./models/content-dao.js');
+
 var app = express();
 
-const storage = multer.diskStorage({
+// Configurazione storage per multer
+const storage1 = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images/profile'); // Salva i file nella cartella public/images/profile
+    cb(null, 'public/images/profile');
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Usa la data corrente come nome del file
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 
-const upload = multer({ storage: storage });
+const storage2 = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images/poster');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
 
-// view engine setup
+const upload1 = multer({ storage: storage1 });
+const upload2 = multer({ storage: storage2 });
+
+// Configurazione view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -28,6 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routing
 app.get('/', (req, res) => {
   res.render('home', { title: 'Home', page: 'home' });
 });
@@ -44,9 +58,9 @@ app.get('/registrazione', (req, res) => {
   res.render('registrazione');
 });
 
-app.post('/registrazione', upload.single('profiloImmagine'), async (req, res) => {
+app.post('/registrazione', upload1.single('profiloImmagine'), async (req, res) => {
   const { email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente } = req.body;
-  const profiloImmagine = req.file ? req.file.filename : null; // Ottiene il nome del file caricato
+  const profiloImmagine = req.file ? req.file.filename : null;
 
   try {
     const userId = await userDao.createUser(email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine);
@@ -73,13 +87,54 @@ app.get('/aggiungi_contenuto', (req, res) => {
   res.render('aggiungi_contenuto');
 });
 
-app.get('/profilo', (req, res) => {
-  res.render('profilo');
+app.get('/profilo/:Nome_utente', async (req, res) => {
+  const nomeUtente = req.params.Nome_utente;
+  try {
+    const result = await userDao.getUserByUsername(nomeUtente);
+    if (result.error) {
+      res.status(404).send(result.error);
+    } else {
+      res.render('profilo', { profilo: result });
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
+
 
 app.get('/visualizza_contenuto', (req, res) => {
   res.render('visualizza_contenuto');
 });
+
+app.get('/visualizza_contenuto/:Titolo', async (req, res) => {
+  const titolo = req.params.Titolo;
+  try {
+    const result = await contentDao.getContentByTitolo(titolo);
+    const commenti = await contentDao.getAllComments(titolo);
+    if (result.error) {
+      res.status(404).send(result.error);
+    } else {
+      res.render('visualizza_contenuto', { contenuto: result, comments: commenti });
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
+app.post('/aggiungi_contenuto', upload2.single('poster'), async (req, res) => {
+  const { tipoContenuto, Titolo, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama } = req.body;
+  const poster = req.file ? req.file.filename : null;
+
+  try {
+    const contentTitolo = await contentDao.createContent(tipoContenuto, Titolo, poster, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama);
+    res.redirect(`/visualizza_contenuto/${contentTitolo}`);
+  } catch (error) {
+    console.error('Error during content creation', error);
+    res.status(500).send('Errore durante l\'aggiunta del contenuto');
+  }
+});
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

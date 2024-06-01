@@ -27,7 +27,8 @@
                         <p class="text-white fs-2 text-center left-box-title">What I
                             Watched</p>
                         <div class="featured-image mb-3">
-                            <img src="/images/poster/<%= contenuto.poster  %>" class="img-fluid rounded-4 left-box-img-visual">
+                            <img src="/images/poster/<%= contenuto.poster  %>"
+                                class="img-fluid rounded-4 left-box-img-visual">
                         </div>
                     </div>
                     <!-- Fine contenitore sinsitro -->
@@ -64,37 +65,59 @@
 
                         <div class="row align-items-center">
                             <div class="header-text mb-4 text-center">
-                                <h2><%= contenuto.titolo %></h2>
+                                <h2>
+                                    <%= contenuto.titolo %>
+                                </h2>
                             </div>
 
                             <div class="text-center film-serie-check mb-3">
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                    id="inlineRadio1" value="film" <%= contenuto.tipologia === 'film' ? 'checked' : '' %> disabled>
-                                  <label class="form-check-label" for="inlineRadio1"><b>Film</b></label>
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio1" value="film" <%=contenuto.tipologia==='film' ? 'checked' : ''
+                                        %> disabled>
+                                    <label class="form-check-label" for="inlineRadio1"><b>Film</b></label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                    id="inlineRadio2" value="serieTV" <%= contenuto.tipologia === 'serieTV' ? 'checked' : '' %> disabled>
-                                  <label class="form-check-label" for="inlineRadio2">Serie TV</label>
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio2" value="serieTV" <%=contenuto.tipologia==='serieTV' ? 'checked'
+                                        : '' %> disabled>
+                                    <label class="form-check-label" for="inlineRadio2">Serie TV</label>
                                 </div>
-                              </div>
-                              
+                            </div>
+
 
                             <div>
-                                <p><b>Genere:</b> <%= contenuto.genere %></p>
-                                <p><b>Regista:</b> <%= contenuto.registi %> </p>
-                                <p><b>Attori:</b> <%= contenuto.attori %></p>
-                                <p><b>Data di uscita:</b> <%= contenuto.data_uscita %></p>
-                                <p><b>Durata:</b> <%= contenuto.durata %> minuti</p>
-                                <p><b>Dove vederlo:</b> <%= contenuto.dove_vederlo %></p>
-                                <p><b>Trama: </b><%= contenuto.trama %></p>
-                                <% if (contenuto.tipologia === 'serieTV') { %>
-                                    <p><b>Numero di episodi:</b> <%= contenuto.num_episodi %></p>
-                                    <p><b>Numero di stagioni:</b> <%= contenuto.num_stagioni %></p>
-                                <% } %>
+                                <p><b>Genere:</b>
+                                    <%= contenuto.genere %>
+                                </p>
+                                <p><b>Regista:</b>
+                                    <%= contenuto.registi %>
+                                </p>
+                                <p><b>Attori:</b>
+                                    <%= contenuto.attori %>
+                                </p>
+                                <p><b>Data di uscita:</b>
+                                    <%= contenuto.data_uscita %>
+                                </p>
+                                <p><b>Durata:</b>
+                                    <%= contenuto.durata %> minuti
+                                </p>
+                                <% if (contenuto.tipologia==='serieTV' ) { %>
+                                    <p><b>Numero di stagioni:</b>
+                                        <%= contenuto.num_stagioni %>
+                                    </p>
+                                    <p><b>Numero di episodi:</b>
+                                        <%= contenuto.num_episodi %>
+                                    </p>
+                                    <% } %>
+                                        <p><b>Dove vederlo:</b>
+                                            <%= contenuto.dove_vederlo %>
+                                        </p>
+                                        <p><b>Trama: </b>
+                                            <%= contenuto.trama %>
+                                        </p>
                             </div>
-                            
+
 
                             <!-- Pulsante per avere accesso ai commenti del contenuto -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -134,15 +157,17 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="ModalFilmLabel">Commenti: <%= contenuto.titolo  %></h1>
+                                            <h1 class="modal-title fs-5" id="ModalFilmLabel">Commenti: <%=
+                                                    contenuto.titolo %>
+                                            </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <ul class="list-group">
-                                                <% comments.forEach((comment) => { %>
-                                                    <%- include('commento', {comment}); -%>              
-                                                  <% }); %>
+                                                <% comments.forEach((comment)=> { %>
+                                                    <%- include('commento', {comment}); -%>
+                                                        <% }); %>
                                             </ul>
                                         </div>
                                         <div class="modal-footer">

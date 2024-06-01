@@ -1,20 +1,19 @@
 <li class="list-group-item">
     <div class="row">
         <div class="col-sm-2 text-center">
-            <img src="/images/profile/<%= comment.profiloImmagine  %>" class="img-commento"
-                alt="profilo">
+            <a href="/profilo/<%= comment.username  %>">
+                <img src="/images/profile/<%= comment.profiloImmagine  %>" class="img-commento" alt="profilo">
+            </a>
         </div>
         <div class="col-sm-8">
-            <b>Commento di <%= comment.username  %>:</b>
+            <b>Commento di <%= comment.username %>:</b>
             <%= comment.commento %>
         </div>
 
         <!-- Tasto per eliminare il commento, nel progetto finale sarà utilizzabile solo dall'utente che ha creato il commento e dagli utenti amministratori -->
         <div class="col-sm-2 text-end">
-            <button class="btn btn-danger btn-sm"
-                title="Elimina commento" id="deleteButton">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1rem"
-                    height="1rem" fill="currentColor"
+            <button class="btn btn-danger btn-sm" title="Elimina commento" id="deleteButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor"
                     class="bi bi-trash" viewBox="0 0 16 16">
                     <path
                         d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />

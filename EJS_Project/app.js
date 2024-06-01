@@ -7,29 +7,20 @@ const multer = require('multer');
 const userDao = require('./models/user-dao.js');
 const contentDao = require('./models/content-dao.js');
 
+
 var app = express();
 
-// Configurazione storage per multer
-const storage1 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/profile');
+const profileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'public', 'images', 'profile'));
   },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix);
   }
 });
 
-const storage2 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/poster');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
-const upload1 = multer({ storage: storage1 });
-const upload2 = multer({ storage: storage2 });
+const profileUpload = multer({ storage: profileStorage });
 
 // Configurazione view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -41,13 +32,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Importa il contentRouter
+const contentRouter = require('./routes/contentRouter');
+
 // Routing
-app.get('/', (req, res) => {
-  res.render('home', { title: 'Home', page: 'home' });
+app.get('/', async (req, res) => {
+  try {
+    const ultimeUscite = await contentDao.getUltimeUscite(3);
+    const top3Contenuti = await contentDao.getTopContenuti(3);
+    res.render('home', { title: 'Home', page: 'home', ultimeUscite: ultimeUscite, top3: top3Contenuti });
+  } catch (error) {
+    console.error('Error during fetching homepage', error);
+    res.status(500).send('Errore durante il recupero della homepage');
+  }
 });
 
-app.get('/home', (req, res) => {
-  res.render('home', { title: 'Home', page: 'home' });
+app.get('/home', async (req, res) => {
+  try {
+    const ultimeUscite = await contentDao.getUltimeUscite(3);
+    const top3Contenuti = await contentDao.getTopContenuti(3);
+    res.render('home', { title: 'Home', page: 'home', ultimeUscite: ultimeUscite, top3: top3Contenuti });
+  } catch (error) {
+    console.error('Error during fetching homepage', error);
+    res.status(500).send('Errore durante il recupero della homepage');
+  }
 });
 
 app.get('/login', (req, res) => {
@@ -58,33 +66,8 @@ app.get('/registrazione', (req, res) => {
   res.render('registrazione');
 });
 
-app.post('/registrazione', upload1.single('profiloImmagine'), async (req, res) => {
-  const { email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente } = req.body;
-  const profiloImmagine = req.file ? req.file.filename : null;
-
-  try {
-    const userId = await userDao.createUser(email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine);
-    res.redirect('/login');
-  } catch (error) {
-    console.error('Error during user registration', error);
-    res.status(500).send('Errore durante la registrazione');
-  }
-});
-
-app.get('/film', (req, res) => {
-  res.render('contenuti', { title: 'FILM', page: 'film' });
-});
-
-app.get('/serieTV', (req, res) => {
-  res.render('contenuti', { title: 'SERIE TV', page: 'serieTV' });
-});
-
 app.get('/contatti', (req, res) => {
   res.render('contatti', { title: 'Contatti', page: 'contatti' });
-});
-
-app.get('/aggiungi_contenuto', (req, res) => {
-  res.render('aggiungi_contenuto');
 });
 
 app.get('/profilo/:Nome_utente', async (req, res) => {
@@ -101,40 +84,21 @@ app.get('/profilo/:Nome_utente', async (req, res) => {
   }
 });
 
+app.post('/registrazione', profileUpload.single('profiloImmagine'), async (req, res) => {
+  const { email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente } = req.body;
+  const profiloImmagine = req.file ? req.file.filename : null;
 
-app.get('/visualizza_contenuto', (req, res) => {
-  res.render('visualizza_contenuto');
-});
-
-app.get('/visualizza_contenuto/:Titolo', async (req, res) => {
-  const titolo = req.params.Titolo;
   try {
-    const result = await contentDao.getContentByTitolo(titolo);
-    const commenti = await contentDao.getAllComments(titolo);
-    if (result.error) {
-      res.status(404).send(result.error);
-    } else {
-      res.render('visualizza_contenuto', { contenuto: result, comments: commenti });
-    }
+    const userId = await userDao.createUser(email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine);
+    res.redirect('/login');
   } catch (error) {
-    res.status(500).send(error);
+    console.error('Error during user registration', error);
+    res.status(500).send('Errore durante la registrazione');
   }
 });
 
-
-app.post('/aggiungi_contenuto', upload2.single('poster'), async (req, res) => {
-  const { tipoContenuto, Titolo, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama } = req.body;
-  const poster = req.file ? req.file.filename : null;
-
-  try {
-    const contentTitolo = await contentDao.createContent(tipoContenuto, Titolo, poster, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama);
-    res.redirect(`/visualizza_contenuto/${contentTitolo}`);
-  } catch (error) {
-    console.error('Error during content creation', error);
-    res.status(500).send('Errore durante l\'aggiunta del contenuto');
-  }
-});
-
+// Usa il contentRouter per le rotte dei contenuti
+app.use('/', contentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

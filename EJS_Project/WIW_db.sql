@@ -31,8 +31,9 @@ CREATE TABLE profilo (
     id_profilo INTEGER PRIMARY KEY AUTOINCREMENT,
     utente TEXT,
     contenuto TEXT,
-    FOREIGN KEY(utente) REFERENCES utente(email),
-    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo)
+    UNIQUE(utente, contenuto),
+    FOREIGN KEY(utente) REFERENCES utente(email) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Creazione tabella rating
@@ -44,21 +45,24 @@ CREATE TABLE rating (
         voto >= 1
         AND voto <= 5
     ),
-    FOREIGN KEY(utente) REFERENCES utente(email),
-    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo)
+        UNIQUE(utente, contenuto),
+    FOREIGN KEY(utente) REFERENCES utente(email) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Creazione tabella commenti
 CREATE TABLE commenti (
     id_commento INTEGER PRIMARY KEY AUTOINCREMENT,
     utente TEXT,
     contenuto TEXT,
     commento TEXT NOT NULL,
-    FOREIGN KEY(utente) REFERENCES utente(email),
-    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo)
+    FOREIGN KEY(utente) REFERENCES utente(email) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO commenti(utente, contenuto, commento) 
+INSERT INTO commenti(utente, contenuto, commento)
 VALUES ('Test', 'Interstellar', 'Uno dei migliori film mai fatti.');
 
-DELETE FROM contenuto WHERE Titolo='Prova2';
+INSERT INTO rating(utente, contenuto, voto)
+VALUES ('Test', 'Interstellar', 5);
+
+DELETE FROM rating;

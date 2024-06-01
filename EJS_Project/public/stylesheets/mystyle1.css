@@ -155,7 +155,7 @@
 #titoli-herosection {
   color: white;
   position: relative;
-  margin-top: 10rem;
+  margin-top: 8rem;
   font-weight: 1000;
 }
 
@@ -208,6 +208,7 @@
 #logo:hover #hover-logo {
   display: inline-block;
 }
+
 
 #card-section-top-3 {
   margin-top: -5rem;

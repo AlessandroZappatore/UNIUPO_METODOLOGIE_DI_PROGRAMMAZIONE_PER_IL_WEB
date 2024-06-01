@@ -27,77 +27,31 @@
               <div class="col-12 text-center">
                 <h1 id="titoli-herosection">ULTIME USCITE</h1>
               </div>
-    
-              <div class="col-md-4">
-                <div class="card mx-auto">
-                  <div class="card-content">
-                    <img src="" alt="" />
-                  </div>
-                  <div class="second-content">
-                    <div class="card-inner"></div>
-                    <div class="text-container overflow-auto">
-                      <h3>Kung fu panda 4</h3>
-                      <p>Regista: Mike Mitchell</p>
-                      <p>Anno: 2024</p>
-                      <p>Genere: Animazione</p>
-                      <p>
-                        Po è destinato a diventare il nuovo leader spirituale della Valle della Pace, ma prima di poterlo
-                        fare, deve trovare un successore per diventare il nuovo Guerriero Drago. Sembra trovarne uno in
-                        Zh en, una volpe con molte abilità promettenti ma a cui non piace l'idea che Po lo alleni.
-                      </p>
-                      <a href="#" class="btn btn-primary btn-altro">Altro</a>
+              <% ultimeUscite.forEach((uscita) => { %>
+                <div class="col-md-4">
+                  <div class="card mx-auto">
+                    <div class="card-content">
+                      <img src="/images/poster/<%= uscita.poster  %>" alt="<%= uscita.Titolo %>" />
+                    </div>
+                    <div class="second-content">
+                      <div class="card-inner"></div>
+                      <div class="text-container overflow-auto">
+                        <h3><%= uscita.Titolo %></h3>
+                        <p>Regista: <%= uscita.Registi %></p>
+                        <p>Anno: <%= uscita.Data_Uscita %></p>
+                        <p>Genere: <%= uscita.Genere %></p>
+                        <p><%= uscita.Trama %></p>
+                        <a href="/visualizza_contenuto/<%= uscita.Titolo  %>" class="btn btn-primary btn-altro">Altro</a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-    
-              <div class="col-md-4">
-                <div class="card mx-auto">
-                  <div class="card-content">
-                    <img src="" alt="" />
-                  </div>
-                  <div class="second-content">
-                    <div class="text-container overflow-auto">
-                      <h3>Oppenheimer</h3>
-                      <p>Regista: Christopher Nolan</p>
-                      <p>Anno: 2023</p>
-                      <p>Genere: Storia</p>
-                      <p>
-                        La storia del ruolo di J. Robert Oppenheimer, i quali studi condussero alle scoperte legate alla
-                        bomba atomica, con il conseguente utilizzo durante le stragi di Hiroshima e Nagasaki durante la
-                        Seconda Guerra Mondiale.
-                      </p>
-                      <a href="#" class="btn btn-primary btn-altro">Altro</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-md-4">
-                <div class="card mx-auto">
-                  <div class="card-content">
-                    <img src="" alt="" />
-                  </div>
-                  <div class="second-content">
-                    <div class="text-container overflow-auto">
-                      <h3>Barbie</h3>
-                      <p>Regista: Greta Gerwig</p>
-                      <p>Anno: 2023</p>
-                      <p>Genere: Commedia</p>
-                      <p>
-                        Vivere a Barbie Land significa essere perfetti in un luogo perfetto. A meno che tu non stia
-                        attraversando una crisi esistenziale. Oppure tu sia un Ken.
-                      </p>
-                      <a href="#" class="btn btn-primary btn-altro">Altro</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <% }); %>
             </div>
           </div>
         </section>
         <!-- Fine ultime uscite -->
-    
+        
         <!-- Inizio Top 3 -->
         <section class="card-section" id="card-section-top-3">
           <div class="container">
@@ -105,74 +59,26 @@
               <div class="col-12 text-center">
                 <h1 id="titoli-herosection">TOP 3</h1>
               </div>
-    
-              <div class="col-md-4">
-                <div class="card mx-auto">
-                  <div class="card-content">
-                    <img src="" alt="" />
-                  </div>
-                  <div class="second-content">
-                    <div class="card-inner"></div>
-                    <div class="text-container overflow-auto">
-                      <h3>Interstellar</h3>
-                      <p>Regista: Christopher Nolan</p>
-                      <p>Anno: 2014</p>
-                      <p>Genere: Fantascienza</p>
-                      <p>
-                        L'umanità è sull'orlo dell'estinzione e un gruppo di
-                        astronauti viaggia attraverso un wormhole alla ricerca di
-                        un altro pianeta abitabile.
-                      </p>
-                      <a href="Visualizza_Film.html" class="btn btn-primary btn-altro">Altro</a>
+              <% top3.forEach((contenuto) => { %>
+                <div class="col-md-4">
+                  <div class="card mx-auto">
+                    <div class="card-content">
+                      <img src="/images/poster/<%= contenuto.poster  %>" alt="<%= contenuto.Titolo %>" />
+                    </div>
+                    <div class="second-content">
+                      <div class="card-inner"></div>
+                      <div class="text-container overflow-auto">
+                        <h3><%= contenuto.Titolo %></h3>
+                        <p>Regista: <%= contenuto.Registi %></p>
+                        <p>Anno: <%= contenuto.Data_Uscita %></p>
+                        <p>Genere: <%= contenuto.Genere %></p>
+                        <p><%= contenuto.Trama %></p>
+                        <a href="/visualizza_contenuto/<%= contenuto.Titolo  %>" class="btn btn-primary btn-altro">Altro</a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-    
-              <div class="col-md-4">
-                <div class="card mx-auto">
-                  <div class="card-content">
-                    <img src="" alt="" />
-                  </div>
-                  <div class="second-content">
-                    <div class="text-container overflow-auto">
-                      <h3>Avengers: Endgame</h3>
-                      <p>Regista: Anthony Russo, Joe Russo</p>
-                      <p>Anno: 2019</p>
-                      <p>Genere: Azione</p>
-                      <p>
-                        Dopo che il terribile corso degli eventi messi in moto da Thanos ha spazzato via la metà
-                        dell'universo e dimezzato i ranghi degli Avengers, i sopravvissuti e i loro alleati devono riunirsi
-                        per l'assalto finale, cercando di ripristinare l'armonia.
-                      </p>
-                      <a href="#" class="btn btn-primary btn-altro">Altro</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-md-4">
-                <div class="card mx-auto">
-                  <div class="card-content">
-                    <img src="" alt="" />
-                  </div>
-                  <div class="second-content">
-                    <div class="text-container overflow-auto">
-                      <h3>Spider-Man: No Way Home</h3>
-                      <p>Regista: Jon Watts</p>
-                      <p>Anno: 2021</p>
-                      <p>Genere: Azione</p>
-                      <p>Per la prima volta, viene rivelata l'identità dell'Uomo Ragno, portando le sue responsabilità di
-                        Supereroe in conflitto con la sua vita normale e mettendo a rischio le persone a cui tiene di più.
-                        Quando chiede l'aiuto del Doctor Strange per ripristinare il suo segreto, l'incantesimo squarcia un
-                        buco nel loro mondo, liberando i cattivi più potenti che l'Uomo Ragno abbia mai dovuto combattere in
-                        qualsiasi universo.
-                      </p>
-                      <a href="#" class="btn btn-primary btn-altro">Altro</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <% }); %>
             </div>
           </div>
         </section>

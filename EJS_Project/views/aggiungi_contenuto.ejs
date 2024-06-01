@@ -15,167 +15,167 @@
         crossorigin="anonymous"></script>
 </head>
 <%- include('navbar', {title: 'Aggiungi' , page: 'aggiungi_contenuto' }) %>
-    <section class="hero-section-contenuto">
+<section class="hero-section-contenuto">
 
-        <!-- Inizio contenitore aggiunta contenuti -->
-        <div class="container d-flex justify-content-center align-items-center min-vh-100">
-            <div class="row border rounded-5 p-3 bg-white shadow box-area-contenuto">
+    <!-- Inizio contenitore aggiunta contenuti -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area-contenuto">
 
-                <!-- Inizio contenitore sinistro-->
-                <div class="col-md-4 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
-                    <p class="text-white fs-2 left-box-title text-center">What I
-                        Watched</p>
-                    <div class="featured-image mb-3">
-                        <img src="/images/static/upload.svg" class="img-fluid left-box-img">
-                    </div>
-                    <small class="text-white text-wrap text-center left-box-subtitle">
-                        Aggiungi i nuovi film o serie TV che
-                        non sono ancora presenti nella nostra piattaforma</small>
+            <!-- Inizio contenitore sinistro-->
+            <div class="col-md-4 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
+                <p class="text-white fs-2 left-box-title text-center">What I
+                    Watched</p>
+                <div class="featured-image mb-3">
+                    <img src="/images/static/upload.svg" class="img-fluid left-box-img">
                 </div>
-                <!-- Fine contenitore sinistro-->
+                <small class="text-white text-wrap text-center left-box-subtitle">
+                    Aggiungi i nuovi film o serie TV che
+                    non sono ancora presenti nella nostra piattaforma</small>
+            </div>
+            <!-- Fine contenitore sinistro-->
 
-                <!-- Inizio contenitore Destro-->
-                <div class="col-md-8 right-box">
-                    <div class="row align-items-center">
+            <!-- Inizio contenitore Destro-->
+            <div class="col-md-8 right-box">
+                <div class="row align-items-center">
 
-                        <div class="header-text mb-4 text-center">
-                            <h2>Aggiungi un nuovo contenuto</h2>
+                    <div class="header-text mb-4 text-center">
+                        <h2>Aggiungi un nuovo contenuto</h2>
+                    </div>
+
+                    <!-- Check box film o serie TV -->
+                    <form action="/aggiungi_contenuto" method="post" enctype="multipart/form-data">
+
+                        <div class="text-center film-serie-check mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoContenuto" id="inlineRadio1"
+                                    value="film" checked>
+                                <label class="form-check-label" for="inlineRadio1">Film</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoContenuto" id="inlineRadio2"
+                                    value="serieTV">
+                                <label class="form-check-label" for="inlineRadio2">Serie TV</label>
+                            </div>
                         </div>
 
-                        <!-- Check box film o serie TV -->
-                        <form action="/aggiungi_contenuto" method="post">
-
-                            <div class="text-center film-serie-check mb-3">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="tipoContenuto" id="inlineRadio1"
-                                        value="film" checked>
-                                    <label class="form-check-label" for="inlineRadio1">Film</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="tipoContenuto" id="inlineRadio2"
-                                        value="serieTV">
-                                    <label class="form-check-label" for="inlineRadio2">Serie TV</label>
-                                </div>
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input type="text" name="Titolo" class="form-control" id="floatingInputGroup2"
+                                    placeholder="Titolo" required>
+                                <label for="floatingInputGroup2">Titolo</label>
                             </div>
+                        </div>
 
-                            <div class="input-group mb-3">
-                                <div class="form-floating">
-                                    <input type="text" name="Titolo" class="form-control" id="floatingInputGroup2"
-                                        placeholder="Titolo" required>
-                                    <label for="floatingInputGroup2">Titolo</label>
-                                </div>
+                        <select class="form-select mb-3" name="Genere" aria-label="Default select example"
+                            placeholder="Genere">
+                            <option selected>Genere</option>
+                            <option value="Commedia">Commedia</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Fantascienza">Fantascienza</option>
+                            <option value="Animazione">Animazione</option>
+                            <option value="Storia">Storia</option>
+                            <option value="Azione">Azione</option>
+                            <option value="Crime">Crime</option>
+                        </select>
+
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input type="text" name="Registi" class="form-control" id="floatingInputGroup2"
+                                    placeholder="Registi">
+                                <label for="floatingInputGroup2">Registi</label>
                             </div>
+                        </div>
 
-                            <select class="form-select mb-3" name="Genere" aria-label="Default select example"
-                                placeholder="Genere">
-                                <option selected>Genere</option>
-                                <option value="Commedia">Commedia</option>
-                                <option value="Fantasy">Fantasy</option>
-                                <option value="Fantascienza">Fantascienza</option>
-                                <option value="Animazione">Animazione</option>
-                                <option value="Storia">Storia</option>
-                                <option value="Azione">Azione</option>
-                                <option value="Crime">Crime</option>
-                            </select>
-
-                            <div class="input-group mb-3">
-                                <div class="form-floating">
-                                    <input type="text" name="Registi" class="form-control" id="floatingInputGroup2"
-                                        placeholder="Registi">
-                                    <label for="floatingInputGroup2">Registi</label>
-                                </div>
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input type="text" name="Attori" class="form-control" id="floatingInputGroup2"
+                                    placeholder="Attori">
+                                <label for="floatingInputGroup2">Attori</label>
                             </div>
+                        </div>
 
-                            <div class="input-group mb-3">
-                                <div class="form-floating">
-                                    <input type="text" name="Attori" class="form-control" id="floatingInputGroup2"
-                                        placeholder="Attori">
-                                    <label for="floatingInputGroup2">Attori</label>
-                                </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label">Data di uscita</label>
+                            <div>
+                                <input type="date" name="Data_uscita" class="form-control input-lg">
                             </div>
+                        </div>
 
-                            <div class="form-group mb-3">
-                                <label class="control-label">Data di uscita</label>
-                                <div>
-                                    <input type="date" name="Data_uscita" class="form-control input-lg">
-                                </div>
+                        <!-- Sezione che si attiva solo se è abilitato il check su serie TV -->
+                        <div class="form-floating mb-3">
+                            <input name="Num_stagioni" type="number" class="form-control" id="numero-stagioni"
+                                placeholder="Num_stagioni" disabled>
+                            <label for="numero-stagioni">&nbsp;&nbsp;&nbsp;Numero di stagioni</label>
+                        </div>
+
+                        <!-- Sezione che si attiva solo se è abilitato il check su serie TV -->
+                        <div class="form-floating mb-3">
+                            <input type="number" name="Num_episodi" class="form-control" id="numero-episodi"
+                                placeholder="Num_episodi" disabled>
+                            <label for="numero-episodi">&nbsp;&nbsp;&nbsp;Numero di episodi</label>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input type="number" name="Durata" class="form-control" id="floatingInputGroup2"
+                                    placeholder="Durata">
+                                <label for="floatingInputGroup2">Durata in minuti</label>
                             </div>
+                        </div>
 
-                            <!-- Sezione che si attiva solo se è abilitato il check su serie TV -->
-                            <div class="form-floating mb-3">
-                                <input name="Num_stagioni" type="number" class="form-control" id="numero-stagioni"
-                                    placeholder="Num_stagioni" disabled>
-                                <label for="numero-stagioni">&nbsp;&nbsp;&nbsp;Numero di stagioni</label>
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input type="text" name="Dove_vederlo" class="form-control" id="floatingInputGroup2"
+                                    placeholder="Dove_vederlo">
+                                <label for="floatingInputGroup2">Dove vederlo</label>
                             </div>
+                        </div>
 
-                            <!-- Sezione che si attiva solo se è abilitato il check su serie TV -->
-                            <div class="form-floating mb-3">
-                                <input type="number" name="Num_episodi" class="form-control" id="numero-episodi"
-                                    placeholder="Num_episodi" disabled>
-                                <label for="numero-episodi">&nbsp;&nbsp;&nbsp;Numero di episodi</label>
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <textarea class="form-control box-trama" name="Trama" style="height: 100px"
+                                    placeholder="Trama" id="floatingTextarea2" placeholder="Trama"></textarea>
+                                <label for="floatingInputGroup2">Una breve trama</label>
                             </div>
+                        </div>
 
-                            <div class="input-group mb-3">
-                                <div class="form-floating">
-                                    <input type="number" name="Durata" class="form-control" id="floatingInputGroup2"
-                                        placeholder="Durata">
-                                    <label for="floatingInputGroup2">Durata in minuti</label>
-                                </div>
-                            </div>
+                        <div class="mb-3 mx-auto">
+                            <label for="poster" class="form-label">Carica qui il poster del contenuto</label>
+                            <input class="form-control" type="file" id="poster" name="poster" required>
+                        </div>
 
-                            <div class="input-group mb-3">
-                                <div class="form-floating">
-                                    <input type="text" name="Dove_vederlo" class="form-control" id="floatingInputGroup2"
-                                        placeholder="Dove_vederlo">
-                                    <label for="floatingInputGroup2">Dove vederlo</label>
-                                </div>
-                            </div>
-
-                            <div class="input-group mb-3">
-                                <div class="form-floating">
-                                    <textarea class="form-control box-trama" name="Trama" style="height: 100px"
-                                        placeholder="Trama" id="floatingTextarea2" placeholder="Trama"></textarea>
-                                    <label for="floatingInputGroup2">Una breve trama</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 mx-auto">
-                                <label for="poster" class="form-label">Carica qui il poster del contenuto</label>
-                                <input class="form-control" type="file" id="poster" name="poster">
-                            </div>
-
-                            <div class="input-group mb-3">
-                                <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Crea</button>
-                            </div>
-                        </form>
+                        <div class="input-group mb-3">
+                            <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Crea</button>
+                        </div>
+                    </form>
 
 
-                    </div>
                 </div>
-                <!-- Fine contenitore Destro-->
             </div>
+            <!-- Fine contenitore Destro-->
         </div>
-        <!-- Fine contenitore aggiunta contenuti -->
+    </div>
+    <!-- Fine contenitore aggiunta contenuti -->
 
-    </section>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const radioButtons = document.querySelectorAll('input[name="tipoContenuto"]');
-            const stagioniInput = document.getElementById('numero-stagioni');
-            const episodiInput = document.getElementById('numero-episodi');
+</section>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const radioButtons = document.querySelectorAll('input[name="tipoContenuto"]');
+        const stagioniInput = document.getElementById('numero-stagioni');
+        const episodiInput = document.getElementById('numero-episodi');
 
-            radioButtons.forEach(function (button) {
-                button.addEventListener('change', function () {
-                    if (this.value === 'serieTV') {
-                        stagioniInput.disabled = false;
-                        episodiInput.disabled = false;
-                    } else {
-                        stagioniInput.disabled = true;
-                        episodiInput.disabled = true;
-                    }
-                });
+        radioButtons.forEach(function (button) {
+            button.addEventListener('change', function () {
+                if (this.value === 'serieTV') {
+                    stagioniInput.disabled = false;
+                    episodiInput.disabled = false;
+                } else {
+                    stagioniInput.disabled = true;
+                    episodiInput.disabled = true;
+                }
             });
         });
+    });
 
-    </script>
-    <%- include('footer'); -%>
+</script>
+<%- include('footer'); -%>

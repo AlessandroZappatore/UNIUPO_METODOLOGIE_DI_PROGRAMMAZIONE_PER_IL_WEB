@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const router = express.Router();
@@ -12,7 +12,7 @@ const posterStorage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
   }
 });
 
@@ -23,7 +23,7 @@ router.get('/film', async (req, res) => {
     const movies = await contentDao.getAllMovies();
     res.render('contenuti', { title: 'FILM', page: 'film', contents: movies });
   } catch (error) {
-    console.error('Error fetching homepage', error);
+    console.error('Error fetching film page', error);
     res.status(500).send('Error fetching film page');
   }
 });
@@ -33,7 +33,7 @@ router.get('/serieTV', async (req, res) => {
     const series = await contentDao.getAllSeries();
     res.render('contenuti', { title: 'SERIE TV', page: 'serieTV', contents: series });
   } catch (error) {
-    console.error('Error fetching homepage', error);
+    console.error('Error fetching serie TV page', error);
     res.status(500).send('Error fetching serie TV page');
   }
 });
@@ -53,6 +53,7 @@ router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
       res.render('visualizza_contenuto', { contenuto: result, comments: commenti });
     }
   } catch (error) {
+    console.error('Error fetching content by title:', error); // Log the error
     res.status(500).send(error);
   }
 });
@@ -64,6 +65,7 @@ router.get('/aggiungi_contenuto', (req, res) => {
 router.post('/aggiungi_contenuto', posterUpload.single('poster'), async (req, res) => {
   const { tipoContenuto, Titolo, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama } = req.body;
   const poster = req.file ? req.file.filename : null;
+
   if (!poster) {
     console.error('Poster upload failed');
     return res.status(400).send('Errore durante l\'upload del poster');
@@ -73,7 +75,7 @@ router.post('/aggiungi_contenuto', posterUpload.single('poster'), async (req, re
     const contentTitolo = await contentDao.createContent(tipoContenuto, Titolo, poster, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama);
     res.redirect(`/visualizza_contenuto/${contentTitolo}`);
   } catch (error) {
-    console.error('Error during content creation', error);
+    console.error('Error during content creation:', error); // Log the error
     res.status(500).send('Errore durante l\'aggiunta del contenuto');
   }
 });

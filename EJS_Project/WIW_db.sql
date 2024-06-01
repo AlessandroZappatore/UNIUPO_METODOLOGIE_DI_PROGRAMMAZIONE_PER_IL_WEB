@@ -1,29 +1,30 @@
--- Creazione tabella utente
 CREATE TABLE utente (
-    email TEXT PRIMARY KEY,
-    Nome TEXT NOT NULL,
-    Cognome TEXT NOT NULL,
-    Data_nascita DATE NOT NULL,
-    Nome_utente TEXT UNIQUE NOT NULL,
-    Tipologia TEXT NOT NULL, -- Cambiato da BOOLEAN a TEXT
-    Password TEXT NOT NULL,
-    profiloImmagine TEXT -- Aggiunto per gestire l'immagine del profilo
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    nome TEXT NOT NULL,
+    cognome TEXT NOT NULL,
+    data_nascita DATE NOT NULL,
+    nome_utente TEXT UNIQUE NOT NULL,
+    tipologia TEXT NOT NULL,
+    password TEXT NOT NULL,
+    profilo_immagine TEXT 
 );
 
 -- Creazione tabella contenuto
 CREATE TABLE contenuto (
-    Titolo TEXT PRIMARY KEY,
-    Tipologia TEXT NOT NULL, -- Cambiato da BOOLEAN a TEXT
-    Genere TEXT,
-    Registi TEXT,
-    Attori TEXT,
-    Data_Uscita DATE,
-    Num_stagioni INTEGER,
-    Num_episodi INTEGER,
-    Durata INTEGER,
-    Dove_vederlo TEXT,
-    Trama TEXT,
-    poster TEXT -- Aggiunto per gestire l'immagine del poster
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    titolo TEXT UNIQUE NOT NULL,
+    tipologia TEXT NOT NULL, 
+    genere TEXT,
+    registi TEXT,
+    attori TEXT,
+    data_uscita DATE,
+    num_stagioni INTEGER,
+    num_episodi INTEGER,
+    durata INTEGER,
+    dove_vederlo TEXT,
+    trama TEXT,
+    poster TEXT 
 );
 
 -- Creazione tabella profilo
@@ -33,7 +34,7 @@ CREATE TABLE profilo (
     contenuto TEXT,
     UNIQUE(utente, contenuto),
     FOREIGN KEY(utente) REFERENCES utente(email) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY(contenuto) REFERENCES contenuto(titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Creazione tabella rating
@@ -45,9 +46,9 @@ CREATE TABLE rating (
         voto >= 1
         AND voto <= 5
     ),
-        UNIQUE(utente, contenuto),
+    UNIQUE(utente, contenuto),
     FOREIGN KEY(utente) REFERENCES utente(email) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY(contenuto) REFERENCES contenuto(titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE commenti (
@@ -59,10 +60,5 @@ CREATE TABLE commenti (
     FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO commenti(utente, contenuto, commento)
-VALUES ('Test', 'Interstellar', 'Uno dei migliori film mai fatti.');
-
-INSERT INTO rating(utente, contenuto, voto)
-VALUES ('Test', 'Interstellar', 5);
-
-DELETE FROM rating;
+INSERT INTO commenti (utente, contenuto, commento)
+VALUES ('Utente 1', 'Interstellar', 'Uno dei migliori mai fatti.');

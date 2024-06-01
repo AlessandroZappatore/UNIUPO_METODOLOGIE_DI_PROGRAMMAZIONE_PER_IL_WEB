@@ -1,14 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+'use strict';
+
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const contentDao = require('./models/content-dao.js');
-const userDao = require('./models/user-dao.js'); // Importa userDao
+const userDao = require('./models/user-dao.js'); // Import userDao
 const contentRouter = require('./routes/contentRouter');
 const userRouter = require('./routes/userRouter');
 
-var app = express();
+const app = express();
 
 // Configurazione view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -20,11 +22,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.get('/', async (req, res) => {
   try {
-    const ultimeUscite = await contentDao.getUltimeUscite(3);
-    const top3Contenuti = await contentDao.getTopContenuti(3);
+    const ultimeUscite = await contentDao.getUltimeUscite();
+    const top3Contenuti = await contentDao.getTopContenuti();
     res.render('home', { title: 'Home', page: 'home', ultimeUscite: ultimeUscite, top3: top3Contenuti });
   } catch (error) {
     console.error('Error during fetching homepage', error);
@@ -32,10 +33,10 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.get('/home',async (req, res) => {
+app.get('/home', async (req, res) => {
   try {
-    const ultimeUscite = await contentDao.getUltimeUscite(3);
-    const top3Contenuti = await contentDao.getTopContenuti(3);
+    const ultimeUscite = await contentDao.getUltimeUscite();
+    const top3Contenuti = await contentDao.getTopContenuti();
     res.render('home', { title: 'Home', page: 'home', ultimeUscite: ultimeUscite, top3: top3Contenuti });
   } catch (error) {
     console.error('Error during fetching homepage', error);

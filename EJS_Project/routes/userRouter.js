@@ -45,4 +45,5 @@ router.post('/registrazione', profileUpload.single('profiloImmagine'), async (re
     }
 });
 
+
 module.exports = router;

@@ -15,9 +15,9 @@ exports.getUser = function(email, password) {
       } else {
         const user = {
           id: row.email, // Cambiato da row.id a row.email
-          username: row.Nome_utente // Cambiato da row.email a row.Nome_utente
+          username: row.nome_utente // Cambiato da row.email a row.Nome_utente
         };
-        const check = bcrypt.compareSync(password, row.Password);
+        const check = bcrypt.compareSync(password, row.password);
         resolve({ user, check });
       }
     });
@@ -28,16 +28,18 @@ exports.getUser = function(email, password) {
 exports.createUser = function(email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine) {
   return new Promise(async (resolve, reject) => {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const sql = 'INSERT INTO utente (email, Nome, Cognome, Data_nascita, Nome_utente, Password, Tipologia, profiloImmagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO utente (email, nome, cognome, data_nascita, nome_utente, password, tipologia, profilo_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     db.run(sql, [email, nome, cognome, dataDiNascita, nomeUtente, hashedPassword, tipoUtente, profiloImmagine], function(err) {
       if (err) {
+        console.error('Error inserting user:', err.message);
         reject(err);
       } else {
-        resolve(email); // Cambiato da this.lastEmail a email
+        resolve(email);
       }
     });
   });
 };
+
 
 // Funzione per ottenere un utente dal database tramite il nome utente
 exports.getUserByUsername = function(username) {
@@ -51,12 +53,12 @@ exports.getUserByUsername = function(username) {
       } else {
         const user = {
           email: row.email,
-          nome_utente: row.Nome_utente,
-          nome: row.Nome,
-          cognome: row.Cognome,
-          data_nascita: row.Data_nascita,
-          tipologia: row.Tipologia,
-          immagineProfilo: row.profiloImmagine
+          nome_utente: row.nome_utente,
+          nome: row.nome,
+          cognome: row.cognome,
+          data_nascita: row.data_nascita,
+          tipologia: row.tipologia,
+          immagineProfilo: row.profilo_immagine
         };
         resolve(user);
       }

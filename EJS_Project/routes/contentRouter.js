@@ -50,6 +50,7 @@ router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
     if (result.error) {
       res.status(404).send(result.error);
     } else {
+      console.log('Comments to be passed to view:', commenti);
       res.render('visualizza_contenuto', { contenuto: result, comments: commenti });
     }
   } catch (error) {
@@ -57,6 +58,7 @@ router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 
 router.get('/aggiungi_contenuto', (req, res) => {
   res.render('aggiungi_contenuto');
@@ -80,4 +82,15 @@ router.post('/aggiungi_contenuto', posterUpload.single('poster'), async (req, re
   }
 });
 
+router.post('/elimina-contenuto', async(req, res) => {
+  const {id} = req.body;
+
+  try{
+    await contentDao.deleteContent(id);
+    res.redirect('/home');
+  } catch(error){
+    console.error('Error fetching content by id:', error); // Log the error
+    res.status(500).send(error);
+  }
+});
 module.exports = router;

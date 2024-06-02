@@ -49,6 +49,30 @@ router.post('/registrazione', profileUpload.single('profiloImmagine'), async (re
         res.status(500).send('Errore durante la registrazione');
     }
 });
+
+router.post('/add-comment', async (req, res) => {
+    const { utente, contenuto, commento } = req.body;
+    
+    try {
+        await userDao.addComment(utente, contenuto, commento);
+        res.json({ message: 'Commento aggiunto con successo' });  // Modifica qui per restituire JSON
+    } catch (error) {
+        console.error('Errore nell\'aggiunta del commento:', error);
+        res.status(500).json({ message: 'Errore nell\'aggiunta del commento' });  // Modifica qui per restituire JSON
+    }
+});
+
   
+router.post('/mark-as-watched', async (req, res) => {
+    const { email, contenuto } = req.body;
+    
+    try {
+        await userDao.markAsWatched(email, contenuto);
+        res.send('Contenuto segnato come visto');
+    } catch (error) {
+        console.error('Errore nel salvataggio:', error);
+        res.status(500).send('Errore nel salvataggio');
+    }
+});
 
 module.exports = router;

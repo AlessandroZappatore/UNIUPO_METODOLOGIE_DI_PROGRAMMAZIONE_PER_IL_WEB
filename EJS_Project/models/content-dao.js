@@ -24,6 +24,7 @@ exports.getContentByTitolo = function (titolo) {
       else if (row === undefined) resolve({ error: 'Content not found.' });
       else {
         const content = {
+          id: row.id,
           titolo: row.titolo,
           tipologia: row.tipologia,
           genere: row.genere,
@@ -48,19 +49,21 @@ exports.getAllComments = function (titolo) {
     const sql = 'SELECT commenti.*, utente.profilo_immagine FROM commenti JOIN utente ON commenti.utente = utente.nome_utente WHERE commenti.contenuto = ?';
     db.all(sql, [titolo], (err, rows) => {
       if (err) {
+        console.error('Error fetching comments:', err);
         reject(err);
       } else {
         const comments = rows.map((e) => ({
           contenuto: e.contenuto,
           username: e.utente,
           commento: e.commento,
-          profiloImmagine: e.profilo_immagine // Aggiungiamo l'immagine del profilo
+          profiloImmagine: e.profilo_immagine
         }));
         resolve(comments);
       }
     });
   });
 };
+
 
 exports.getUltimeUscite = function () {
   return new Promise((resolve, reject) => {
@@ -111,6 +114,19 @@ exports.getAllSeries = function () {
         reject(err);
       } else {
         resolve(rows);
+      }
+    });
+  });
+};
+
+exports.deleteContent = function(id) {
+  return new Promise((resolve, reject) => {
+    const sql = 'DELETE FROM contenuto WHERE id = ?'; 
+    db.run(sql, [id], (err) => { 
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
       }
     });
   });

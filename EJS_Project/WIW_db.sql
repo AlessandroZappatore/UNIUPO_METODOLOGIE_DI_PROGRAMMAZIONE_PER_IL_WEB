@@ -56,14 +56,14 @@ CREATE TABLE commenti (
     utente TEXT,
     contenuto TEXT,
     commento TEXT NOT NULL,
-    FOREIGN KEY(utente) REFERENCES utente(email) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY(contenuto) REFERENCES contenuto(Titolo) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY(utente) REFERENCES utente(nome_utente) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(contenuto) REFERENCES contenuto(titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO commenti (utente, contenuto, commento)
-VALUES ('Utente 1', 'Interstellar', 'Uno dei migliori mai fatti.');
+VALUES ('Test', 'Interstellar', 'Film veramente bello');
 
 INSERT INTO profilo (utente, contenuto)
 VALUES ('utente1@gmail.com', 'Top Gun: Maverick');
 
-DELETE FROM contenuto WHERE id = '3';
+DROP TABLE commenti;

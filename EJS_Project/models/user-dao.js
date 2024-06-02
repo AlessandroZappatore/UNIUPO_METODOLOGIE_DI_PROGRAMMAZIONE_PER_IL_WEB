@@ -136,3 +136,31 @@ exports.getSerieUtente = function(email) {
     });
   });
 };
+
+exports.markAsWatched = function(email, contenuto) {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO profilo (utente, contenuto) VALUES (?, ?)';
+    db.run(sql, [email, contenuto], function(err) {
+      if (err) {
+        console.error('Error saving content:', err.message);
+        reject(err);
+      } else {
+        resolve(this.lastID);
+      }
+    });
+  });
+};
+
+exports.addComment = function(utente, contenuto, commento) {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO commenti (utente, contenuto, commento) VALUES (?, ?, ?)';
+    db.run(sql, [utente, contenuto, commento], function(err) {
+      if(err){
+        console.error('Error adding comment:', err.message);
+        reject(err);
+      } else{
+        resolve(this.lastID);
+      }
+    });
+  });
+};

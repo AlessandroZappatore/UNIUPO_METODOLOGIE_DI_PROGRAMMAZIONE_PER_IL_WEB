@@ -28,10 +28,11 @@ router.post('/sessions/updateUser/', function(req, res, next) {
     });
 });
 
-router.delete('/sessions/current', function (req, res, next) {
+router.delete('/sessions/current', function(req, res, next) {
     req.logout();
     res.end();
-  });
-  
+});
+
+
 
 module.exports = router;

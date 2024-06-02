@@ -2,8 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="/home" id="logo">
       <img src="/images/static/wiw-logo-red.png" alt="WIW logo" height="50em" id="normal-logo" />
-      <img src="/images/static/wiw-logo-black.png" alt="WIW logo hover" height="50em"
-        id="hover-logo" />
+      <img src="/images/static/wiw-logo-black.png" alt="WIW logo hover" height="50em" id="hover-logo" />
     </a>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -19,13 +18,13 @@
               <a class="nav-link mx-lg-2 <%= page === 'home' ? 'active' : '' %>" href="/home">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2 <%= page==='film' ? 'active' : ''%>" href="/film">Film</a>
+              <a class="nav-link mx-lg-2 <%= page === 'film' ? 'active' : '' %>" href="/film">Film</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2 <%= page==='serieTV' ? 'active' : ''%>" href="/serieTV">Serie TV</a>
+              <a class="nav-link mx-lg-2 <%= page === 'serieTV' ? 'active' : '' %>" href="/serieTV">Serie TV</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2 <%= page==='contatti' ? 'active' : ''%>" href="/contatti">Contatti</a>
+              <a class="nav-link mx-lg-2 <%= page === 'contatti' ? 'active' : '' %>" href="/contatti">Contatti</a>
             </li>
 
           </ul>
@@ -36,17 +35,32 @@
         </form>
 
       </div>
-
     </div>
 
-    <!-- Tasto provvisorio per accedere alla creazione di un nuovo contenuto, nel progetto finale verrà implementato in altro modo -->
-    <a href="/aggiungi_contenuto" class="add-button mx-lg-2">Aggiungi</a>
-    
-    <a href="/login" class="login-button">Login</a>
 
-    <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <% if (user) { %>
+      <% if (user.tipologia==='amministratore' ) { %>
+        <a href="/aggiungi_contenuto" class="add-button mx-lg-2">Aggiungi</a>
+        <% } %>
+
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <img src="/images/profile/<%= user.profilo_immagine %>" alt="Profile Picture" class="rounded-circle"
+                height="70">
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="/profilo/<%= user.nome_utente  %>">Profilo</a></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </div>
+          <% } else { %>
+            <a href="/login" class="login-button">Login</a>
+            <% } %>
+
+              <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
   </div>
 </nav>

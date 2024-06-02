@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
   <title>WIW - What I Watched</title>
   <link rel="shortcut icon" href="/images/static/popcorn.png" />
@@ -9,249 +8,111 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
   <link rel="stylesheet" href="/stylesheets/mystyle2.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-  crossorigin="anonymous"></script>
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </head>
-
 <body>
-    <%- include('navbar', {title: 'Profilo', page: 'profilo'}) %>
+  <%- include('navbar', {title: 'Profilo' , page: 'profilo' }) %>
     <section class="hero-section-registrazione">
-        <div class="container d-flex justify-content-center align-items-center min-vh-100">
-          <div class="row border rounded-5 p-3 bg-white shadow box-area-profilo">
-    
-            <!-- Inizio contenitore sinsitro -->
-            <div class="col-md-3 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
-              <p class="text-white fs-2 left-box-title">Profilo
-              </p>
-              <div class="featured-image mb-3">
-                <img src="/images/profile/<%= profilo.immagineProfilo %>" class="img-fluid left-box-img">
-              </div>
-              <small class="text-white text-wrap text-center left-box-subtitle">
-                Qui trovi tutti i contenuti che hai
-                aggiunto al tuo profilo</small>
+      <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area-profilo">
+
+          <!-- Inizio contenitore sinsitro -->
+          <div class="col-md-3 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
+            <p class="text-white fs-2 left-box-title">Profilo</p>
+            <div class="featured-image mb-3">
+              <img src="/images/profile/<%= profilo.immagineProfilo %>" class="img-fluid left-box-img">
             </div>
-            <!-- Fine contenitore sinistro -->
-    
-            <!-- Inizio contenitore destro -->
-            <div class="col-md-9 right-box">
-              <div class="row align-items-center">
-                <div class="header-text mb-4 d-flex justify-content-between align-items-center">
-                  <h2 class="mx-auto"> &nbsp &nbsp &nbsp<%= profilo.nome_utente %> </h2>
-                  <button class="btn btn-success btn-sm" title="Modifica Profilo" id="editButton">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                    </svg>
-                  </button>
-                </div>
-                
-    
-    
-                <h4>Numero di film visti: <span class="badge text-bg-info">3</span></h4>
-    
-                <!-- Carousel di card dei film visti dall'utente -->
-                <div id="carouselFilm" class="carousel slide">
-                  <div class="carousel-inner">
-    
-                    <!-- Prima pagina -->
-                    <div class="carousel-item active">
-                      <div class="cards-wrapper">
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/Interstellar.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/spiderman.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/avengers-endgame-journey-s-end-i122136.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-    
-                    <!-- Seconda pagina, ripetizione della prima pagina per vedere il funzionamento del carousel -->
-                    <div class="carousel-item">
-                      <div class="cards-wrapper">
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/Interstellar.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/Interstellar.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/Interstellar.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-    
-                    <!-- Terza pagina, ripetizione della prima pagina per vedere il funzionamento del carousel -->
-                    <div class="carousel-item">
-                      <div class="cards-wrapper">
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/Interstellar.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/Interstellar.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Film.html">
-                            <div class="card-content">
-                              <img src="img/Interstellar.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-    
-                  <!-- Tasti carousel film -->
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselFilm" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselFilm" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                  </button>
-                </div>
-    
-                <h4 style="margin-top: 2rem;">Numero di film visti: <span class="badge text-bg-info">10</span></h4>
-    
-                <!-- Carousel di card delle serie TV viste dall'utente -->
-                <div id="carouselSerie" class="carousel slide">
-    
-                  <!-- Prima pagina -->
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <div class="cards-wrapper">
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/stranger-things.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/griffin.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/simpson.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-    
-                    <!-- Seconda pagina, ripetizione della prima pagina per vedere il funzionamento del carousel -->
-                    <div class="carousel-item">
-                      <div class="cards-wrapper">
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/stranger-things.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/stranger-things.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/stranger-things.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-    
-                    <!-- Terza pagina, ripetizione della prima pagina per vedere il funzionamento del carousel -->
-                    <div class="carousel-item">
-                      <div class="cards-wrapper">
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/stranger-things.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/stranger-things.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                        <div class="card mx-auto">
-                          <a href="Visualizza_Serie.html">
-                            <div class="card-content">
-                              <img src="img/stranger-things.jpg" alt="Interstellar" />
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-    
-                  <!-- Tasti carousel serie TV -->
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselSerie" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselSerie" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Fine contenitore destro -->
-    
+            <small class="text-white text-wrap text-center left-box-subtitle">
+              Qui trovi tutti i contenuti che hai aggiunto al tuo profilo
+            </small>
           </div>
-        </div>
-    
-      </section>
-      <%- include('footer'); -%>
+          <!-- Fine contenitore sinistro -->
+
+          <!-- Inizio contenitore destro -->
+          <div class="col-md-9 right-box">
+            <div class="row align-items-center">
+              <div class="header-text mb-4 d-flex justify-content-between align-items-center">
+                <h2 class="mx-auto"> &nbsp &nbsp &nbsp<%= profilo.nome_utente %></h2>
+                <button class="btn btn-success btn-sm" title="Modifica Profilo" id="editButton">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor"
+                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                    <path fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                  </svg>
+                </button>
+              </div>
+
+              <h4>Numero di film visti: <span class="badge text-bg-info"><%= films.length %></span></h4>
+
+              <!-- Carosello dei film -->
+              <div id="carouselFilm" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <% for(let i = 0; i < films.length; i += 3) { %>
+                    <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                      <div class="row">
+                        <% for(let j = i; j < i + 3 && j < films.length; j++) { %>
+                          <div class="col-md-4">
+                            <div class="card mx-auto">
+                              <a href="/visualizza_contenuto/<%= films[j].titolo %>">
+                                <div class="card-content">
+                                  <img src="/images/poster/<%= films[j].poster %>" alt="<%= films[j].titolo %>" class="img-fluid" />
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        <% } %>
+                      </div>
+                    </div>
+                  <% } %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselFilm" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselFilm" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+
+              <h4 id="serieTitle">Numero di serie TV viste: <span class="badge text-bg-info"><%= serieTV.length %></span></h4>
+
+              <!-- Carosello delle serie TV -->
+              <div id="carouselSerie" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <% for(let i = 0; i < serieTV.length; i += 3) { %>
+                    <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                      <div class="row">
+                        <% for(let j = i; j < i + 3 && j < serieTV.length; j++) { %>
+                          <div class="col-md-4">
+                            <div class="card mx-auto">
+                              <a href="/visualizza_contenuto/<%= serieTV[j].titolo %>">
+                                <div class="card-content">
+                                  <img src="/images/poster/<%= serieTV[j].poster %>" alt="<%= serieTV[j].titolo %>" class="img-fluid" />
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        <% } %>
+                      </div>
+                    </div>
+                  <% } %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselSerie" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselSerie" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+    </section>
+    <%- include('footer'); %>

@@ -62,3 +62,8 @@ CREATE TABLE commenti (
 
 INSERT INTO commenti (utente, contenuto, commento)
 VALUES ('Utente 1', 'Interstellar', 'Uno dei migliori mai fatti.');
+
+INSERT INTO profilo (utente, contenuto)
+VALUES ('utente1@gmail.com', 'Top Gun: Maverick');
+
+DELETE FROM contenuto WHERE id = '3';

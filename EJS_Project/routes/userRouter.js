@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const userDao = require('../models/user-dao.js'); // Corretto da contentDao a userDao
+const userDao = require('../models/user-dao.js'); 
 const multer = require('multer');
 const path = require('path');
 
@@ -20,15 +20,20 @@ const profileUpload = multer({ storage: profileStorage });
 
 router.get('/profilo/:Nome_utente', async (req, res) => {
     const nomeUtente = req.params.Nome_utente;
+
     try {
-        const result = await userDao.getUserByUsername(nomeUtente);
-        if (result.error) {
-            res.status(404).send(result.error);
-        } else {
-            res.render('profilo', { profilo: result });
+        const user = await userDao.getUserByUsername(nomeUtente);
+        if (user.error) {
+            return res.status(404).send(user.error);
         }
+
+        const filmVisti = await userDao.getFilmUtente(user.email);
+        const serieViste = await userDao.getSerieUtente(user.email);
+
+        res.render('profilo', { profilo: user, films: filmVisti, serieTV: serieViste });
     } catch (error) {
-        res.status(500).send(error);
+        console.error('Error fetching user profile:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 
@@ -44,6 +49,6 @@ router.post('/registrazione', profileUpload.single('profiloImmagine'), async (re
         res.status(500).send('Errore durante la registrazione');
     }
 });
-
+  
 
 module.exports = router;

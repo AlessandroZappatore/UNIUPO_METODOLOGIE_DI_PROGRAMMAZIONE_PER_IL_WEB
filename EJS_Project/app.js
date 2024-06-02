@@ -5,12 +5,26 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const moment = require('moment');
 const contentDao = require('./models/content-dao.js');
-const userDao = require('./models/user-dao.js'); // Import userDao
+const userDao = require('./models/user-dao.js'); 
 const contentRouter = require('./routes/contentRouter');
 const userRouter = require('./routes/userRouter');
+const sessionsRouter = require('./routes/sessions'); // Assicurati di importare il sessionsRouter
+
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
 
 const app = express();
+
+app.use(function (req, res, next) {
+  app.locals.moment = moment;
+  app.locals.title = '';
+  app.locals.message = '';
+  app.locals.active = '';
+  next();
+});
 
 // Configurazione view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +35,51 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    userDao.getUser(username, password).then(({user, check}) => {
+      if (!user) {
+        return done(null, false, { message: 'Incorrect email or password.' });
+      }
+      if (!check) {
+        return done(null, false, { message: 'Incorrect email or password.' });
+      }
+      return done(null, user);
+    }).catch(err => done(err));
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  userDao.getUserById(id).then(user => {
+    done(null, user);
+  }).catch(err => done(err));
+});
+
+app.use(session({
+  secret: 'a secret sentence not to share with anybody and anywhere, used to sign the session ID cookie',
+  resave: false,
+  saveUninitialized: false 
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
+
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated())
+    next();
+  else
+    res.redirect('/login');
+}
 
 app.get('/', async (req, res) => {
   try {
@@ -44,10 +103,6 @@ app.get('/home', async (req, res) => {
   }
 });
 
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
 app.get('/registrazione', (req, res) => {
   res.render('registrazione');
 });
@@ -56,10 +111,9 @@ app.get('/contatti', (req, res) => {
   res.render('contatti', { title: 'Contatti', page: 'contatti' });
 });
 
-// Usa il contentRouter per le rotte dei contenuti
 app.use('/', contentRouter);
-// Usa il userRouter per le rotte degli utenti
 app.use('/', userRouter);
+app.use('/', sessionsRouter); 
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

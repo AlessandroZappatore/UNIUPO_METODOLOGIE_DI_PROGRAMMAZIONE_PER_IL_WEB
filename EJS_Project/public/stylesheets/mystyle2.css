@@ -294,19 +294,19 @@
 
 .card-content {
   width: 100%;
-  height: 100%;
+  height: 15rem; 
   border-radius: 10px;
   transition: all 0.4s;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 1;
-  border-radius: 15px;
+  overflow: hidden; 
 }
 
 .card-content img {
   width: 100%;
   height: 100%;
+  object-fit: cover; 
   border-radius: 10px;
 }
 
@@ -332,4 +332,8 @@
 
 .img-commento {
   width: 2.8rem;
+}
+
+#serieTitle{
+  margin-top: 2rem;
 }

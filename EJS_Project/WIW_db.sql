@@ -66,4 +66,4 @@ VALUES ('Test', 'Interstellar', 'Film veramente bello');
 INSERT INTO profilo (utente, contenuto)
 VALUES ('utente1@gmail.com', 'Top Gun: Maverick');
 
-DROP TABLE commenti;
+DROP TABLE rating;

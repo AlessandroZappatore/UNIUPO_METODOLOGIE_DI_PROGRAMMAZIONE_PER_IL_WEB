@@ -3,7 +3,7 @@
 const db = require('../db.js');
 const bcrypt = require('bcrypt');
 
-exports.getUserById = function(id) {
+exports.getUserById = function (id) {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT * FROM utente WHERE id = ?';
     db.get(sql, [id], (err, row) => {
@@ -24,7 +24,7 @@ exports.getUserById = function(id) {
 };
 
 // Funzione per ottenere un utente dal database
-exports.getUser = function(email, password) {
+exports.getUser = function (email, password) {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT * FROM utente WHERE email = ?';
     db.get(sql, [email], (err, row) => {
@@ -48,12 +48,13 @@ exports.getUser = function(email, password) {
 };
 
 // Funzione per creare un nuovo utente nel database
-exports.createUser = function(email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine) {
+exports.createUser = function (email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine) {
   return new Promise(async (resolve, reject) => {
     try {
+      if (!profiloImmagine) profiloImmagine = 'default_profile.jpg';
       const hashedPassword = await bcrypt.hash(password, 10);
       const sql = 'INSERT INTO utente (email, nome, cognome, data_nascita, nome_utente, password, tipologia, profilo_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-      db.run(sql, [email, nome, cognome, dataDiNascita, nomeUtente, hashedPassword, tipoUtente, profiloImmagine], function(err) {
+      db.run(sql, [email, nome, cognome, dataDiNascita, nomeUtente, hashedPassword, tipoUtente, profiloImmagine], function (err) {
         if (err) {
           console.error('Error inserting user:', err.message);
           reject(err);
@@ -68,7 +69,7 @@ exports.createUser = function(email, nome, cognome, dataDiNascita, nomeUtente, p
 };
 
 // Funzione per ottenere un utente dal database tramite il nome utente
-exports.getUserByUsername = function(username) {
+exports.getUserByUsername = function (username) {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT * FROM utente WHERE nome_utente = ?';
     db.get(sql, [username], (err, row) => {
@@ -92,12 +93,12 @@ exports.getUserByUsername = function(username) {
   });
 };
 
-exports.updateUser = function(id, email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine) {
+exports.updateUser = function (id, email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine) {
   return new Promise(async (resolve, reject) => {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const sql = 'UPDATE utente SET email = ?, nome = ?, cognome = ?, data_nascita = ?, nome_utente = ?, password = ?, tipologia = ?, profilo_immagine = ? WHERE id = ?';
-      db.run(sql, [email, nome, cognome, dataDiNascita, nomeUtente, hashedPassword, tipoUtente, profiloImmagine, id], function(err) {
+      db.run(sql, [email, nome, cognome, dataDiNascita, nomeUtente, hashedPassword, tipoUtente, profiloImmagine, id], function (err) {
         if (err) {
           console.error('Error updating user:', err.message);
           reject(err);
@@ -111,7 +112,7 @@ exports.updateUser = function(id, email, nome, cognome, dataDiNascita, nomeUtent
   });
 };
 
-exports.getFilmUtente = function(email) {
+exports.getFilmUtente = function (email) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT c.* FROM contenuto c INNER JOIN profilo p ON c.titolo = p.contenuto WHERE p.utente = ? AND c.tipologia = 'film'`;
     db.all(sql, [email], (err, rows) => {
@@ -124,7 +125,7 @@ exports.getFilmUtente = function(email) {
   });
 };
 
-exports.getSerieUtente = function(email) {
+exports.getSerieUtente = function (email) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT c.* FROM contenuto c INNER JOIN profilo p ON c.titolo = p.contenuto WHERE p.utente = ? AND c.tipologia = 'serieTV'`;
     db.all(sql, [email], (err, rows) => {
@@ -137,10 +138,10 @@ exports.getSerieUtente = function(email) {
   });
 };
 
-exports.markAsWatched = function(email, contenuto) {
+exports.markAsWatched = function (email, contenuto) {
   return new Promise((resolve, reject) => {
     const sql = 'INSERT INTO profilo (utente, contenuto) VALUES (?, ?)';
-    db.run(sql, [email, contenuto], function(err) {
+    db.run(sql, [email, contenuto], function (err) {
       if (err) {
         console.error('Error saving content:', err.message);
         reject(err);
@@ -151,15 +152,58 @@ exports.markAsWatched = function(email, contenuto) {
   });
 };
 
-exports.addComment = function(utente, contenuto, commento) {
+exports.addComment = function (utente, contenuto, commento) {
   return new Promise((resolve, reject) => {
     const sql = 'INSERT INTO commenti (utente, contenuto, commento) VALUES (?, ?, ?)';
-    db.run(sql, [utente, contenuto, commento], function(err) {
-      if(err){
+    db.run(sql, [utente, contenuto, commento], function (err) {
+      if (err) {
         console.error('Error adding comment:', err.message);
+        reject(err);
+      } else {
+        resolve(this.lastID);
+      }
+    });
+  });
+};
+
+exports.deleteComment = function (id_commento) {
+  return new Promise((resolve, reject) => {
+    const sql = 'DELETE FROM commenti WHERE id_commento = ?';
+    db.run(sql, [id_commento], (err) => {
+      if (err) { reject(err) }
+      else { resolve() };
+    });
+  });
+};
+
+exports.addRating = function (utente, contenuto, voto) {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO rating (utente, contenuto, voto) VALUES (?, ?, ?)';
+    db.run(sql, [utente, contenuto, voto], (err) => {
+      if(err){
+        console.error('Error adding rating:', err.message);
         reject(err);
       } else{
         resolve(this.lastID);
+      }
+    });
+  });
+};
+
+exports.getRatingByUser = function (utente, contenuto) {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT FROM rating WHERE utente = ? AND contenuto = ?';
+    db.get(sql, [utente, contenuto], (err, row) =>{
+      if(err) {reject(err);}
+      else if(row === undefined) {resolve({error: 'Rating not found.'})}
+      else {
+        const rating = {
+          id_rating: id_rating,
+          utente: utente,
+          contenuto: contenuto,
+          voto: voto
+        };
+        resolve(rating);
       }
     });
   });

@@ -29,9 +29,16 @@ router.post('/sessions/updateUser/', function(req, res, next) {
 });
 
 router.delete('/sessions/current', function(req, res, next) {
-    req.logout();
-    res.end();
+    req.logout(function(err) {
+        if (err) {
+            console.error('Logout error:', err);
+            return next(err);
+        }
+        res.end();
+    });
 });
+
+
 
 
 

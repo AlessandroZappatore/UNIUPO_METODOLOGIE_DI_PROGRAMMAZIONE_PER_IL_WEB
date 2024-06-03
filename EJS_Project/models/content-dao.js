@@ -9,12 +9,39 @@ exports.createContent = function (tipoContenuto, Titolo, poster, Genere, Registi
       if (err) {
         reject(err);
       } else {
-        resolve(Titolo); // Return the title of the new content created
+        resolve(Titolo);
       }
     });
   });
 };
 
+exports.getContentById = function (id) {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT * FROM contenuto WHERE id = ?';
+    db.get(sql, [id], (err, row) => {
+      if (err) reject(err);
+      else if (row === undefined) resolve({ error: 'Content not found.' });
+      else {
+        const content = {
+          id: row.id,
+          titolo: row.titolo,
+          tipologia: row.tipologia,
+          genere: row.genere,
+          registi: row.registi,
+          attori: row.attori,
+          data_uscita: row.data_uscita,
+          num_stagioni: row.num_stagioni,
+          num_episodi: row.num_episodi,
+          durata: row.durata,
+          dove_vederlo: row.dove_vederlo,
+          trama: row.trama,
+          poster: row.poster
+        };
+        resolve(content);
+      }
+    });
+  });
+};
 
 exports.getContentByTitolo = function (titolo) {
   return new Promise((resolve, reject) => {
@@ -53,6 +80,7 @@ exports.getAllComments = function (titolo) {
         reject(err);
       } else {
         const comments = rows.map((e) => ({
+          id_commento: e.id_commento,
           contenuto: e.contenuto,
           username: e.utente,
           commento: e.commento,
@@ -91,7 +119,6 @@ exports.getTopContenuti = function () {
   });
 };
 
-// content-dao.js
 
 exports.getAllMovies = function () {
   return new Promise((resolve, reject) => {
@@ -126,6 +153,53 @@ exports.deleteContent = function(id) {
       if (err) {
         reject(err);
       } else {
+        resolve();
+      }
+    });
+  });
+};
+
+exports.updateContent = function(id, updatedContent) {
+  return new Promise((resolve, reject) => {
+    const sql = `
+      UPDATE contenuto 
+      SET 
+        titolo = ?,
+        tipologia = ?,
+        genere = ?,
+        registi = ?,
+        attori = ?,
+        data_uscita = ?,
+        num_stagioni = ?,
+        num_episodi = ?,
+        durata = ?,
+        dove_vederlo = ?,
+        trama = ?,
+        poster = ?
+      WHERE 
+        id = ?`;
+    const params = [
+      updatedContent.Titolo,
+      updatedContent.tipoContenuto,
+      updatedContent.Genere,
+      updatedContent.Registi,
+      updatedContent.Attori,
+      updatedContent.Data_uscita,
+      updatedContent.Num_stagioni,
+      updatedContent.Num_episodi,
+      updatedContent.Durata,
+      updatedContent.Dove_vederlo,
+      updatedContent.Trama,
+      updatedContent.poster,
+      id
+    ];
+
+    db.run(sql, params, function(err) {
+      if (err) {
+        console.error('Error updating content:', err);
+        reject(err);
+      } else {
+        console.log(`Content updated successfully with id ${id}`);
         resolve();
       }
     });

@@ -347,3 +347,18 @@
   text-decoration: none;
   transition: 0.3s background-color;
 }
+
+.carousel-control-prev {
+  position: absolute;
+  transform: translateX(-35%);
+}
+
+.carousel-control-next{
+  position: absolute;
+  transform: translateX(+35%);
+}
+
+.btn-pencil-square a {
+  color: inherit; /* Utilizza il colore del testo del genitore */
+  text-decoration: none; /* Rimuovi sottolineatura */
+}

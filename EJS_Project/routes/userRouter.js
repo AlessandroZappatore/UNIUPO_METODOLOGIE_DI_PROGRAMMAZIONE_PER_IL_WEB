@@ -62,6 +62,18 @@ router.post('/add-comment', async (req, res) => {
     }
 });
 
+router.post('/elimina-commento', async (req, res) => {
+    const { id_commento } = req.body;
+    
+    try {
+        await userDao.deleteComment(id_commento);
+        res.json({ message: 'Commento eliminato con successo' });  // Modifica qui per restituire JSON
+    } catch (error) {
+        console.error('Errore nell\'eliminazione del commento:', error);
+        res.status(500).json({ message: 'Errore nell\'eliminazione del commento' });  // Modifica qui per restituire JSON
+    }
+});
+
   
 router.post('/mark-as-watched', async (req, res) => {
     const { email, contenuto } = req.body;

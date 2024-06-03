@@ -120,4 +120,7 @@ function addRating(utente, contenuto, voto) {
         });
 }
 
-
+function redirectToModifica(contenutoId) {
+    var urlModifica = "/modifica_contenuto/" + contenutoId;
+    window.location.href = urlModifica;
+}

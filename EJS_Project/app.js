@@ -10,6 +10,8 @@ const contentDao = require('./models/content-dao.js');
 const userDao = require('./models/user-dao.js'); 
 const contentRouter = require('./routes/contentRouter');
 const userRouter = require('./routes/userRouter');
+const loggedRouter = require('./routes/loggedRouter');
+const administratorRouter = require('./routes/administratorRouter');
 const sessionsRouter = require('./routes/sessions'); // Assicurati di importare il sessionsRouter
 
 const passport = require('passport');
@@ -81,6 +83,19 @@ const isLoggedIn = (req, res, next) => {
     res.redirect('/login');
 }
 
+function isLoggedInAsAdministrator(req, res, next) {
+
+  if (req.isAuthenticated()) {
+    if (req.user.tipologia === 'amministratore') {
+      return next();
+    } else {
+      res.redirect('/registrazione');
+    }
+  } else {
+    res.redirect('/login');
+  }
+}
+
 app.get('/', async (req, res) => {
   try {
     const ultimeUscite = await contentDao.getUltimeUscite();
@@ -114,6 +129,8 @@ app.get('/contatti', (req, res) => {
 app.use('/', contentRouter);
 app.use('/', userRouter);
 app.use('/', sessionsRouter); 
+app.use('/', isLoggedIn, loggedRouter);
+app.use('/', isLoggedInAsAdministrator, administratorRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

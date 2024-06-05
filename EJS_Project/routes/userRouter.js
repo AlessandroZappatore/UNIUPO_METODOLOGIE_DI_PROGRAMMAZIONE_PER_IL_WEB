@@ -5,7 +5,6 @@ const router = express.Router();
 const userDao = require('../models/user-dao.js'); 
 const multer = require('multer');
 const path = require('path');
-const { title } = require('process');
 const fs = require('fs');
 
 
@@ -109,47 +108,40 @@ router.get('/modifica-profilo/:id', async (req, res) => {
 router.post('/modifica-profilo/:id', profileUpload.single('profiloImmagine'), async (req, res) => {
     const id = req.params.id;
     const { email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente } = req.body;
-  
-    try {
-      const user = await userDao.getUserById(id);
-      if(!user) {
-        return res.status(404).send('Utente non trovato');
-      }
-  
-      let profiloImmagine;
-      if (req.file) {
-        profiloImmagine = req.file.filename;
-  
-        if (user.profiloImmagine) {
-          const oldProfileImagePath = path.join(__dirname, '..', 'public', 'images', 'profile', user.profiloImmagine);
-          fs.unlink(oldProfileImagePath, (err) => {
-            if (err) {
-              console.error('Errore durante l\'eliminazione della vecchia immagine del profilo:', err);
-            } else {
-              console.log('Vecchia immagine del profilo eliminata con successo:', oldProfileImagePath);
-            }
-          });
+    const profiloImmagine = req.file ? req.file.filename : null;
+
+    try{
+        const user = await userDao.getUserById(id);
+        if(!user){
+            return res.status(404).send('Utente non trovato');
         }
-      } else {
-        profiloImmagine = user.profiloImmagine;
-      }
-  
-      const updatedUser = {
-        email,
-        nome,
-        cognome,
-        dataDiNascita,
-        nomeUtente,
-        password,
-        tipoUtente,
-        profiloImmagine
-      };
-  
-      await userDao.updateUser(id, updatedUser);
-      res.redirect(`/visualizza-profilo/${nomeUtente}`);
+
+        const updatedUser = {
+            email,
+            nome,
+            cognome,
+            dataDiNascita,
+            nomeUtente,
+            password,
+            tipoUtente,
+            profiloImmagine: profiloImmagine || user.profiloImmagine
+        };
+
+        if(profiloImmagine && user.profiloImmagine){
+            const profileImagePath = path.join(__dirname, '..', 'public', 'images', 'profile', user.profiloImmagine);
+            fs.unlink(profileImagePath, (err) => {
+                if(err){
+                    console.error('Errore durante l\'eliminazione dell\'immagine del profilo:', err);
+                }
+                console.log('Immagine del profilo eliminata con successo:', profileImagePath);
+            });
+        }
+
+        await userDao.updateUser(id, updatedUser);
+        res.redirect('/profilo/' + updatedUser.nomeUtente);
     } catch (error) {
-      console.error('Errore durante l\'aggiornamento del profilo utente:', error);
-      res.status(500).send('Errore durante l\'aggiornamento del profilo utente');
+        console.error('Errore durante la modifica del profilo:', error);
+        res.status(500).send('Errore durante la modifica del profilo');
     }
   });
 

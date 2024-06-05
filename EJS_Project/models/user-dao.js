@@ -143,6 +143,7 @@ exports.updateUser = function (id, updatedUser) {
     });
   });
 };
+
 exports.getFilmUtente = function (email) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT c.* FROM contenuto c INNER JOIN profilo p ON c.titolo = p.contenuto WHERE p.utente = ? AND c.tipologia = 'film'`;

@@ -127,8 +127,6 @@ router.get('/modifica_contenuto/:id', async (req, res) => {
   }
 });
 
-
-// Route to handle content update
 router.post('/modifica_contenuto/:id', posterUpload.single('poster'), async (req, res) => {
   const id = req.params.id;
   const { tipoContenuto, Titolo, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama } = req.body;
@@ -156,7 +154,6 @@ router.post('/modifica_contenuto/:id', posterUpload.single('poster'), async (req
     };
 
     if (poster && content.poster) {
-      // Delete the old poster file
       const oldPosterPath = path.join(__dirname, '..', 'public', 'images', 'poster', content.poster);
       fs.unlink(oldPosterPath, (err) => {
         if (err) {
@@ -174,5 +171,6 @@ router.post('/modifica_contenuto/:id', posterUpload.single('poster'), async (req
     res.status(500).send('Errore durante l\'aggiornamento del contenuto');
   }
 });
+
 
 module.exports = router;

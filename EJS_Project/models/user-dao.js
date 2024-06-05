@@ -14,8 +14,11 @@ exports.getUserById = function (id) {
           id: row.id,
           email: row.email,
           nome_utente: row.nome_utente,
+          nome: row.nome,
+          cognome: row.cognome,
+          data_nascita: row.data_nascita,
           tipologia: row.tipologia,
-          profilo_immagine: row.profilo_immagine
+          immagineProfilo: row.profilo_immagine
         };
         resolve(user);
       }
@@ -93,25 +96,53 @@ exports.getUserByUsername = function (username) {
   });
 };
 
-exports.updateUser = function (id, email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine) {
+exports.updateUser = function (id, updatedUser) {
   return new Promise(async (resolve, reject) => {
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const sql = 'UPDATE utente SET email = ?, nome = ?, cognome = ?, data_nascita = ?, nome_utente = ?, password = ?, tipologia = ?, profilo_immagine = ? WHERE id = ?';
-      db.run(sql, [email, nome, cognome, dataDiNascita, nomeUtente, hashedPassword, tipoUtente, profiloImmagine, id], function (err) {
-        if (err) {
-          console.error('Error updating user:', err.message);
-          reject(err);
-        } else {
-          resolve(this.changes);
-        }
-      });
-    } catch (err) {
-      reject(err);
+    let hashedPassword;
+    if (updatedUser.password) {
+      const salt = await bcrypt.genSalt(10);
+      hashedPassword = await bcrypt.hash(updatedUser.password, salt);
+    } else {
+      const user = await this.getUserById(id);
+      hashedPassword = user.password;
     }
+
+    const sql = `
+      UPDATE utente 
+      SET 
+        email = ?,
+        nome = ?,
+        cognome = ?,
+        data_nascita = ?,
+        nome_utente = ?,
+        password = ?,
+        tipologia = ?,
+        profilo_immagine = ?
+      WHERE 
+        id = ?`;
+    const params = [
+      updatedUser.email,
+      updatedUser.nome,
+      updatedUser.cognome,
+      updatedUser.dataDiNascita,
+      updatedUser.nomeUtente,
+      hashedPassword,
+      updatedUser.tipoUtente,
+      updatedUser.profiloImmagine,
+      id
+    ];
+
+    db.run(sql, params, function (err) {
+      if (err) {
+        console.error('Error updating user:', err);
+        reject(err);
+      } else {
+        console.log(`User updated successfully with id ${id}`);
+        resolve();
+      }
+    });
   });
 };
-
 exports.getFilmUtente = function (email) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT c.* FROM contenuto c INNER JOIN profilo p ON c.titolo = p.contenuto WHERE p.utente = ? AND c.tipologia = 'film'`;
@@ -180,10 +211,10 @@ exports.addRating = function (utente, contenuto, voto) {
   return new Promise((resolve, reject) => {
     const sql = 'INSERT INTO rating (utente, contenuto, voto) VALUES (?, ?, ?)';
     db.run(sql, [utente, contenuto, voto], (err) => {
-      if(err){
+      if (err) {
         console.error('Error adding rating:', err.message);
         reject(err);
-      } else{
+      } else {
         resolve(this.lastID);
       }
     });
@@ -193,9 +224,9 @@ exports.addRating = function (utente, contenuto, voto) {
 exports.getRatingByUser = function (utente, contenuto) {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT FROM rating WHERE utente = ? AND contenuto = ?';
-    db.get(sql, [utente, contenuto], (err, row) =>{
-      if(err) {reject(err);}
-      else if(row === undefined) {resolve({error: 'Rating not found.'})}
+    db.get(sql, [utente, contenuto], (err, row) => {
+      if (err) { reject(err); }
+      else if (row === undefined) { resolve({ error: 'Rating not found.' }) }
       else {
         const rating = {
           id_rating: id_rating,

@@ -124,3 +124,8 @@ function redirectToModifica(contenutoId) {
     var urlModifica = "/modifica_contenuto/" + contenutoId;
     window.location.href = urlModifica;
 }
+
+function redirectToModificaProfilo(userId) {
+    var urlModifica = "/modifica-profilo/" + userId;
+    window.location.href = urlModifica;
+}

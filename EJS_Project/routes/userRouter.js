@@ -5,6 +5,9 @@ const router = express.Router();
 const userDao = require('../models/user-dao.js'); 
 const multer = require('multer');
 const path = require('path');
+const { title } = require('process');
+const fs = require('fs');
+
 
 const profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -86,5 +89,68 @@ router.post('/mark-as-watched', async (req, res) => {
         res.status(500).send('Errore nel salvataggio');
     }
 });
+
+router.get('/modifica-profilo/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const user = await userDao.getUserById(id);
+        if (user.error) {
+             res.status(404).send(user.error);
+        } else {
+            res.render('registrazione', {title: 'Modifica', button: 'Modifica', profilo: user });
+        }
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/modifica-profilo/:id', profileUpload.single('profiloImmagine'), async (req, res) => {
+    const id = req.params.id;
+    const { email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente } = req.body;
+  
+    try {
+      const user = await userDao.getUserById(id);
+      if(!user) {
+        return res.status(404).send('Utente non trovato');
+      }
+  
+      let profiloImmagine;
+      if (req.file) {
+        profiloImmagine = req.file.filename;
+  
+        if (user.profiloImmagine) {
+          const oldProfileImagePath = path.join(__dirname, '..', 'public', 'images', 'profile', user.profiloImmagine);
+          fs.unlink(oldProfileImagePath, (err) => {
+            if (err) {
+              console.error('Errore durante l\'eliminazione della vecchia immagine del profilo:', err);
+            } else {
+              console.log('Vecchia immagine del profilo eliminata con successo:', oldProfileImagePath);
+            }
+          });
+        }
+      } else {
+        profiloImmagine = user.profiloImmagine;
+      }
+  
+      const updatedUser = {
+        email,
+        nome,
+        cognome,
+        dataDiNascita,
+        nomeUtente,
+        password,
+        tipoUtente,
+        profiloImmagine
+      };
+  
+      await userDao.updateUser(id, updatedUser);
+      res.redirect(`/visualizza-profilo/${nomeUtente}`);
+    } catch (error) {
+      console.error('Errore durante l\'aggiornamento del profilo utente:', error);
+      res.status(500).send('Errore durante l\'aggiornamento del profilo utente');
+    }
+  });
 
 module.exports = router;

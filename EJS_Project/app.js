@@ -104,7 +104,7 @@ app.get('/home', async (req, res) => {
 });
 
 app.get('/registrazione', (req, res) => {
-  res.render('registrazione');
+  res.render('registrazione', {title: 'Registrazione', button: 'Registrati', profilo: {} });
 });
 
 app.get('/contatti', (req, res) => {

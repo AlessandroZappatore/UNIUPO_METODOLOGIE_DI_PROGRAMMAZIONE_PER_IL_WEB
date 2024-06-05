@@ -2,7 +2,7 @@
 <html lang="it">
 
 <head>
-    <title>WIW - Registrazione</title>
+    <title>WIW - <%= title  %></title>
     <link rel="shortcut icon" href="/images/static/popcorn.png" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,15 +41,15 @@
                     <div class="col-md-7 right-box">
                         <div class="row align-items-center">
                             <div class="header-text mb-4 text-center">
-                                <h2>Benvenuto</h2>
-                                <p>Effettua qui la registrazione</p>
+                                <h2><% if(title === 'Registrazione') { %> Benvenuto <% } else if(title === 'Modifica') {%> Bentornato <%= profilo.nome_utente  %> <% } %></h2>
+                                <p><% if(title === 'Registrazione') { %> Effettua qui la registrazione <% } else if(title === 'Modifica') {%> Modifica qui il tuo profilo <% } %></p>
                             </div>
 
-                            <form action="/registrazione" method="POST" enctype="multipart/form-data" class="mb-3 mx-auto">
-                                <div class="input-group mb-3">
+                            <form action="<% title === 'Registrazione' ? '/registrazione' : '/modifica-profilo/' + profilo.id %>" method="post" enctype="multipart/form-data">
+                              <div class="input-group mb-3">
                                   <span class="input-group-text">&nbsp;@</span>
                                   <div class="form-floating">
-                                    <input type="email" name="email" class="form-control" id="floatingInputGroup1" placeholder="Email" required>
+                                    <input type="email" name="email" class="form-control" id="floatingInputGroup1" placeholder="Email" required value="<%= profilo.email  || '' %>">
                                     <label for="floatingInputGroup1">Email</label>
                                   </div>
                                 </div>
@@ -57,7 +57,7 @@
                                 <div class="input-group mb-3">
                                   <span class="input-group-text">🖊️</span>
                                   <div class="form-floating">
-                                    <input type="text" name="nome" class="form-control" id="floatingInputGroup2" placeholder="Nome" required>
+                                    <input type="text" name="nome" class="form-control" id="floatingInputGroup2" placeholder="Nome" required value="<%= profilo.nome  || '' %>">
                                     <label for="floatingInputGroup2">Nome</label>
                                   </div>
                                 </div>
@@ -65,7 +65,7 @@
                                 <div class="input-group mb-3">
                                   <span class="input-group-text">🖊️</span>
                                   <div class="form-floating">
-                                    <input type="text" name="cognome" class="form-control" id="floatingInputGroup3" placeholder="Cognome" required>
+                                    <input type="text" name="cognome" class="form-control" id="floatingInputGroup3" placeholder="Cognome" required value="<%= profilo.cognome  || '' %>">
                                     <label for="floatingInputGroup3">Cognome</label>
                                   </div>
                                 </div>
@@ -73,14 +73,14 @@
                                 <div class="form-group mb-3">
                                   <label class="control-label">Data di nascita</label>
                                   <div>
-                                    <input type="date" name="dataDiNascita" class="form-control input-lg" required>
+                                    <input type="date" name="dataDiNascita" class="form-control input-lg" required value="<%= profilo.data_nascita  || '' %>">
                                   </div>
                                 </div>
                               
                                 <div class="input-group mb-3">
                                   <span class="input-group-text">👤</span>
                                   <div class="form-floating">
-                                    <input type="text" name="nomeUtente" class="form-control" id="floatingInputGroup4" placeholder="Nome utente" required>
+                                    <input type="text" name="nomeUtente" class="form-control" id="floatingInputGroup4" placeholder="Nome utente" required value="<%= profilo.nome_utente  || '' %>">
                                     <label for="floatingInputGroup4">Nome utente</label>
                                   </div>
                                 </div>
@@ -89,17 +89,16 @@
                                   <span class="input-group-text">🔑</span>
                                   <div class="form-floating">
                                     <input type="password" name="password" class="form-control" id="floatingInputGroup5" placeholder="Password" required>
-                                    <label for="floatingInputGroup5">Password</label>
+                                    <label for="floatingInputGroup5">Password <% if(title === 'Modifica') {%> (reinserisci o modifica) <% } %></label>
                                   </div>
                                 </div>
                               
-                                <div class="text-center film-serie-check mb-3">
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="tipoUtente" id="inlineRadio1" value="standard" checked>
+                                    <input class="form-check-input" type="radio" name="tipoUtente" id="inlineRadio1" value="standard" <% if(profilo.tipologia === 'standard' || title === 'Registrazione') {%> checked <% } %>>
                                     <label class="form-check-label" for="inlineRadio1">Utente standard</label>
                                   </div>
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="tipoUtente" id="inlineRadio2" value="amministratore">
+                                    <input class="form-check-input" type="radio" name="tipoUtente" id="inlineRadio2" value="amministratore" <% if(profilo.tipologia === 'amministratore') {%> checked <% } %>>
                                     <label class="form-check-label" for="inlineRadio2">Utente amministratore</label>
                                   </div>
                                 </div>
@@ -110,15 +109,12 @@
                                 </div>
                               
                                 <div class="input-group mb-3">
-                                  <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Registrati</button>
+                                  <button class="btn btn-lg btn-primary w-100 fs-6" type="submit"><%= button %></button>
                                 </div>
                               </form>
-                              
                         </div>
                     </div>
-                    <!-- Fine contenitore destro -->
                 </div>
             </div>
-
         </section>
         <%- include('footer'); -%>

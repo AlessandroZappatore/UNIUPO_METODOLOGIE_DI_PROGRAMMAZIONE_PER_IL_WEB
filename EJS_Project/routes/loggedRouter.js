@@ -6,6 +6,7 @@ const userDao = require('../models/user-dao.js');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
+const { check, validationResult } = require('express-validator');
 
 const profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -19,7 +20,11 @@ const profileStorage = multer.diskStorage({
 
 const profileUpload = multer({ storage: profileStorage });
 
-router.post('/add-comment', async (req, res) => {
+router.post('/add-comment', [
+    check('utente').isEmail(),
+    check('contenuto').isString(),
+    check('commento').isString()
+], async (req, res) => {
     const { utente, contenuto, commento } = req.body;
 
     try {
@@ -59,7 +64,15 @@ router.get('/modifica-profilo/:id', async (req, res) => {
     }
 });
 
-router.post('/modifica-profilo/:id', profileUpload.single('profiloImmagine'), async (req, res) => {
+router.post('/modifica-profilo/:id', [
+    check('email').isEmail().withMessage('Inserisci un indirizzo email valido'),
+    check('nome').isLength({ min: 1 }).withMessage('Inserisci il tuo nome'),
+    check('cognome').isLength({ min: 1 }).withMessage('Inserisci il tuo cognome'),
+    check('dataDiNascita').isDate().withMessage('Inserisci una data di nascita valida'),
+    check('nomeUtente').isLength({ min: 1 }).withMessage('Inserisci un nome utente'),
+    check('password').isLength({ min: 8 }).withMessage('La password deve contenere almeno 8 caratteri'),
+    check('tipoUtente').isIn(['standard', 'amministratore']).withMessage('Tipo utente non valido')
+] ,profileUpload.single('profiloImmagine'), async (req, res) => {
     const id = req.params.id;
     const { email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente } = req.body;
     const profiloImmagine = req.file ? req.file.filename : null;
@@ -111,4 +124,14 @@ router.post('/elimina-commento', async (req, res) => {
     }
 });
 
+router.post('/add-rating', async (req, res) => {
+    const { utente, contenuto, rating } = req.body;
+    try {
+        await userDao.addRating(utente, contenuto, rating);
+        res.json({ message: 'Rating aggiunto con successo' });
+    } catch (error) {
+        console.error('Errore nell\'aggiunta del rating:', error);
+        res.status(500).json({ message: 'Errore nell\'aggiunta del rating' });
+    }
+});
 module.exports = router;

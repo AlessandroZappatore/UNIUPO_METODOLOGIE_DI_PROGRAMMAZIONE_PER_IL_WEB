@@ -37,7 +37,7 @@
           <div class="col-md-9 right-box">
             <div class="row align-items-center">
               <div class="header-text mb-4 d-flex justify-content-between align-items-center">
-                <h2 class="mx-auto"> &nbsp &nbsp &nbsp<%= profilo.nome_utente %></h2>
+                <h1 class="mx-auto"><b><%= profilo.nome_utente %></b></h1>
                 <% if(user && (user.nome_utente === profilo.nome_utente)) { %>
                 <button class="btn btn-success btn-sm" title="Modifica Profilo" id="editButton" onclick="redirectToModificaProfilo('<%= user.id %>')">
                   <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor"
@@ -50,7 +50,8 @@
                 <% } %>
               </div>
 
-              <h4>Numero di film visti: <span class="badge text-bg-info"><%= films.length %></span></h4>
+              <h4>Numero di film visti: <span class="badge rounded-pill text-bg-info"><%= films.length %> </span> </h4>
+              <h5>Numero di giorni passati a vedere film: <span class="badge text-bg-success"><%= totalMinutesFilm %></span></h3>
 
               <!-- Carosello dei film -->
               <div id="carouselFilm" class="carousel slide" data-bs-ride="carousel">
@@ -85,8 +86,8 @@
                 <% } %>
               </div>
 
-              <h4 id="serieTitle">Numero di serie TV viste: <span class="badge text-bg-info"><%= serieTV.length %></span></h4>
-
+              <h4 id="serieTitle">Numero di serie TV viste: <span class="badge rounded-pill text-bg-info"><%= serieTV.length %></span></h4>
+              <h5>Numero di giorni passati a vedere serie TV: <span class="badge text-bg-success"><%= totalMinutesSerie %></span></h5>
               <!-- Carosello delle serie TV -->
               <div id="carouselSerie" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">

@@ -6,7 +6,7 @@ const contentDao = require('../models/content-dao.js');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-
+const { check, validationResult } = require('express-validator');
 const posterStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join(__dirname, '..', 'public', 'images', 'poster'));
@@ -23,7 +23,19 @@ router.get('/aggiungi_contenuto', (req, res) => {
     res.render('aggiungi_contenuto', { title: 'Aggiungi', button: 'Crea', contenuto: {} });
 });
 
-router.post('/aggiungi_contenuto', posterUpload.single('poster'), async (req, res) => {
+router.post('/aggiungi_contenuto', [
+    check('tipoContenuto').isIn(['Film', 'Serie TV']).withMessage('Tipo contenuto non valido'),
+    check('Titolo').isLength({ min: 1 }).withMessage('Inserisci un titolo'),
+    check('Genere').isLength({ min: 1 }).withMessage('Inserisci un genere'),
+    check('Registi').isLength({ min: 1 }).withMessage('Inserisci almeno un regista'),
+    check('Attori').isLength({ min: 1 }).withMessage('Inserisci almeno un attore'),
+    check('Data_uscita').isDate().withMessage('Inserisci una data di uscita valida'),
+    check('Num_stagioni').isInt({ min: 1 }).withMessage('Inserisci un numero di stagioni valido'),
+    check('Num_episodi').isInt({ min: 1 }).withMessage('Inserisci un numero di episodi valido'),
+    check('Durata').isInt({ min: 1 }).withMessage('Inserisci una durata valida'),
+    check('Dove_vederlo').isLength({ min: 1 }).withMessage('Inserisci dove vederlo'),
+    check('Trama').isLength({ min: 1 }).withMessage('Inserisci una trama')
+],posterUpload.single('poster'), async (req, res) => {
     const { tipoContenuto, Titolo, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama } = req.body;
     const poster = req.file ? req.file.filename : null;
 
@@ -85,7 +97,19 @@ router.get('/modifica_contenuto/:id', async (req, res) => {
     }
 });
 
-router.post('/modifica_contenuto/:id', posterUpload.single('poster'), async (req, res) => {
+router.post('/modifica_contenuto/:id', [
+    check('tipoContenuto').isIn(['Film', 'Serie TV']).withMessage('Tipo contenuto non valido'),
+    check('Titolo').isLength({ min: 1 }).withMessage('Inserisci un titolo'),
+    check('Genere').isLength({ min: 1 }).withMessage('Inserisci un genere'),
+    check('Registi').isLength({ min: 1 }).withMessage('Inserisci almeno un regista'),
+    check('Attori').isLength({ min: 1 }).withMessage('Inserisci almeno un attore'),
+    check('Data_uscita').isDate().withMessage('Inserisci una data di uscita valida'),
+    check('Num_stagioni').isInt({ min: 1 }).withMessage('Inserisci un numero di stagioni valido'),
+    check('Num_episodi').isInt({ min: 1 }).withMessage('Inserisci un numero di episodi valido'),
+    check('Durata').isInt({ min: 1 }).withMessage('Inserisci una durata valida'),
+    check('Dove_vederlo').isLength({ min: 1 }).withMessage('Inserisci dove vederlo'),
+    check('Trama').isLength({ min: 1 }).withMessage('Inserisci una trama')
+],posterUpload.single('poster'), async (req, res) => {
     const id = req.params.id;
     const { tipoContenuto, Titolo, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama } = req.body;
     const poster = req.file ? req.file.filename : null;

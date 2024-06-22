@@ -59,3 +59,14 @@ CREATE TABLE commenti (
     FOREIGN KEY(utente) REFERENCES utente(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(contenuto) REFERENCES contenuto(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO utente (email, nome, cognome, data_nascita, nome_utente, tipologia, password, profilo_immagine)
+VALUES ('prova@prova.it', 'prova', 'prova', '1999-01-01', 'prova', 'prova', 'prova', 'prova');
+
+INSERT INTO contenuto (titolo, tipologia, genere, registi, attori, data_uscita, num_stagioni, num_episodi, durata, dove_vederlo, trama, poster)
+VALUES ('prova', 'prova', 'prova', 'prova', 'prova', '1999-01-01', 1, 1, 1, 'prova', 'prova', 'prova');
+
+INSERT INTO commenti (utente, contenuto, commento)
+VALUES (1, 1, 'prova');
+
+DELETE FROM utente WHERE id = 1;

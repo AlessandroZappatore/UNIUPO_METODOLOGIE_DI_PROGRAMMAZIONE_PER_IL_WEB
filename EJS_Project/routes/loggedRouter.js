@@ -91,16 +91,17 @@ router.post('/modifica-profilo/:id', [
             nomeUtente,
             password,
             tipoUtente,
-            profiloImmagine: profiloImmagine || user.profiloImmagine
+            profiloImmagine: profiloImmagine || user.immagineProfilo
         };
 
-        if (profiloImmagine && user.profiloImmagine) {
-            const profileImagePath = path.join(__dirname, '..', 'public', 'images', 'profile', user.profiloImmagine);
+        if (profiloImmagine && user.immagineProfilo) {
+            const profileImagePath = path.join(__dirname, '..', 'public', 'images', 'profile', user.immagineProfilo);
             fs.unlink(profileImagePath, (err) => {
                 if (err) {
                     console.error('Errore durante l\'eliminazione dell\'immagine del profilo:', err);
                 }
-                console.log('Immagine del profilo eliminata con successo:', profileImagePath);
+                else
+                    console.log('Immagine del profilo eliminata con successo:', profileImagePath);
             });
         }
 
@@ -121,6 +122,37 @@ router.post('/elimina-commento', async (req, res) => {
     } catch (error) {
         console.error('Errore nell\'eliminazione del commento:', error);
         res.status(500).json({ message: 'Errore nell\'eliminazione del commento' });
+    }
+});
+
+router.post('/elimina-profilo', async (req, res) => {
+    const { id } = req.body; 
+
+    try {
+        const user = await userDao.getUserById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'Profilo non trovato' });
+        }
+
+        await userDao.deleteProfile(id);
+
+        if (user.immagineProfilo !== "default_profile.jpg") { 
+            const profileImagePath = path.join(__dirname, '..', 'public', 'images', 'profile', user.immagineProfilo);
+
+            fs.unlink(profileImagePath, (err) => {
+                if (err) {
+                    console.error('Errore durante l\'eliminazione della foto profilo:', err);
+                    return res.status(500).json({ message: 'Errore durante l\'eliminazione della foto profilo' });
+                } else {
+                    console.log('Foto profilo eliminata con successo:', profileImagePath); 
+                }
+            });
+        }
+
+        res.json({ message: 'Profilo eliminato con successo' });
+    } catch (error) {
+        console.error('Errore eliminazione profilo:', error);
+        res.status(500).send(error);
     }
 });
 

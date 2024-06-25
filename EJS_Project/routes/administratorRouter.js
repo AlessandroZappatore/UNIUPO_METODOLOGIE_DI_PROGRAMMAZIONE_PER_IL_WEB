@@ -7,13 +7,15 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { check, validationResult } = require('express-validator');
+
 const posterStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join(__dirname, '..', 'public', 'images', 'poster'));
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+        const extension = path.extname(file.originalname);
+        const sanitizedTitolo = req.body.Titolo.replace(/[^a-zA-Z0-9_\-]/g, '_');
+        cb(null, sanitizedTitolo + extension);
     }
 });
 
@@ -57,7 +59,6 @@ router.post('/elimina-contenuto', async (req, res) => {
     const { id } = req.body;
 
     try {
-        // Ottieni il contenuto dal database per ottenere il nome del file del poster
         const content = await contentDao.getContentById(id);
         if (!content) {
             return res.status(404).json({ message: 'Contenuto non trovato' });
@@ -72,7 +73,8 @@ router.post('/elimina-contenuto', async (req, res) => {
                 console.error('Errore durante l\'eliminazione del poster:', err);
                 return res.status(500).json({ message: 'Errore durante l\'eliminazione del poster' });
             }
-            console.log('Poster eliminato con successo:', posterPath);
+            else
+                console.log('Poster eliminato con successo:', posterPath);
         });
 
         res.json({ message: 'Contenuto eliminato con successo' });

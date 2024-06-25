@@ -38,8 +38,4 @@ router.delete('/sessions/current', function(req, res, next) {
     });
 });
 
-
-
-
-
 module.exports = router;

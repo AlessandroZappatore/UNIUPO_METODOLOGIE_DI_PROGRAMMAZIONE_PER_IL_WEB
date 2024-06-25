@@ -1,5 +1,26 @@
 "use strict";
 
+function showModal(modalId, bodyText, confirmCallback = null) {
+    const modalElement = document.getElementById(modalId);
+    const modalBody = document.getElementById(`${modalId}Body`);
+    modalBody.textContent = bodyText;
+
+    const modal = new bootstrap.Modal(modalElement);
+
+    const confirmButton = document.getElementById(`${modalId}ConfirmButton`);
+    if (confirmButton) {
+        if (confirmCallback) {
+            confirmButton.onclick = confirmCallback;
+            confirmButton.style.display = 'block';
+        } else {
+            confirmButton.onclick = null; 
+            confirmButton.style.display = 'none';
+        }
+    }
+
+    modal.show();
+}
+
 function markAsWatched(contenuto, email) {
     fetch('/mark-as-watched', {
         method: 'POST',
@@ -8,19 +29,17 @@ function markAsWatched(contenuto, email) {
         },
         body: JSON.stringify({ email: email, contenuto: contenuto }),
     })
-        .then(response => response.text())
-        .then(data => {
-            alert(data)
-        })
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+    .then(response => response.text())
+    .then(data => {
+        showModal('successModal', data);
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
 }
 
 function confirmDelete(contentId) {
-    if (confirm("Sei sicuro di voler eliminare questo contenuto?")) {
-        deleteContent(contentId);
-    }
+    showModal('confirmModal', "Sei sicuro di voler eliminare questo contenuto?", () => deleteContent(contentId));
 }
 
 function deleteContent(id) {
@@ -31,16 +50,14 @@ function deleteContent(id) {
         },
         body: JSON.stringify({ id: id }),
     })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            window.location.href = '/home'; // Reindirizza alla home
-        })
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        window.location.href = '/home';
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
 }
-
 
 function inviaCommento(contenuto, utente, commento) {
     fetch('/add-comment', {
@@ -50,21 +67,17 @@ function inviaCommento(contenuto, utente, commento) {
         },
         body: JSON.stringify({ utente: utente, contenuto: contenuto, commento: commento }),
     })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            window.location.reload();
-
-        })
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
 }
 
 function confirmDeleteComment(commentId) {
-    if (confirm("Sei sicuro di voler eliminare questo commento?")) {
-        deleteComment(commentId);
-    }
+    showModal('confirmModal', "Sei sicuro di voler eliminare questo commento?", () => deleteComment(commentId));
 }
 
 function deleteComment(id_commento) {
@@ -75,14 +88,36 @@ function deleteComment(id_commento) {
         },
         body: JSON.stringify({ id_commento: id_commento }),
     })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            window.location.reload();
-        })
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        window.location.reload();
+        
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
+}
+
+function confirmDeleteProfile(profileId) {
+    showModal('confirmModal', "Sei sicuro di voler eliminare questo profilo?", () => deleteProfile(profileId));
+}
+
+function deleteProfile(id_profilo) {
+    fetch('/elimina-profilo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id_profilo }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        fetch('/sessions/current', { method: 'DELETE' });
+        window.location.href = '/home';
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -100,8 +135,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-
-
 function addRating(utente, contenuto, voto) {
     fetch('/add-rating', {
         method: 'POST',
@@ -110,14 +143,13 @@ function addRating(utente, contenuto, voto) {
         },
         body: JSON.stringify({ utente: utente, contenuto: contenuto, voto: voto }),
     })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            window.location.reload();
-        })
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
 }
 
 function redirectToModifica(contenutoId) {

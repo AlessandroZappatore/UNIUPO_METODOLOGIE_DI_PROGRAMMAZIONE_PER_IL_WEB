@@ -159,6 +159,7 @@ exports.deleteContent = function(id) {
   });
 };
 
+
 exports.updateContent = function(id, updatedContent) {
   return new Promise((resolve, reject) => {
     const sql = `

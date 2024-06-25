@@ -10,11 +10,12 @@ const { check, validationResult } = require('express-validator');
 
 const profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '..', 'public', 'images', 'profile')); // Corretto il percorso
+        cb(null, path.join(__dirname, '..', 'public', 'images', 'profile'));
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix);
+        const extension = path.extname(file.originalname);
+        const sanitizedNomeUtente = req.body.nomeUtente.replace(/[^a-zA-Z0-9_\-]/g, '_');
+        cb(null, sanitizedNomeUtente + extension);
     }
 });
 
@@ -50,15 +51,7 @@ router.get('/profilo/:Nome_utente', async (req, res) => {
     }
 });
 
-router.post('/registrazione', [
-    check('email').isEmail().withMessage('Inserisci un indirizzo email valido'),
-    check('nome').isLength({ min: 1 }).withMessage('Inserisci il tuo nome'),
-    check('cognome').isLength({ min: 1 }).withMessage('Inserisci il tuo cognome'),
-    check('dataDiNascita').isDate().withMessage('Inserisci una data di nascita valida'),
-    check('nomeUtente').isLength({ min: 1 }).withMessage('Inserisci un nome utente'),
-    check('password').isLength({ min: 8 }).withMessage('La password deve contenere almeno 8 caratteri'),
-    check('tipoUtente').isIn(['standard', 'amministratore']).withMessage('Tipo utente non valido')
-],profileUpload.single('profiloImmagine'), async (req, res) => {
+router.post('/registrazione', profileUpload.single('profiloImmagine'), async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });

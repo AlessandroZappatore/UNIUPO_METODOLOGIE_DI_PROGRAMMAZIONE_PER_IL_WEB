@@ -50,6 +50,20 @@ exports.getUser = function (email, password) {
   });
 };
 
+exports.deleteProfile = function(id) {
+  return new Promise((resolve, reject) => {
+    const sql = 'DELETE FROM utente WHERE id = ?'; 
+    db.run(sql, [id], (err) => { 
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+};
+
+
 // Funzione per creare un nuovo utente nel database
 exports.createUser = function (email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente, profiloImmagine) {
   return new Promise(async (resolve, reject) => {
@@ -82,6 +96,7 @@ exports.getUserByUsername = function (username) {
         resolve({ error: 'User not found.' });
       } else {
         const user = {
+          id: row.id,
           email: row.email,
           nome_utente: row.nome_utente,
           nome: row.nome,

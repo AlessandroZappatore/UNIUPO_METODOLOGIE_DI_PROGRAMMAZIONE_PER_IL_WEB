@@ -59,3 +59,4 @@ CREATE TABLE commenti (
     FOREIGN KEY(utente) REFERENCES utente(nome_utente) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(contenuto) REFERENCES contenuto(titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
+

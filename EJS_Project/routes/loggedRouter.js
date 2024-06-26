@@ -48,6 +48,19 @@ router.post('/mark-as-watched', async (req, res) => {
     }
 });
 
+router.post('/mark-as-not-watched', async (req, res) => {
+    const { email, contenuto } = req.body;
+
+    try {
+        await userDao.markAsNotWatched(email, contenuto);
+        res.json({ message: 'Contenuto segnato come NON visto' });
+    }
+    catch (error) {
+        console.error('Errore nella rimozione:', error);
+        res.status(500).send('Errore nella rimozione');
+    }
+});
+
 router.get('/modifica-profilo/:id', async (req, res) => {
     const id = req.params.id;
 
@@ -72,7 +85,7 @@ router.post('/modifica-profilo/:id', [
     check('nomeUtente').isLength({ min: 1 }).withMessage('Inserisci un nome utente'),
     check('password').isLength({ min: 8 }).withMessage('La password deve contenere almeno 8 caratteri'),
     check('tipoUtente').isIn(['standard', 'amministratore']).withMessage('Tipo utente non valido')
-] ,profileUpload.single('profiloImmagine'), async (req, res) => {
+], profileUpload.single('profiloImmagine'), async (req, res) => {
     const id = req.params.id;
     const { email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente } = req.body;
     const profiloImmagine = req.file ? req.file.filename : null;
@@ -126,7 +139,7 @@ router.post('/elimina-commento', async (req, res) => {
 });
 
 router.post('/elimina-profilo', async (req, res) => {
-    const { id } = req.body; 
+    const { id } = req.body;
 
     try {
         const user = await userDao.getUserById(id);
@@ -136,7 +149,7 @@ router.post('/elimina-profilo', async (req, res) => {
 
         await userDao.deleteProfile(id);
 
-        if (user.immagineProfilo !== "default_profile.jpg") { 
+        if (user.immagineProfilo !== "default_profile.jpg") {
             const profileImagePath = path.join(__dirname, '..', 'public', 'images', 'profile', user.immagineProfilo);
 
             fs.unlink(profileImagePath, (err) => {
@@ -144,7 +157,7 @@ router.post('/elimina-profilo', async (req, res) => {
                     console.error('Errore durante l\'eliminazione della foto profilo:', err);
                     return res.status(500).json({ message: 'Errore durante l\'eliminazione della foto profilo' });
                 } else {
-                    console.log('Foto profilo eliminata con successo:', profileImagePath); 
+                    console.log('Foto profilo eliminata con successo:', profileImagePath);
                 }
             });
         }

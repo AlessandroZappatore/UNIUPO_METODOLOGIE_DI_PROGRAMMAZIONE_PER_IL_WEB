@@ -56,24 +56,25 @@
                                 </form>
                                 
                                 <!-- Tasto per segnare un contenuto come visto -->
-                                <button class="btn btn-primary btn-sm" id="bookmarkButton" title="<%= contenuto.aggiunto ? 'Rimuovi dai visti' : 'Segna come visto' %>"
+                                 <% if(!hasWatched) {%>
+                                <button class="btn btn-primary btn-sm" id="bookmarkButton" title="Segna come visto"
                                     data-id="<%= contenuto.titolo %>"
                                     onclick="markAsWatched('<%= contenuto.titolo %>', '<%= user.email %>')">
-                                    <% if (contenuto.aggiunto) { %>
-                                        <!-- Icona per "Rimuovi dai visti" -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem"
-                                            fill="currentColor" class="bi bi-bookmark-dash" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zM2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2z"/>
-                                        </svg>
-                                    <% } else { %>
-                                        <!-- Icona originale per "Segna come visto" -->
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem"
                                             fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
                                             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
                                             <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4"/>
                                         </svg>
+                                </button>
+                                <% } else {%>
+                                    <button class="btn btn-success btn-sm" id="bookmarkButton" title="Segna come NON visto"
+                                    data-id="<%= contenuto.titolo %>"
+                                    onclick="confirmUnWatch('<%= contenuto.titolo %>', '<%= user.email %>')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5m8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
+                                          </svg>
+                                </button>
                                     <% } %>
-                            </button>
                         </div>
                         <% } %>
 
@@ -126,7 +127,7 @@
                                             <p><b>Dove vederlo:</b>
                                                 <%= contenuto.dove_vederlo %>
                                             </p>
-                                            <p><b>Trama: </b>
+                                            <p align="justify"><b>Trama: </b>
                                                 <%= contenuto.trama %>
                                             </p>
                                 </div>
@@ -140,7 +141,7 @@
                                 <% if(user && user.tipologia==='amministratore' ) { %>
                                     <div class="d-flex align-items-center justify-content-end">
                                         <!-- Tasto per modificare il Film, nel progetto finale sarà utilizzabile solo dagli utenti amministratori -->
-                                        <button class="btn btn-success btn-sm btn-pencil-square" title="Modifica contenuto" onclick="redirectToModifica('<%= contenuto.id %>')">
+                                            <button class="btn btn-success btn-sm btn-pencil-square" title="Modifica contenuto" onclick="redirectToModifica('<%= contenuto.id %>')">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
@@ -245,40 +246,7 @@
             </div>
         </section>
 
-        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmModalLabel">Conferma</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="confirmModalBody">
-                        Sei sicuro di voler procedere?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                        <button type="button" class="btn btn-primary" id="confirmModalConfirmButton">Conferma</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="successModalLabel">Successo</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="successModalBody">
-                        L'operazione è stata completata con successo.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%- include('modal'); -%>
         <%- include('footer'); -%>
 
         

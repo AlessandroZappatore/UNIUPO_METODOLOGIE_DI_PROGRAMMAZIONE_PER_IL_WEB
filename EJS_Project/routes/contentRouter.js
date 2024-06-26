@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const contentDao = require('../models/content-dao.js');
+const userDao = require('../models/user-dao.js');
 const path = require('path');
 
 router.get('/film', async (req, res) => {
@@ -30,10 +31,11 @@ router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
   try {
     const result = await contentDao.getContentByTitolo(titolo);
     const commenti = await contentDao.getAllComments(titolo);
+    const hasWatched = req.user ? await userDao.hasWatched(req.user.email, titolo) : false;
     if (result.error) {
       res.status(404).send(result.error);
     } else {
-      res.render('visualizza_contenuto', { contenuto: result, comments: commenti });
+      res.render('visualizza_contenuto', { contenuto: result, comments: commenti, hasWatched: hasWatched });
     }
   } catch (error) {
     console.error('Error fetching content by title:', error);

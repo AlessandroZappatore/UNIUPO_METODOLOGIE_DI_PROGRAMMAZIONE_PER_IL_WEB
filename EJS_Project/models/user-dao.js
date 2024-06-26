@@ -185,10 +185,10 @@ exports.getSerieUtente = function (email) {
   });
 };
 
-exports.markAsWatched = function (email, contenuto) {
+exports.markAsWatched = function (utente, contenuto) {
   return new Promise((resolve, reject) => {
     const sql = 'INSERT INTO profilo (utente, contenuto) VALUES (?, ?)';
-    db.run(sql, [email, contenuto], function (err) {
+    db.run(sql, [utente, contenuto], function (err) {
       if (err) {
         console.error('Error saving content:', err.message);
         reject(err);
@@ -197,6 +197,31 @@ exports.markAsWatched = function (email, contenuto) {
       }
     });
   });
+};
+
+exports.markAsNotWatched = function (utente, contenuto) {
+  return new Promise((resolve, reject) => {
+    const sql = 'DELETE FROM profilo WHERE contenuto = ? AND utente = ?';
+    db.run(sql, [contenuto, utente], (err) => {
+      if (err) { reject(err) }
+      else { resolve() };
+    });
+  });
+};
+
+exports.hasWatched = function (utente, contenuto) {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT * FROM profilo WHERE utente = ? AND contenuto = ?';
+    db.get(sql, [utente, contenuto], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  })
 };
 
 exports.addComment = function (utente, contenuto, commento) {

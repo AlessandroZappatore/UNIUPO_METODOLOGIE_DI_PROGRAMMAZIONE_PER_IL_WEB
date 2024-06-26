@@ -40,7 +40,7 @@ router.get('/profilo/:Nome_utente', async (req, res) => {
         const serieViste = await userDao.getSerieUtente(user.email);
         let totalMinutesSerie = 0;
         for (let i = 0; i < serieViste.length; i++) {
-            totalMinutesSerie += serieViste[i].durata;
+            totalMinutesSerie += serieViste[i].durata * serieViste[i].num_stagioni * serieViste[i].num_episodi;
         }
         let durationSerie = moment.duration(totalMinutesSerie, 'minutes');
         let daysSerie = parseFloat(durationSerie.asDays().toFixed(3));

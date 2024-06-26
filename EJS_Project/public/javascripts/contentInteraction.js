@@ -31,7 +31,28 @@ function markAsWatched(contenuto, email) {
     })
     .then(response => response.text())
     .then(data => {
-        showModal('successModal', data);
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
+}
+
+function confirmUnWatch(contentId, userEmail) {
+    showModal('confirmModal', "Sei sicuro di voler segnare questo contenuto come NON visto?", () => unMarkWatched(userEmail, contentId));
+}
+
+function unMarkWatched(userEmail, contentId) {
+    fetch('/mark-as-not-watched', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: userEmail, contenuto: contentId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        window.location.reload();
     })
     .catch(error => {
         console.error('Errore:', error);

@@ -49,23 +49,28 @@
                         <div class="header-text mb-4 text-center">
                             <h2>
                                 <% if(title==='Aggiungi' ) {%> Aggiungi un nuovo contenuto
-                                    <% } else if(title==='Modifica' ) {%> Modifica <b><%= contenuto.titolo %></b>
-                                            <% } %>
+                                    <% } else if(title==='Modifica' ) {%> Modifica <b>
+                                            <%= contenuto.titolo %>
+                                        </b>
+                                        <% } %>
                             </h2>
                         </div>
 
                         <!-- Check box film o serie TV -->
-                        <form action="<% title === 'Aggiungi' ? '/aggiungi_contenuto' : '/modifica_contenuto/' + contenuto.id %>" method="post" enctype="multipart/form-data">
+                        <form
+                            action="<% title === 'Aggiungi' ? '/aggiungi_contenuto' : '/modifica_contenuto/' + contenuto.id %>"
+                            method="post" enctype="multipart/form-data">
                             <div class="text-center film-serie-check mb-3">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="tipoContenuto" id="inlineRadio1"
-                                        value="film" <% if(contenuto.tipologia === 'film' || title === 'Aggiungi') {%> checked <% } %>>
-                                    <label class="form-check-label" for="inlineRadio1">Film</label>
+                                        value="film" <% if(contenuto.tipologia==='film' || title==='Aggiungi' ) {%>
+                                    checked <% } %>>
+                                        <label class="form-check-label" for="inlineRadio1">Film</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="tipoContenuto" id="inlineRadio2"
-                                        value="serieTV" <% if(contenuto.tipologia === 'serieTV') {%> checked <% } %>>
-                                    <label class="form-check-label" for="inlineRadio2">Serie TV</label>
+                                        value="serieTV" <% if(contenuto.tipologia==='serieTV' ) {%> checked <% } %>>
+                                        <label class="form-check-label" for="inlineRadio2">Serie TV</label>
                                 </div>
                             </div>
 
@@ -91,7 +96,14 @@
                                 </option>
                                 <option value="Azione" <%=contenuto.genere==='Azione' ? 'selected' : '' %>>Azione
                                 </option>
-                                <option value="Crime" <%=contenuto.genere==='Crime' ? 'selected' : '' %>>Crime</option>
+                                <option value="Crime" <%=contenuto.genere==='Crime' ? 'selected' : '' %>>Crime
+                                </option>
+                                <option value="Drammatico" <%=contenuto.genere==='Drammatico' ? 'selected' : '' %>>Drammatico                                    
+                                </option>
+                                <option value="Biografico" <%=contenuto.genere==='Biografico' ? 'selected' : '' %>>Biografico                                    
+                                </option>
+                                <option value="Musical" <%=contenuto.genere==='Musical' ? 'selected' : '' %>>Musical                                    
+                                </option>
                             </select>
 
 
@@ -115,22 +127,24 @@
                                 <label class="control-label">Data di uscita</label>
                                 <div>
                                     <input type="date" name="Data_uscita" class="form-control input-lg"
-                                    value="<%= contenuto.data_uscita  || '' %>">
+                                        value="<%= contenuto.data_uscita  || '' %>">
                                 </div>
                             </div>
 
                             <!-- Sezione che si attiva solo se è abilitato il check su serie TV -->
                             <div class="form-floating mb-3">
                                 <input name="Num_stagioni" type="number" class="form-control" id="numero-stagioni"
-                                    placeholder="Num_stagioni" <% if(title === 'Aggiungi' || contenuto.tipologia === 'film') {%> disabled <% } %> value="<%= contenuto.num_stagioni  || '' %>">
-                                <label for="numero-stagioni">&nbsp;&nbsp;&nbsp;Numero di stagioni</label>
+                                    placeholder="Num_stagioni" <% if(title==='Aggiungi' || contenuto.tipologia==='film'
+                                    ) {%> disabled <% } %> value="<%= contenuto.num_stagioni || '' %>">
+                                        <label for="numero-stagioni">&nbsp;&nbsp;&nbsp;Numero di stagioni</label>
                             </div>
 
                             <!-- Sezione che si attiva solo se è abilitato il check su serie TV -->
                             <div class="form-floating mb-3">
                                 <input type="number" name="Num_episodi" class="form-control" id="numero-episodi"
-                                    placeholder="Num_episodi" <% if(title === 'Aggiungi' || contenuto.tipologia === 'film') {%> disabled <% } %> value="<%= contenuto.num_episodi  || '' %>">
-                                <label for="numero-episodi">&nbsp;&nbsp;&nbsp;Numero di episodi</label>
+                                    placeholder="Num_episodi" <% if(title==='Aggiungi' || contenuto.tipologia==='film' )
+                                    {%> disabled <% } %> value="<%= contenuto.num_episodi || '' %>">
+                                        <label for="numero-episodi">&nbsp;&nbsp;&nbsp;Numero di episodi</label>
                             </div>
 
                             <div class="input-group mb-3">
@@ -152,14 +166,16 @@
                             <div class="input-group mb-3">
                                 <div class="form-floating">
                                     <textarea class="form-control box-trama" name="Trama" style="height: 100px"
-                                        placeholder="Trama" id="floatingTextarea2"><%= contenuto.trama || '' %></textarea>
+                                        placeholder="Trama"
+                                        id="floatingTextarea2"><%= contenuto.trama || '' %></textarea>
                                     <label for="floatingTextarea2">Una breve trama</label>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3 mx-auto">
                                 <label for="poster" class="form-label">Carica qui il poster del contenuto</label>
-                                <input class="form-control" type="file" id="poster" name="poster" <% if(title === 'Aggiungi') {%> required  <% } %>>
+                                <input class="form-control" type="file" id="poster" name="poster" <%
+                                    if(title==='Aggiungi' ) {%> required <% } %>>
                             </div>
 
                             <div class="input-group mb-3">

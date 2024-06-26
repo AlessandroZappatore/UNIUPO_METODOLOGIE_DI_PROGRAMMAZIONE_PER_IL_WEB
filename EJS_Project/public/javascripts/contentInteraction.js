@@ -141,18 +141,22 @@ function deleteProfile(id_profilo) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    const ratingContainer = document.querySelector('.rating');
-    const username = ratingContainer.getAttribute('data-user-username');
-    const contentTitle = ratingContainer.getAttribute('data-content-title');
-    
-    const ratingInputs = document.querySelectorAll('.rating-input');
-    
-    ratingInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            const ratingValue = this.value;
-            addRating(username, contentTitle, ratingValue);
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    const ratingForm = document.getElementById('ratingForm');
+    const ratingDiv = document.querySelector('.rating');
+
+    ratingForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Previene l'invio del form
+
+        // Trova il voto selezionato
+        const selectedRating = ratingForm.querySelector('input[name="rating"]:checked').value;
+
+        // Ottieni i dati utente e contenuto dai data attributes
+        const utente = ratingDiv.getAttribute('data-user-username');
+        const contenuto = ratingDiv.getAttribute('data-content-title');
+
+        // Chiama la funzione addRating
+        addRating(utente, contenuto, selectedRating);
     });
 });
 

@@ -30,10 +30,19 @@
           </ul>
         </div>
 
-        <form class="d-flex ms-auto" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+        <form class="d-flex ms-auto" role="search" action="/search" method="GET">
+          <input class="form-control me-2" type="search" name="query" placeholder="Ricerca" aria-label="Search" />
+          <% if (user) { %>
+            <select class="form-select me-2" name="searchBy">
+              <option value="title">Titolo</option>
+              <option value="actor">Attore</option>
+              <option value="director">Regista</option>
+            </select>
+          <% } else { %>
+            <input type="hidden" name="searchBy" value="title">
+          <% } %>
+          <button class="btn btn-outline-success" type="submit">Cerca</button>
         </form>
-
       </div>
     </div>
 
@@ -55,6 +64,7 @@
             </ul>
           </div>
           <% } else { %>
+            <div style="width: 10px;"></div>
             <a href="/login" class="login-button">Login</a>
             <% } %>
 

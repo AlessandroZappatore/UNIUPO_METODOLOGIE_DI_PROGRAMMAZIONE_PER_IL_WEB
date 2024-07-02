@@ -26,7 +26,6 @@ router.get('/serieTV', async (req, res) => {
   }
 });
 
-
 router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
   const titolo = req.params.Titolo;
   try {
@@ -43,5 +42,41 @@ router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    req.isUnauthenticated = true;
+    return next();
+  }
+}
+
+router.get('/search_no_log', async (req, res) => {
+  const query = req.query.query;
+  const searchBy = req.query.searchBy;
+
+  if(searchBy !== "titolo") return res.status(404).send("Parametro di ricerca non valido");
+  try {
+    let result = await contentDao.getAllContent();
+
+    if (result.error) return res.status(404).send(result.error);
+
+    result = filterData(searchBy, query, result);
+    res.render('contenuti', { title: `Risultati per: ${query}`, page: 'search', contents: result });
+  } catch (error) {
+    console.error('Error fetching search results:', error);
+    res.status(500).send(error);
+  }
+});
+
+function filterData(searchBy, query, data) {
+  if (!searchBy || !query) return data;
+
+  return data.filter(row => {
+    if (row[searchBy] === undefined) return false; 
+    return row[searchBy].toLowerCase().includes(query.toLowerCase());
+  });
+}
 
 module.exports = router;

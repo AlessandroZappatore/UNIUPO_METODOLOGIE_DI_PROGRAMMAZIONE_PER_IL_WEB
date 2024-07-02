@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const userDao = require('../models/user-dao.js');
+const contentDao = require('../models/content-dao.js');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
@@ -179,4 +180,30 @@ router.post('/add-rating', async (req, res) => {
         res.status(500).json({ message: 'Errore nell\'aggiunta del rating' });
     }
 });
+
+router.get('/search', async (req, res) => {
+    const query = req.query.query;
+    const searchBy = req.query.searchBy;
+  
+    try {
+      let result = await contentDao.getAllContent();
+  
+      if (result.error) return res.status(404).send(result.error);
+  
+      result = filterData(searchBy, query, result);
+      res.render('contenuti', { title: `Risultati per: ${query}`, page: 'search', contents: result });
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+      res.status(500).send(error);
+    }
+  });
+  
+  function filterData(searchBy, query, data) {
+    if (!searchBy || !query) return data;
+  
+    return data.filter(row => {
+      if (row[searchBy] === undefined) return false; 
+      return row[searchBy].toLowerCase().includes(query.toLowerCase());
+    });
+  }
 module.exports = router;

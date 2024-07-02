@@ -146,6 +146,19 @@ exports.getAllSeries = function () {
   });
 };
 
+exports.getAllContent = function () {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT * FROM contenuto';
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
+  });
+}
+
 exports.deleteContent = function(id) {
   return new Promise((resolve, reject) => {
     const sql = 'DELETE FROM contenuto WHERE id = ?'; 

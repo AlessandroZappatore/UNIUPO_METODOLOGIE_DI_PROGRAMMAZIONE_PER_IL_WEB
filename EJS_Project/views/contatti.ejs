@@ -13,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+    <script src="/javascripts/contentInteraction.js"></script>
     <script defer src="/javascripts/logout.js"></script>
 
 </head>
@@ -68,7 +69,7 @@
                 </div>
     
                 <div class="input-group mb-3">
-                  <button class="btn btn-lg btn-primary w-100 fs-6">Invia</button>
+                  <button class="btn btn-lg btn-primary w-100 fs-6" onclick="simulateSendEmail()">Invia</button>
                 </div>
               </div>
             </div>
@@ -78,4 +79,6 @@
         </div>
         <!-- Fine contenitore contatti -->
       </section>
+
+      <%- include('modal'); -%>
       <%- include('footer'); -%>

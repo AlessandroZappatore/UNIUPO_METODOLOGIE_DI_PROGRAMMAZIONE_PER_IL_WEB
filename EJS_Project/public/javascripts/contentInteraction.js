@@ -209,3 +209,8 @@ function redirectToModificaProfilo(userId) {
     var urlModifica = "/modifica-profilo/" + userId;
     window.location.href = urlModifica;
 }
+
+function simulateSendEmail() {
+    const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    confirmationModal.show();
+}

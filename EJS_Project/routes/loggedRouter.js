@@ -181,6 +181,17 @@ router.post('/add-rating', async (req, res) => {
     }
 });
 
+router.post('/delete-rating', async (req, res) => {
+    const { contenuto, email } = req.body; // Assicurati che sia 'email'
+    try {
+        await userDao.deleteRating(email, contenuto); // Usa 'email' qui
+        res.json({ message: 'Rating eliminato con successo' });
+    } catch (error) {
+        console.error('Errore nell\'eliminazione del rating:', error);
+        res.status(500).json({ message: 'Errore nell\'eliminazione del rating' });
+    }
+});
+
 
 router.get('/search', async (req, res) => {
     const query = req.query.query;

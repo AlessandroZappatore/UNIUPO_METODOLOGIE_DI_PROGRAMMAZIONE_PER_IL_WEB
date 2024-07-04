@@ -219,3 +219,17 @@ exports.updateContent = function(id, updatedContent) {
     });
   });
 };
+
+exports.getAvgRating = function (id) {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT AVG(voto) AS media_voti FROM rating WHERE contenuto = ?';
+    db.get(sql, [id], (err, row) => {
+      if (err) {
+        reject(err);
+      } else {
+        const averageRating = row.media_voti || 0;
+        resolve(averageRating);
+      }
+    });
+  });
+};

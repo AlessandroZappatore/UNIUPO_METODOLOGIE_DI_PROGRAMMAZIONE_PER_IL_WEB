@@ -2,7 +2,8 @@
 <html lang="it">
 
 <head>
-    <title>WIW - <%= contenuto.titolo %></title>
+    <title>WIW - <%= contenuto.titolo %>
+    </title>
     <link rel="shortcut icon" href="/images/static/popcorn.png" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,208 +40,275 @@
                             <% if(user) { %>
                                 <div class="d-flex align-items-center">
                                     <% if(hasWatched) { %>
-                                    <div class="rating me-auto" data-user-username="<%= user.email %>" data-content-title="<%= contenuto.titolo %>">
-                                        <input value="5" name="rating" id="star5" type="radio" class="rating-input">
-                                        <label for="star5"></label>
-                                        <input value="4" name="rating" id="star4" type="radio" class="rating-input">
-                                        <label for="star4"></label>
-                                        <input value="3" name="rating" id="star3" type="radio" class="rating-input">
-                                        <label for="star3"></label>
-                                        <input value="2" name="rating" id="star2" type="radio" class="rating-input">
-                                        <label for="star2"></label>
-                                        <input value="1" name="rating" id="star1" type="radio" class="rating-input">
-                                        <label for="star1"></label>
-                                    </div>
-                                    <% } else { %>
-                                    <div class="me-auto"></div>
-                                    <% } %>
+
+                                        <% if(!rating) { %>
+                                            <div class="rating me-auto" data-user-username="<%= user.email %>"
+                                                data-content-title="<%= contenuto.titolo %>">
+                                                <input value="5" name="rating" id="star5" type="radio"
+                                                    class="rating-input">
+                                                <label for="star5"></label>
+                                                <input value="4" name="rating" id="star4" type="radio"
+                                                    class="rating-input">
+                                                <label for="star4"></label>
+                                                <input value="3" name="rating" id="star3" type="radio"
+                                                    class="rating-input">
+                                                <label for="star3"></label>
+                                                <input value="2" name="rating" id="star2" type="radio"
+                                                    class="rating-input">
+                                                <label for="star2"></label>
+                                                <input value="1" name="rating" id="star1" type="radio"
+                                                    class="rating-input">
+                                                <label for="star1"></label>
+                                            </div>
+                                            <% } else {%>
+                                                <div class="rating me-auto" data-user-username="<%= user.email %>"
+                                                    data-content-title="<%= contenuto.titolo %>">
+                                                    <input value="5" name="rating" id="star5" type="radio"
+                                                        class="rating-input" <%=rating.voto===5 ? 'checked' : '' %>>
+                                                    <label for="star5"></label>
+                                                    <input value="4" name="rating" id="star4" type="radio"
+                                                        class="rating-input" <%=rating.voto===4 ? 'checked' : '' %>>
+                                                    <label for="star4"></label>
+                                                    <input value="3" name="rating" id="star3" type="radio"
+                                                        class="rating-input" <%=rating.voto===3 ? 'checked' : '' %>>
+                                                    <label for="star3"></label>
+                                                    <input value="2" name="rating" id="star2" type="radio"
+                                                        class="rating-input" <%=rating.voto===2 ? 'checked' : '' %>>
+                                                    <label for="star2"></label>
+                                                    <input value="1" name="rating" id="star1" type="radio"
+                                                        class="rating-input" <%=rating.voto===1 ? 'checked' : '' %>>
+                                                    <label for="star1"></label>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-end p-2">
+                                                    <button class="btn btn-danger btn-sm" title="Rimuovi voto"
+                                                        onclick="confirmDeleteRating('<%= contenuto.titolo %>', '<%= user.email %>')"
+                                                        id="deleteButton">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem"
+                                                            height="1.2rem" fill="currentColor" class="bi bi-trash"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                            <path
+                                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                        </svg>
+                                                    </button>
+
+                                                </div>
+                                                <% } %>
+                                                    <% } else { %>
+                                                        <div class="me-auto"></div>
+                                                        <% } %>
                                 </div>
-                        
+
                                 <!-- Tasto per segnare un contenuto come visto -->
                                 <% if(!hasWatched) { %>
-                                <button class="btn btn-primary btn-sm" id="bookmarkButton" title="Segna come visto"
-                                    data-id="<%= contenuto.titolo %>"
-                                    onclick="markAsWatched('<%= contenuto.titolo %>', '<%= user.email %>')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem"
-                                        fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
-                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-                                        <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4"/>
-                                    </svg>
-                                </button>
-                                <% } else { %>
-                                <button class="btn btn-success btn-sm" id="bookmarkButton" title="Segna come NON visto"
-                                    data-id="<%= contenuto.titolo %>"
-                                    onclick="confirmUnWatch('<%= contenuto.titolo %>', '<%= user.email %>')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5m8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-                                    </svg>
-                                </button>
-                                <% } %>
-                            <% } %>
-                        </div>
-                        
-                            <div class="row align-items-center">
-                                <div class="header-text mb-4 text-center">
-                                    <h2>
-                                        <%= contenuto.titolo %>
-                                    </h2>
-                                </div>
-
-                                <div class="text-center film-serie-check mb-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="inlineRadio1" value="film" <%=contenuto.tipologia==='film' ? 'checked'
-                                            : '' %> disabled>
-                                        <label class="form-check-label" for="inlineRadio1"><b>Film</b></label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="inlineRadio2" value="serieTV" <%=contenuto.tipologia==='serieTV'
-                                            ? 'checked' : '' %> disabled>
-                                        <label class="form-check-label" for="inlineRadio2">Serie TV</label>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p><b>Genere:</b>
-                                        <%= contenuto.genere %>
-                                    </p>
-                                    <p><b>Regista:</b>
-                                        <%= contenuto.registi %>
-                                    </p>
-                                    <p><b>Attori:</b>
-                                        <%= contenuto.attori %>
-                                    </p>
-                                    <p><b>Data di uscita:</b>
-                                        <%= contenuto.data_uscita %>
-                                    </p>
-                                    <p><b>Durata:</b>
-                                        <%= contenuto.durata %> minuti
-                                    </p>
-                                    <% if (contenuto.tipologia==='serieTV' ) { %>
-                                        <p><b>Numero di stagioni:</b>
-                                            <%= contenuto.num_stagioni %>
-                                        </p>
-                                        <p><b>Numero di episodi:</b>
-                                            <%= contenuto.num_episodi %>
-                                        </p>
-                                        <% } %>
-                                            <p><b>Dove vederlo:</b>
-                                                <%= contenuto.dove_vederlo %>
-                                            </p>
-                                            <p align="justify"><b>Trama: </b>
-                                                <%= contenuto.trama %>
-                                            </p>
-                                </div>
-
-                                <!-- Pulsante per avere accesso ai commenti del contenuto -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#ModalFilm">
-                                    Commenti
-                                </button>
-
-                                <% if(user && user.tipologia==='amministratore' ) { %>
-                                    <div class="d-flex align-items-center justify-content-end">
-                                        <!-- Tasto per modificare il Film, nel progetto finale sarà utilizzabile solo dagli utenti amministratori -->
-                                            <button class="btn btn-success btn-sm btn-pencil-square" title="Modifica contenuto" onclick="redirectToModifica('<%= contenuto.id %>')">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                                </svg>
+                                    <button class="btn btn-primary btn-sm" id="bookmarkButton" title="Segna come visto"
+                                        data-id="<%= contenuto.titolo %>"
+                                        onclick="markAsWatched('<%= contenuto.titolo %>', '<%= user.email %>')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem"
+                                            fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                                            <path
+                                                d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4" />
+                                        </svg>
+                                    </button>
+                                    <% } else { %>
+                                        <button class="btn btn-success btn-sm" id="bookmarkButton"
+                                            title="Segna come NON visto" data-id="<%= contenuto.titolo %>"
+                                            onclick="confirmUnWatch('<%= contenuto.titolo %>', '<%= user.email %>')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem"
+                                                fill="currentColor" class="bi bi-bookmark-check-fill"
+                                                viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                    d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5m8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
+                                            </svg>
                                         </button>
-                                        <!-- Tasto per eliminare il Film, nel progetto finale sarà utilizzabile solo dagli utenti amministratori -->
-                                        <div class="d-flex align-items-center justify-content-end p-2">
-                                            <button class="btn btn-danger btn-sm" title="Elimina contentuto" onclick="confirmDelete('<%= contenuto.id %>')" id="deleteButton">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                                </svg>
-                                            </button>
-                                            
-                                        </div>
-                                    </div>
-                                    <% } %>
+                                        <% } %>
+                                            <% } %>
+                        </div>
 
-                                        <div class="modal fade" id="ModalFilm" tabindex="-1"
-                                            aria-labelledby="ModalFilmLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="ModalFilmLabel">Commenti: <%=
-                                                                contenuto.titolo %>
-                                                        </h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <ul class="list-group">
-                                                            <% comments.forEach((comment)=> { %>
-                                                                <%- include('commento', { comment }); -%>
-                                                                    <% }); %>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="modal-footer d-flex">
-                                                        <% if(user) {%>
-                                                          <button class="btn btn-success mr-auto" title="Aggiungi commento"
-                                                                  id="addButton" data-bs-toggle="modal"
-                                                                  data-bs-target="#addCommentModal">
+                        <div class="row align-items-center">
+                            <div class="header-text mb-4 text-center">
+                                <h2>
+                                    <%= contenuto.titolo %>
+                                </h2>
+                                <h5>
+                                    Voto medio:
+                                    <span class="badge 
+                                            <%= avgRating <= 1.5 ? 'text-bg-danger' : avgRating <= 3.5 ? 'text-bg-warning' : 'text-bg-success' %>">
+                                        <%= avgRating.toFixed(1) %>
+                                    </span>
+                                </h5>
+                            </div>
+
+                            <div class="text-center film-serie-check mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio1" value="film" <%=contenuto.tipologia==='film' ? 'checked' : ''
+                                        %> disabled>
+                                    <label class="form-check-label" for="inlineRadio1"><b>Film</b></label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio2" value="serieTV" <%=contenuto.tipologia==='serieTV' ? 'checked'
+                                        : '' %> disabled>
+                                    <label class="form-check-label" for="inlineRadio2">Serie TV</label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p><b>Genere:</b>
+                                    <%= contenuto.genere %>
+                                </p>
+                                <p><b>Regista:</b>
+                                    <%= contenuto.registi %>
+                                </p>
+                                <p><b>Attori:</b>
+                                    <%= contenuto.attori %>
+                                </p>
+                                <p><b>Data di uscita:</b>
+                                    <%= contenuto.data_uscita %>
+                                </p>
+                                <p><b>Durata:</b>
+                                    <%= contenuto.durata %> minuti
+                                </p>
+                                <% if (contenuto.tipologia==='serieTV' ) { %>
+                                    <p><b>Numero di stagioni:</b>
+                                        <%= contenuto.num_stagioni %>
+                                    </p>
+                                    <p><b>Numero di episodi:</b>
+                                        <%= contenuto.num_episodi %>
+                                    </p>
+                                    <% } %>
+                                        <p><b>Dove vederlo:</b>
+                                            <%= contenuto.dove_vederlo %>
+                                        </p>
+                                        <p align="justify"><b>Trama: </b>
+                                            <%= contenuto.trama %>
+                                        </p>
+                            </div>
+
+                            <!-- Pulsante per avere accesso ai commenti del contenuto -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#ModalFilm">
+                                Commenti
+                            </button>
+
+                            <% if(user && user.tipologia==='amministratore' ) { %>
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <!-- Tasto per modificare il Film, nel progetto finale sarà utilizzabile solo dagli utenti amministratori -->
+                                    <button class="btn btn-success btn-sm btn-pencil-square" title="Modifica contenuto"
+                                        onclick="redirectToModifica('<%= contenuto.id %>')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem"
+                                            fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg>
+                                    </button>
+                                    <!-- Tasto per eliminare il Film, nel progetto finale sarà utilizzabile solo dagli utenti amministratori -->
+                                    <div class="d-flex align-items-center justify-content-end p-2">
+                                        <button class="btn btn-danger btn-sm" title="Elimina contentuto"
+                                            onclick="confirmDelete('<%= contenuto.id %>')" id="deleteButton">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem"
+                                                fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                <path
+                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                            </svg>
+                                        </button>
+
+                                    </div>
+                                </div>
+                                <% } %>
+
+                                    <div class="modal fade" id="ModalFilm" tabindex="-1"
+                                        aria-labelledby="ModalFilmLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="ModalFilmLabel">Commenti: <%=
+                                                            contenuto.titolo %>
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-group">
+                                                        <% comments.forEach((comment)=> { %>
+                                                            <%- include('commento', { comment }); -%>
+                                                                <% }); %>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer d-flex">
+                                                    <% if(user) {%>
+                                                        <button class="btn btn-success mr-auto"
+                                                            title="Aggiungi commento" id="addButton"
+                                                            data-bs-toggle="modal" data-bs-target="#addCommentModal">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem"
                                                                 height="1.5rem" fill="currentColor"
                                                                 class="bi bi-plus-square align-middle"
                                                                 viewBox="0 0 16 16">
-                                                              <path
-                                                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                                                              <path
-                                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                                <path
+                                                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                                                <path
+                                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                                                             </svg>
-                                                          </button>
+                                                        </button>
                                                         <% } %>
-                                                      
-                                                        <div class="ms-auto">
-                                                          <button type="button" class="btn btn-secondary"
-                                                                  data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                      </div>
-                                            
+
+                                                            <div class="ms-auto">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Fine sezione commenti -->
+                                    <div class="modal fade" id="addCommentModal" tabindex="-1"
+                                        aria-labelledby="addCommentModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addCommentModalLabel">Aggiungi
+                                                        Commento per <b>
+                                                            <%= contenuto.titolo %>
+                                                        </b></h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Form per l'aggiunta del commento -->
+                                                    <% if(user) {%>
+                                                        <form action="/add-comment" method="POST" id="addCommentForm"
+                                                            onsubmit="event.preventDefault(); inviaCommento('<%= contenuto.titolo %>', '<%= user.nome_utente %>', document.getElementById('commentText').value)">
+                                                            <div class="mb-3">
+                                                                <label for="commentText" class="form-label">Testo del
+                                                                    Commento</label>
+                                                                <textarea class="form-control" id="commentText"
+                                                                    name="commento" rows="3"></textarea>
+                                                            </div>
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-success">Aggiungi
+                                                                    Commento</button>
+                                                            </div>
+                                                        </form>
+
+                                                        <% } %>
+
+
+
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Fine sezione commenti -->
-                                        <div class="modal fade" id="addCommentModal" tabindex="-1"
-                                            aria-labelledby="addCommentModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="addCommentModalLabel">Aggiungi
-                                                            Commento per <b>
-                                                                <%= contenuto.titolo %>
-                                                            </b></h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <!-- Form per l'aggiunta del commento -->
-                                                        <% if(user) {%>
-                                                            <form action="/add-comment" method="POST" id="addCommentForm" onsubmit="event.preventDefault(); inviaCommento('<%= contenuto.titolo %>', '<%= user.nome_utente %>', document.getElementById('commentText').value)">
-                                                                <div class="mb-3">
-                                                                    <label for="commentText" class="form-label">Testo del Commento</label>
-                                                                    <textarea class="form-control" id="commentText" name="commento" rows="3"></textarea>
-                                                                </div>
-                                                                <div class="text-center">
-                                                                    <button type="submit" class="btn btn-success">Aggiungi Commento</button>
-                                                                </div>
-                                                            </form>
-                                                   
-                                                        <% } %>
-                                        
-                                                        
+                                    </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                            </div>
+                        </div>
                     </div>
                     <!-- Fine contenitore destro -->
                 </div>
@@ -248,6 +316,4 @@
         </section>
 
         <%- include('modal'); -%>
-        <%- include('footer'); -%>
-
-        
+            <%- include('footer'); -%>

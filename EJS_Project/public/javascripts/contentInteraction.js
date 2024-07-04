@@ -39,8 +39,12 @@ function markAsWatched(contenuto, email) {
 }
 
 function confirmUnWatch(contentId, userEmail) {
-    showModal('confirmModal', "Sei sicuro di voler segnare questo contenuto come NON visto?", () => unMarkWatched(userEmail, contentId));
+    showModal('confirmModal', "Sei sicuro di voler segnare questo contenuto come NON visto?", () => {
+        unMarkWatched(userEmail, contentId);
+        deleteRating(contentId, userEmail);
+    });
 }
+
 
 function unMarkWatched(userEmail, contentId) {
     fetch('/mark-as-not-watched', {
@@ -165,13 +169,34 @@ function addRating(utente, contenuto, voto) {
         },
         body: JSON.stringify({ utente: utente, contenuto: contenuto, voto: voto }),
     })
-        .then(response => response.json())
         .then(data => {
-            window.location.reload();
+                window.location.href = '/visualizza_contenuto/' + contenuto;
         })
         .catch(error => {
-            console.error('Errore:', error);
+            showModal('errorModal', 'Errore durante l\'aggiunta del voto');
         });
+}
+
+function confirmDeleteRating(contentId, userEmail) {
+    showModal('confirmModal', "Sei sicuro di voler rimuovere il voto?", () => deleteRating(contentId, userEmail));
+}
+
+
+function deleteRating(contentId, userEmail) {
+    fetch('/delete-rating', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ contenuto: contentId, email: userEmail }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
 }
 
 

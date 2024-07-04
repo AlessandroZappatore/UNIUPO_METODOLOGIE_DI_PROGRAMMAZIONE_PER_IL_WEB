@@ -262,18 +262,30 @@ exports.addRating = function (utente, contenuto, voto) {
   });
 };
 
+exports.deleteRating = function (utente, contenuto) {
+  return new Promise((resolve, reject) => {
+    const sql = 'DELETE FROM rating WHERE utente = ? AND contenuto = ?';
+    db.run(sql, [ utente,contenuto], (err) => {
+      if (err) { reject(err) }
+      else { resolve() };
+    });
+  });
+}
+
 exports.getRatingByUser = function (utente, contenuto) {
   return new Promise((resolve, reject) => {
-    const sql = 'SELECT FROM rating WHERE utente = ? AND contenuto = ?';
+    const sql = 'SELECT id_rating, voto FROM rating WHERE utente = ? AND contenuto = ?';
     db.get(sql, [utente, contenuto], (err, row) => {
-      if (err) { reject(err); }
-      else if (row === undefined) { resolve({ error: 'Rating not found.' }) }
-      else {
+      if (err) { 
+        reject(err); 
+      } else if (row === undefined) { 
+        resolve(false); 
+      } else {
         const rating = {
-          id_rating: id_rating,
+          id_rating: row.id_rating,
           utente: utente,
           contenuto: contenuto,
-          voto: voto
+          voto: row.voto
         };
         resolve(rating);
       }

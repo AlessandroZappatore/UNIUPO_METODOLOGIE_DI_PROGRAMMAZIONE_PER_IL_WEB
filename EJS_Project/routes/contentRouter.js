@@ -32,10 +32,12 @@ router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
     const result = await contentDao.getContentByTitolo(titolo);
     const commenti = await contentDao.getAllComments(titolo);
     const hasWatched = req.user ? await userDao.hasWatched(req.user.email, titolo) : false;
+    const rating = req.user ? await userDao.getRatingByUser(req.user.email, titolo) : false;
+    const avgRating = await contentDao.getAvgRating(titolo);
     if (result.error) {
       res.status(404).send(result.error);
     } else {
-      res.render('visualizza_contenuto', { contenuto: result, comments: commenti, hasWatched: hasWatched });
+      res.render('visualizza_contenuto', { contenuto: result, comments: commenti, hasWatched: hasWatched, rating: rating, avgRating: avgRating });
     }
   } catch (error) {
     console.error('Error fetching content by title:', error);

@@ -33,15 +33,28 @@
         
           <% if (user) { %>
             <form class="d-flex ms-auto" role="search" action="/search" method="GET">
-              <input class="form-control me-2" type="search" name="query" placeholder="Ricerca" aria-label="Search" />
-            <select class="form-select me-2" name="searchBy">
-              <option value="titolo">Titolo</option>
-              <option value="attori">Attore</option>
-              <option value="registi">Regista</option>
-              <option value="genere">Genere</option>
-            </select>
-            <button class="btn btn-outline-success" type="submit">Cerca</button>
-          </form>
+              <input class="form-control me-2" type="search" name="query" placeholder="Ricerca" aria-label="Search" id="searchInput" />
+              <select class="form-select me-2 d-none" name="genre" id="genreSelect">
+                <option value="commedia">Commedia</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="fantascienza">Fantascienza</option>
+                <option value="animazione">Animazione</option>
+                <option value="storia">Storia</option>
+                <option value="azione">Azione</option>
+                <option value="crime">Crime</option>
+                <option value="biografico">Biografico</option>
+                <option value="musical">Musical</option>
+              </select>
+              <select class="form-select me-2" name="searchBy" id="searchBy">
+                <option value="titolo">Titolo</option>
+                <option value="attori">Attore</option>
+                <option value="registi">Regista</option>
+                <option value="genere">Genere</option>
+              </select>
+              
+              <button class="btn btn-outline-success" type="submit">Cerca</button>
+            </form>
+            
           <% } else { %>
             <form class="d-flex ms-auto" role="search" action="/search_no_log" method="GET">
               <input class="form-control me-2" type="search" name="query" placeholder="Ricerca" aria-label="Search" />

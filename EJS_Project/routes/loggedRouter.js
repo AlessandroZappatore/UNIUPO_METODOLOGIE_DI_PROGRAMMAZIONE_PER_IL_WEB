@@ -11,11 +11,12 @@ const { check, validationResult } = require('express-validator');
 
 const profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '..', 'public', 'images', 'profile')); // Corretto il percorso
+        cb(null, path.join(__dirname, '..', 'public', 'images', 'profile'));
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix);
+        const extension = path.extname(file.originalname);
+        const sanitizedNomeUtente = req.body.nomeUtente.replace(/[^a-zA-Z0-9_\-]/g, '_');
+        cb(null, sanitizedNomeUtente + extension);
     }
 });
 

@@ -214,3 +214,23 @@ function simulateSendEmail() {
     const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
     confirmationModal.show();
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const searchBy = document.getElementById('searchBy');
+    const searchInput = document.getElementById('searchInput');
+    const genreSelect = document.getElementById('genreSelect');
+
+    searchBy.addEventListener('change', function () {
+      if (searchBy.value === 'genere') {
+        searchInput.classList.add('d-none');
+        searchInput.removeAttribute('name');
+        genreSelect.classList.remove('d-none');
+        genreSelect.setAttribute('name', 'query');
+      } else {
+        searchInput.classList.remove('d-none');
+        searchInput.setAttribute('name', 'query');
+        genreSelect.classList.add('d-none');
+        genreSelect.removeAttribute('name');
+      }
+    });
+  });

@@ -171,15 +171,16 @@ router.post('/elimina-profilo', async (req, res) => {
 });
 
 router.post('/add-rating', async (req, res) => {
-    const { utente, contenuto, rating } = req.body;
+    const { utente, contenuto, voto } = req.body;
     try {
-        await userDao.addRating(utente, contenuto, rating);
+        await userDao.addRating(utente, contenuto, voto);
         res.json({ message: 'Rating aggiunto con successo' });
     } catch (error) {
         console.error('Errore nell\'aggiunta del rating:', error);
         res.status(500).json({ message: 'Errore nell\'aggiunta del rating' });
     }
 });
+
 
 router.get('/search', async (req, res) => {
     const query = req.query.query;

@@ -60,3 +60,4 @@ CREATE TABLE commenti (
     FOREIGN KEY(contenuto) REFERENCES contenuto(titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+DELETE FROM rating;

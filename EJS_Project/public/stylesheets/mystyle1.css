@@ -229,3 +229,8 @@
   position: absolute;
   transform: translateX(+80%);
 }
+
+.small-image {
+  width: 80px !important;  
+  height: auto !important; 
+}

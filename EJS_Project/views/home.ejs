@@ -61,12 +61,19 @@
               <div class="col-12 text-center">
                 <h1 id="titoli-herosection">TOP 3</h1>
               </div>
-              <% top3.forEach((contenuto) => { %>
+              <% top3.forEach((contenuto, index) => { %>
                 <div class="col-md-4">
                   <div class="card mx-auto">
-                    <div class="card-content">
-                      <img src="/images/poster/<%= contenuto.poster  %>" alt="<%= contenuto.titolo %>" />
-                    </div>
+                    <div class="card-content position-relative">
+                      <img src="/images/poster/<%= contenuto.poster %>" alt="<%= contenuto.titolo %>" />
+                      <% if (index === 0) { %>
+                        <img src="/images/static/first.png" class="position-absolute top-0 start-0 m-2 small-image" alt="First place" />
+                      <% } else if (index === 1) { %>
+                        <img src="/images/static/second.png" class="position-absolute top-0 start-0 m-2 small-image" alt="Second place" />
+                      <% } else if (index === 2) { %>
+                        <img src="/images/static/third.png" class="position-absolute top-0 start-0 m-2 small-image" alt="Third place" />
+                      <% } %>
+                    </div>                    
                     <div class="second-content">
                       <div class="card-inner"></div>
                       <div class="text-container overflow-auto">
@@ -75,7 +82,7 @@
                         <p>Anno: <%= contenuto.data_uscita %></p>
                         <p>Genere: <%= contenuto.genere %></p>
                         <p><%= contenuto.trama %></p>
-                        <a href="/visualizza_contenuto/<%= contenuto.titolo  %>" class="btn btn-primary btn-altro">Altro</a>
+                        <a href="/visualizza_contenuto/<%= contenuto.titolo %>" class="btn btn-primary btn-altro">Altro</a>
                       </div>
                     </div>
                   </div>
@@ -84,6 +91,7 @@
             </div>
           </div>
         </section>
+        
         <!-- Fine Top 3 -->
     
       </section>

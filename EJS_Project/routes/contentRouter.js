@@ -56,9 +56,8 @@ function isAuthenticated(req, res, next) {
 
 router.get('/search_no_log', async (req, res) => {
   const query = req.query.query;
-  const searchBy = req.query.searchBy;
+  const searchBy = "titolo";
 
-  if(searchBy !== "titolo") return res.status(404).send("Parametro di ricerca non valido");
   try {
     let result = await contentDao.getAllContent();
 

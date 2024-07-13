@@ -12,7 +12,7 @@ router.get('/film', async (req, res) => {
     res.render('contenuti', { title: 'FILM', page: 'film', contents: movies });
   } catch (error) {
     console.error('Error fetching film page', error);
-    res.status(500).send('Error fetching film page');
+    res.status(500).render("error", {message: "Errore durante il recupero dei film", buttonAction: "Home"});
   }
 });
 
@@ -22,7 +22,7 @@ router.get('/serieTV', async (req, res) => {
     res.render('contenuti', { title: 'SERIE TV', page: 'serieTV', contents: series });
   } catch (error) {
     console.error('Error fetching serie TV page', error);
-    res.status(500).send('Error fetching serie TV page');
+    res.status(500).render("error", {message: "Errore durante il recupero delle serie TV", buttonAction: "Home"});
   }
 });
 
@@ -35,24 +35,15 @@ router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
     const rating = req.user ? await userDao.getRatingByUser(req.user.email, titolo) : false;
     const avgRating = await contentDao.getAvgRating(titolo);
     if (result.error) {
-      res.status(404).send(result.error);
+      res.status(404).render("error", {message: result.error, buttonAction: "Home"});
     } else {
       res.render('visualizza_contenuto', { contenuto: result, comments: commenti, hasWatched: hasWatched, rating: rating, avgRating: avgRating });
     }
   } catch (error) {
     console.error('Error fetching content by title:', error);
-    res.status(500).send(error);
+    res.status(500).render("error", {message: error, buttonAction: "Home"});
   }
 });
-
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    req.isUnauthenticated = true;
-    return next();
-  }
-}
 
 router.get('/search_no_log', async (req, res) => {
   const query = req.query.query;
@@ -61,13 +52,13 @@ router.get('/search_no_log', async (req, res) => {
   try {
     let result = await contentDao.getAllContent();
 
-    if (result.error) return res.status(404).send(result.error);
+    if (result.error) return res.status(404).render("error", {message: result.error, buttonAction: "Home"});
 
     result = filterData(searchBy, query, result);
     res.render('contenuti', { title: `Risultati per: ${query}`, page: 'search', contents: result });
   } catch (error) {
     console.error('Error fetching search results:', error);
-    res.status(500).send(error);
+    res.status(500).render("error", {message: error, buttonAction: "Home"});
   }
 });
 

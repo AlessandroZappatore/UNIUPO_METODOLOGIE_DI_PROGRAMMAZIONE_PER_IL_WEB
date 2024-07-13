@@ -8,7 +8,7 @@ exports.getUserById = function (id) {
     const sql = 'SELECT * FROM utente WHERE id = ?';
     db.get(sql, [id], (err, row) => {
       if (err) reject(err);
-      else if (row === undefined) resolve({ error: 'User not found.' });
+      else if (row === undefined) resolve({ error: 'Utente non trovato' });
       else {
         const user = {
           id: row.id,
@@ -34,7 +34,7 @@ exports.getUser = function (email, password) {
       if (err) {
         reject(err);
       } else if (row === undefined) {
-        resolve({ error: 'User not found.' });
+        resolve({ error: 'Utente non trovato' });
       } else {
         const user = {
           id: row.id,
@@ -93,7 +93,7 @@ exports.getUserByUsername = function (username) {
       if (err) {
         reject(err);
       } else if (row === undefined) {
-        resolve({ error: 'User not found.' });
+        resolve({ error: 'Utente non trovato' });
       } else {
         const user = {
           id: row.id,

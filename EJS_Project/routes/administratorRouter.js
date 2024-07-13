@@ -1,12 +1,12 @@
 'use strict';
 
 const express = require('express');
+const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const contentDao = require('../models/content-dao.js');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { check, validationResult } = require('express-validator');
 
 const posterStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -25,19 +25,26 @@ router.get('/aggiungi_contenuto', (req, res) => {
     res.render('aggiungi_contenuto', { title: 'Aggiungi', button: 'Crea', contenuto: {} });
 });
 
-router.post('/aggiungi_contenuto', [
-    check('tipoContenuto').isIn(['Film', 'Serie TV']).withMessage('Tipo contenuto non valido'),
-    check('Titolo').isLength({ min: 1 }).withMessage('Inserisci un titolo'),
-    check('Genere').isLength({ min: 1 }).withMessage('Inserisci un genere'),
-    check('Registi').isLength({ min: 1 }).withMessage('Inserisci almeno un regista'),
-    check('Attori').isLength({ min: 1 }).withMessage('Inserisci almeno un attore'),
-    check('Data_uscita').isDate().withMessage('Inserisci una data di uscita valida'),
-    check('Num_stagioni').isInt({ min: 1 }).withMessage('Inserisci un numero di stagioni valido'),
-    check('Num_episodi').isInt({ min: 1 }).withMessage('Inserisci un numero di episodi valido'),
-    check('Durata').isInt({ min: 1 }).withMessage('Inserisci una durata valida'),
-    check('Dove_vederlo').isLength({ min: 1 }).withMessage('Inserisci dove vederlo'),
-    check('Trama').isLength({ min: 1 }).withMessage('Inserisci una trama')
-],posterUpload.single('poster'), async (req, res) => {
+router.post('/aggiungi_contenuto',posterUpload.single('poster'), [
+    check('tipoContenuto').isIn(['film', 'serieTV']).withMessage('Tipo contenuto non valido'),
+    check('Titolo').isLength({ min: 1 }).isString().withMessage('Inserisci un titolo'),
+    check('Genere').optional().isString().withMessage('Inserisci un genere'),
+    check('Registi').optional().isString().withMessage('Inserisci almeno un regista'),
+    check('Attori').optional().isString().withMessage('Inserisci almeno un attore'),
+    check('Data_uscita').optional({ checkFalsy: true }).isISO8601().withMessage('Inserisci una data di uscita valida'),
+    check('Num_stagioni').optional({ checkFalsy: true }).isInt({ min: 1 }).withMessage('Inserisci un numero di stagioni valido'),
+    check('Num_episodi').optional({ checkFalsy: true }).isInt({ min: 1 }).withMessage('Inserisci un numero di episodi valido'),
+    check('Durata').optional({ checkFalsy: true }).isInt({ min: 1 }).withMessage('Inserisci una durata valida'),
+    check('Dove_vederlo').optional().isString().withMessage('Inserisci dove vederlo'),
+    check('Trama').optional().isString().withMessage('Inserisci una trama')
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        const errorMessages = errors.array().map(error => error.msg).join(', ');
+        return res.status(400).render("error", { message: errorMessages, buttonAction: "Back" });
+    }
+    
     const { tipoContenuto, Titolo, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama } = req.body;
     const poster = req.file ? req.file.filename : null;
 
@@ -50,18 +57,25 @@ router.post('/aggiungi_contenuto', [
         const contentTitolo = await contentDao.createContent(tipoContenuto, Titolo, poster, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama);
         res.redirect(`/visualizza_contenuto/${contentTitolo}`);
     } catch (error) {
-        console.error('Error during content creation:', error); // Log the error
-        res.status(500).send('Errore durante l\'aggiunta del contenuto');
+        console.error('Error during content creation:', error); 
+        res.status(500).render("error", {message: "Errore durante l'aggiunta del contenuto",  buttonAction: "Back"});
     }
 });
 
-router.post('/elimina-contenuto', async (req, res) => {
+router.post('/elimina-contenuto',[
+    check('id').isInt().withMessage('ID contenuto non valido')
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        return res.status(400).render("error", { message: errors, buttonAction: "Back" });
+    }
     const { id } = req.body;
 
     try {
         const content = await contentDao.getContentById(id);
         if (!content) {
-            return res.status(404).json({ message: 'Contenuto non trovato' });
+            return res.status(404).render("error", {message: "Contenuto non trovato", buttonAction: "Home"});
         }
 
         await contentDao.deleteContent(id);
@@ -71,7 +85,7 @@ router.post('/elimina-contenuto', async (req, res) => {
         fs.unlink(posterPath, (err) => {
             if (err) {
                 console.error('Errore durante l\'eliminazione del poster:', err);
-                return res.status(500).json({ message: 'Errore durante l\'eliminazione del poster' });
+                return res.status(500);
             }
             else
                 console.log('Poster eliminato con successo:', posterPath);
@@ -80,7 +94,7 @@ router.post('/elimina-contenuto', async (req, res) => {
         res.json({ message: 'Contenuto eliminato con successo' });
     } catch (error) {
         console.error('Error eliminazione contenuto:', error);
-        res.status(500).send(error);
+        res.status(500).render("error", {message: error, buttonAction: "Home"});
     }
 });
 
@@ -89,7 +103,7 @@ router.get('/modifica_contenuto/:id', async (req, res) => {
     try {
         const content = await contentDao.getContentById(id);
         if (content.error) {
-            res.status(404).send(content.error);
+            res.status(404).render("error", {message: content.error, buttonAction: "Home"});
         } else {
             res.render('aggiungi_contenuto', { title: 'Modifica', button: 'Modifica', contenuto: content });
         }
@@ -100,18 +114,25 @@ router.get('/modifica_contenuto/:id', async (req, res) => {
 });
 
 router.post('/modifica_contenuto/:id', [
-    check('tipoContenuto').isIn(['Film', 'Serie TV']).withMessage('Tipo contenuto non valido'),
-    check('Titolo').isLength({ min: 1 }).withMessage('Inserisci un titolo'),
-    check('Genere').isLength({ min: 1 }).withMessage('Inserisci un genere'),
-    check('Registi').isLength({ min: 1 }).withMessage('Inserisci almeno un regista'),
-    check('Attori').isLength({ min: 1 }).withMessage('Inserisci almeno un attore'),
-    check('Data_uscita').isDate().withMessage('Inserisci una data di uscita valida'),
-    check('Num_stagioni').isInt({ min: 1 }).withMessage('Inserisci un numero di stagioni valido'),
-    check('Num_episodi').isInt({ min: 1 }).withMessage('Inserisci un numero di episodi valido'),
-    check('Durata').isInt({ min: 1 }).withMessage('Inserisci una durata valida'),
-    check('Dove_vederlo').isLength({ min: 1 }).withMessage('Inserisci dove vederlo'),
-    check('Trama').isLength({ min: 1 }).withMessage('Inserisci una trama')
+    check('tipoContenuto').optional().isIn(['film', 'serieTV']).withMessage('Tipo contenuto non valido'),
+    check('Titolo').optional().isString().withMessage('Inserisci un titolo'),
+    check('Genere').optional().isString().withMessage('Inserisci un genere'),
+    check('Registi').optional().isString().withMessage('Inserisci almeno un regista'),
+    check('Attori').optional().isString().withMessage('Inserisci almeno un attore'),
+    check('Data_uscita').optional({ checkFalsy: true }).isISO8601().withMessage('Inserisci una data di uscita valida'),
+    check('Num_stagioni').optional({ checkFalsy: true }).isInt({ min: 1 }).withMessage('Inserisci un numero di stagioni valido'),
+    check('Num_episodi').optional({ checkFalsy: true }).isInt({ min: 1 }).withMessage('Inserisci un numero di episodi valido'),
+    check('Durata').optional({ checkFalsy: true }).isInt({ min: 1 }).withMessage('Inserisci una durata valida'),
+    check('Dove_vederlo').optional().isString().withMessage('Inserisci dove vederlo'),
+    check('Trama').optional().isString().withMessage('Inserisci una trama')
 ],posterUpload.single('poster'), async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        const errorMessages = errors.array().map(error => error.msg).join(', ');
+        return res.status(400).render("error", { message: errorMessages, buttonAction: "Back" });
+    }
+
     const id = req.params.id;
     const { tipoContenuto, Titolo, Genere, Registi, Attori, Data_uscita, Num_stagioni, Num_episodi, Durata, Dove_vederlo, Trama } = req.body;
     const poster = req.file ? req.file.filename : null;
@@ -119,7 +140,7 @@ router.post('/modifica_contenuto/:id', [
     try {
         const content = await contentDao.getContentById(id);
         if (!content) {
-            return res.status(404).send('Contenuto non trovato');
+            return res.status(404).render("error", {message: "Contenuto non trovato", buttonAction: "Home"});
         }
 
         const updatedContent = {
@@ -152,7 +173,7 @@ router.post('/modifica_contenuto/:id', [
         res.redirect(`/visualizza_contenuto/${Titolo}`);
     } catch (error) {
         console.error('Errore durante l\'aggiornamento del contenuto:', error);
-        res.status(500).send('Errore durante l\'aggiornamento del contenuto');
+        res.status(500).render("error", {message: "Errore durante la modifica del contenuto", buttonAction: "Back"});
     }
 });
 

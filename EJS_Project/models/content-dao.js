@@ -20,7 +20,7 @@ exports.getContentById = function (id) {
     const sql = 'SELECT * FROM contenuto WHERE id = ?';
     db.get(sql, [id], (err, row) => {
       if (err) reject(err);
-      else if (row === undefined) resolve({ error: 'Content not found.' });
+      else if (row === undefined) resolve({ error: 'Contenuto non trovato' });
       else {
         const content = {
           id: row.id,
@@ -48,7 +48,7 @@ exports.getContentByTitolo = function (titolo) {
     const sql = 'SELECT * FROM contenuto WHERE titolo = ?';
     db.get(sql, [titolo], (err, row) => {
       if (err) reject(err);
-      else if (row === undefined) resolve({ error: 'Content not found.' });
+      else if (row === undefined) resolve({ error: 'Contenuto non trovato' });
       else {
         const content = {
           id: row.id,

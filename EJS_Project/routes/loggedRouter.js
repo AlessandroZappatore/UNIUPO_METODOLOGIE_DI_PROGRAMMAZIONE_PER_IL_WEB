@@ -1,13 +1,13 @@
 "use strict";
 
 const express = require('express');
+const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const userDao = require('../models/user-dao.js');
 const contentDao = require('../models/content-dao.js');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
-const { check, validationResult } = require('express-validator');
 
 const profileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -23,22 +23,35 @@ const profileStorage = multer.diskStorage({
 const profileUpload = multer({ storage: profileStorage });
 
 router.post('/add-comment', [
-    check('utente').isEmail(),
+    check('utente').isString(),
     check('contenuto').isString(),
     check('commento').isString()
 ], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const errorMessages = errors.array().map(error => error.msg).join(', ');
+        return res.status(400).json({ message: errorMessages, buttonAction: "Home" });
+    }
     const { utente, contenuto, commento } = req.body;
 
     try {
         await userDao.addComment(utente, contenuto, commento);
-        res.json({ message: 'Commento aggiunto con successo' });  // Modifica qui per restituire JSON
+        res.json({ message: 'Commento aggiunto con successo' });
     } catch (error) {
         console.error('Errore nell\'aggiunta del commento:', error);
-        res.status(500).json({ message: 'Errore nell\'aggiunta del commento' });  // Modifica qui per restituire JSON
+        res.status(500).json({ message: 'Errore nell\'aggiunta del commento' });  
     }
 });
 
-router.post('/mark-as-watched', async (req, res) => {
+router.post('/mark-as-watched',[
+    check('email').isEmail(),
+    check('contenuto').isString()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const errorMessages = errors.array().map(error => error.msg).join(', ');
+        return res.status(400).json({ message: errorMessages, buttonAction: "Home" });
+    }
     const { email, contenuto } = req.body;
 
     try {
@@ -46,11 +59,19 @@ router.post('/mark-as-watched', async (req, res) => {
         res.send('Contenuto segnato come visto');
     } catch (error) {
         console.error('Errore nel salvataggio:', error);
-        res.status(500).send('Errore nel salvataggio');
+        res.status(500).render("error", {message: "Errore durante il salvataggio", buttonAction: "Home"});
     }
 });
 
-router.post('/mark-as-not-watched', async (req, res) => {
+router.post('/mark-as-not-watched', [
+    check('email').isEmail(),
+    check('contenuto').isString()
+],async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const errorMessages = errors.array().map(error => error.msg).join(', ');
+        return res.status(400).json({ message: errorMessages, buttonAction: "Home" });
+    }
     const { email, contenuto } = req.body;
 
     try {
@@ -59,7 +80,7 @@ router.post('/mark-as-not-watched', async (req, res) => {
     }
     catch (error) {
         console.error('Errore nella rimozione:', error);
-        res.status(500).send('Errore nella rimozione');
+        res.status(500).render("error", {message: "Errore durante la rimozione", buttonAction: "Home"});
     }
 });
 
@@ -69,25 +90,31 @@ router.get('/modifica-profilo/:id', async (req, res) => {
     try {
         const user = await userDao.getUserById(id);
         if (user.error) {
-            res.status(404).send(user.error);
+            res.status(404).render("error", {message: user.error, buttonAction: "Home"});
         } else {
             res.render('registrazione', { title: 'Modifica', button: 'Modifica', profilo: user });
         }
     } catch (error) {
         console.error('Error fetching user profile:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).render("error", {message: "Errore interno al server", buttonAction: "Home"});
     }
 });
 
 router.post('/modifica-profilo/:id', [
     check('email').isEmail().withMessage('Inserisci un indirizzo email valido'),
-    check('nome').isLength({ min: 1 }).withMessage('Inserisci il tuo nome'),
-    check('cognome').isLength({ min: 1 }).withMessage('Inserisci il tuo cognome'),
-    check('dataDiNascita').isDate().withMessage('Inserisci una data di nascita valida'),
-    check('nomeUtente').isLength({ min: 1 }).withMessage('Inserisci un nome utente'),
-    check('password').isLength({ min: 8 }).withMessage('La password deve contenere almeno 8 caratteri'),
+    check('nome').isLength({ min: 1 }).withMessage('Inserisci un nome valido'),
+    check('cognome').isString().isLength({ min: 1 }).withMessage('Inserisci un cognome valido'),
+    check('dataDiNascita').isISO8601().withMessage('Inserisci una data di nascita valida'),
+    check('nomeUtente').isString().isLength({ min: 1 }).withMessage('Inserisci un nome utente'),
+    check('password').isString().isLength({ min: 4 }).withMessage('La password deve contenere almeno 4 caratteri'),
     check('tipoUtente').isIn(['standard', 'amministratore']).withMessage('Tipo utente non valido')
 ], profileUpload.single('profiloImmagine'), async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        const errorMessages = errors.array().map(error => error.msg).join(', ');
+        return res.status(400).render("error", { message: errorMessages, buttonAction: "Back" });
+    }
     const id = req.params.id;
     const { email, nome, cognome, dataDiNascita, nomeUtente, password, tipoUtente } = req.body;
     const profiloImmagine = req.file ? req.file.filename : null;
@@ -128,7 +155,13 @@ router.post('/modifica-profilo/:id', [
     }
 });
 
-router.post('/elimina-commento', async (req, res) => {
+router.post('/elimina-commento',[
+    check('id_commento').isInt().withMessage('ID commento non valido')
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ message: errors, buttonAction: "Home" });
+    }
     const { id_commento } = req.body;
 
     try {
@@ -171,7 +204,16 @@ router.post('/elimina-profilo', async (req, res) => {
     }
 });
 
-router.post('/add-rating', async (req, res) => {
+router.post('/add-rating', [
+    check('utente').isEmail(),
+    check('contenuto').isString(),
+    check('voto').isInt({ min: 1, max: 5 })
+],async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const errorMessages = errors.array().map(error => error.msg).join(', ');
+        return res.status(400).json({ message: errorMessages, buttonAction: "Home" });
+    }
     const { utente, contenuto, voto } = req.body;
     try {
         await userDao.addRating(utente, contenuto, voto);
@@ -182,7 +224,15 @@ router.post('/add-rating', async (req, res) => {
     }
 });
 
-router.post('/delete-rating', async (req, res) => {
+router.post('/delete-rating', [
+    check('email').isEmail(),
+    check('contenuto').isString()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const errorMessages = errors.array().map(error => error.msg).join(', ');
+        return res.status(400).json({ message: errorMessages, buttonAction: "Home" });
+    }  
     const { contenuto, email } = req.body; // Assicurati che sia 'email'
     try {
         await userDao.deleteRating(email, contenuto); // Usa 'email' qui

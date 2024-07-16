@@ -13,7 +13,7 @@ function showModal(modalId, bodyText, confirmCallback = null) {
             confirmButton.onclick = confirmCallback;
             confirmButton.style.display = 'block';
         } else {
-            confirmButton.onclick = null; 
+            confirmButton.onclick = null;
             confirmButton.style.display = 'none';
         }
     }
@@ -29,13 +29,13 @@ function markAsWatched(contenuto, email) {
         },
         body: JSON.stringify({ email: email, contenuto: contenuto }),
     })
-    .then(response => response.text())
-    .then(data => {
-        window.location.reload();
-    })
-    .catch(error => {
-        console.error('Errore:', error);
-    });
+        .then(response => response.text())
+        .then(data => {
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Errore:', error);
+        });
 }
 
 function confirmUnWatch(contentId, userEmail) {
@@ -54,13 +54,13 @@ function unMarkWatched(userEmail, contentId) {
         },
         body: JSON.stringify({ email: userEmail, contenuto: contentId }),
     })
-    .then(response => response.json())
-    .then(data => {
-        window.location.reload();
-    })
-    .catch(error => {
-        console.error('Errore:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Errore:', error);
+        });
 }
 
 function confirmDelete(contentId) {
@@ -75,13 +75,13 @@ function deleteContent(id) {
         },
         body: JSON.stringify({ id: id }),
     })
-    .then(response => response.json())
-    .then(data => {
-        window.location.href = '/home';
-    })
-    .catch(error => {
-        console.error('Errore:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            window.location.href = '/home';
+        })
+        .catch(error => {
+            console.error('Errore:', error);
+        });
 }
 
 function inviaCommento(contenuto, utente, commento) {
@@ -92,13 +92,13 @@ function inviaCommento(contenuto, utente, commento) {
         },
         body: JSON.stringify({ utente: utente, contenuto: contenuto, commento: commento }),
     })
-    .then(response => response.json())
-    .then(data => {
-        window.location.reload();
-    })
-    .catch(error => {
-        console.error('Errore:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Errore:', error);
+        });
 }
 
 function confirmDeleteComment(commentId) {
@@ -113,14 +113,14 @@ function deleteComment(id_commento) {
         },
         body: JSON.stringify({ id_commento: id_commento }),
     })
-    .then(response => response.json())
-    .then(data => {
-        window.location.reload();
-        
-    })
-    .catch(error => {
-        console.error('Errore:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            window.location.reload();
+
+        })
+        .catch(error => {
+            console.error('Errore:', error);
+        });
 }
 
 function confirmDeleteProfile(profileId) {
@@ -135,25 +135,25 @@ function deleteProfile(id_profilo) {
         },
         body: JSON.stringify({ id: id_profilo }),
     })
-    .then(response => response.json())
-    .then(data => {
-        fetch('/sessions/current', { method: 'DELETE' });
-        window.location.href = '/home';
-    })
-    .catch(error => {
-        console.error('Errore:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            fetch('/sessions/current', { method: 'DELETE' });
+            window.location.href = '/home';
+        })
+        .catch(error => {
+            console.error('Errore:', error);
+        });
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const ratingContainer = document.querySelector('.rating');
     const username = ratingContainer.getAttribute('data-user-username');
     const contentTitle = ratingContainer.getAttribute('data-content-title');
-    
+
     const ratingInputs = document.querySelectorAll('.rating-input');
-    
+
     ratingInputs.forEach(input => {
-        input.addEventListener('change', function() {
+        input.addEventListener('change', function () {
             const ratingValue = this.value;
             console.log(username);
             addRating(username, contentTitle, ratingValue);
@@ -170,7 +170,7 @@ function addRating(utente, contenuto, voto) {
         body: JSON.stringify({ utente: utente, contenuto: contenuto, voto: voto }),
     })
         .then(data => {
-                window.location.href = '/visualizza_contenuto/' + contenuto;
+            window.location.href = '/visualizza_contenuto/' + contenuto;
         })
         .catch(error => {
             showModal('errorModal', 'Errore durante l\'aggiunta del voto');
@@ -190,13 +190,13 @@ function deleteRating(contentId, userEmail) {
         },
         body: JSON.stringify({ contenuto: contentId, email: userEmail }),
     })
-    .then(response => response.json())
-    .then(data => {
-        window.location.reload();
-    })
-    .catch(error => {
-        console.error('Errore:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Errore:', error);
+        });
 }
 
 
@@ -221,16 +221,34 @@ document.addEventListener('DOMContentLoaded', function () {
     const genreSelect = document.getElementById('genreSelect');
 
     searchBy.addEventListener('change', function () {
-      if (searchBy.value === 'genere') {
-        searchInput.classList.add('d-none');
-        searchInput.removeAttribute('name');
-        genreSelect.classList.remove('d-none');
-        genreSelect.setAttribute('name', 'query');
-      } else {
-        searchInput.classList.remove('d-none');
-        searchInput.setAttribute('name', 'query');
-        genreSelect.classList.add('d-none');
-        genreSelect.removeAttribute('name');
-      }
+        if (searchBy.value === 'genere') {
+            searchInput.classList.add('d-none');
+            searchInput.removeAttribute('name');
+            genreSelect.classList.remove('d-none');
+            genreSelect.setAttribute('name', 'query');
+        } else {
+            searchInput.classList.remove('d-none');
+            searchInput.setAttribute('name', 'query');
+            genreSelect.classList.add('d-none');
+            genreSelect.removeAttribute('name');
+        }
     });
-  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const radioButtons = document.querySelectorAll('input[name="tipoContenuto"]');
+    const stagioniInput = document.getElementById('numero-stagioni');
+    const episodiInput = document.getElementById('numero-episodi');
+
+    radioButtons.forEach(function (button) {
+        button.addEventListener('change', function () {
+            if (this.value === 'serieTV') {
+                stagioniInput.disabled = false;
+                episodiInput.disabled = false;
+            } else {
+                stagioniInput.disabled = true;
+                episodiInput.disabled = true;
+            }
+        });
+    });
+});

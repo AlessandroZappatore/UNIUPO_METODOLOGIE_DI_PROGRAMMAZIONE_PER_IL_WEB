@@ -198,24 +198,4 @@
         <!-- Fine contenitore aggiunta contenuti -->
 
     </section>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const radioButtons = document.querySelectorAll('input[name="tipoContenuto"]');
-            const stagioniInput = document.getElementById('numero-stagioni');
-            const episodiInput = document.getElementById('numero-episodi');
-
-            radioButtons.forEach(function (button) {
-                button.addEventListener('change', function () {
-                    if (this.value === 'serieTV') {
-                        stagioniInput.disabled = false;
-                        episodiInput.disabled = false;
-                    } else {
-                        stagioniInput.disabled = true;
-                        episodiInput.disabled = true;
-                    }
-                });
-            });
-        });
-
-    </script>
     <%- include('footer'); -%>

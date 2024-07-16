@@ -10,7 +10,6 @@ CREATE TABLE utente (
     profilo_immagine TEXT 
 );
 
--- Creazione tabella contenuto
 CREATE TABLE contenuto (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     titolo TEXT UNIQUE NOT NULL,
@@ -27,7 +26,6 @@ CREATE TABLE contenuto (
     poster TEXT 
 );
 
--- Creazione tabella profilo
 CREATE TABLE profilo (
     id_profilo INTEGER PRIMARY KEY AUTOINCREMENT,
     utente TEXT,
@@ -37,7 +35,6 @@ CREATE TABLE profilo (
     FOREIGN KEY(contenuto) REFERENCES contenuto(titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Creazione tabella rating
 CREATE TABLE rating (
     id_rating INTEGER PRIMARY KEY AUTOINCREMENT,
     utente TEXT,
@@ -59,5 +56,3 @@ CREATE TABLE commenti (
     FOREIGN KEY(utente) REFERENCES utente(nome_utente) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(contenuto) REFERENCES contenuto(titolo) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-DELETE FROM rating;

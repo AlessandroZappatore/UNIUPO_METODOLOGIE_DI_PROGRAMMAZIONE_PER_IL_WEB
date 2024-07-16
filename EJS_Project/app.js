@@ -6,13 +6,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const moment = require('moment');
+
 const contentDao = require('./models/content-dao.js');
 const userDao = require('./models/user-dao.js'); 
+
 const contentRouter = require('./routes/contentRouter');
 const userRouter = require('./routes/userRouter');
 const loggedRouter = require('./routes/loggedRouter');
 const administratorRouter = require('./routes/administratorRouter');
-const sessionsRouter = require('./routes/sessions'); // Assicurati di importare il sessionsRouter
+const sessionsRouter = require('./routes/sessions'); 
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -28,7 +30,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Configurazione view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -42,10 +43,10 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     userDao.getUser(username, password).then(({user, check}) => {
       if (!user) {
-        return done(null, false, { message: 'Incorrect email or password.' });
+        return done(null, false, { message: 'Errore! Email o password sbagliata' });
       }
       if (!check) {
-        return done(null, false, { message: 'Incorrect email or password.' });
+        return done(null, false, { message: 'Errore! Email o password sbagliata' });
       }
       return done(null, user);
     }).catch(err => done(err));

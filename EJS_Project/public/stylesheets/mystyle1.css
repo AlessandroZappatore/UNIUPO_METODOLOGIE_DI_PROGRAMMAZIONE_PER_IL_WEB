@@ -335,11 +335,11 @@
 
 #prev-cont {
   position: absolute;
-  transform: translateX(-80%);
+  transform: translateX(-60%);
 }
 #next-cont{
   position: absolute;
-  transform: translateX(+80%);
+  transform: translateX(+60%);
 }
 
 .small-image {
@@ -491,6 +491,6 @@
 }
 
 .btn-pencil-square a {
-  color: inherit; /* Utilizza il colore del testo del genitore */
-  text-decoration: none; /* Rimuovi sottolineatura */
+  color: inherit; 
+  text-decoration: none; 
 }

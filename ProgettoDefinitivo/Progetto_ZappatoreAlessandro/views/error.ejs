@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <title>WIW - Errore</title>
+  <link rel="shortcut icon" href="/images/static/popcorn.png" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/stylesheets/mystyle1.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="/javascripts/contentInteraction.js"></script>
+  <script defer src="/javascripts/logout.js"></script>
+
+</head>
+
+<body>
+  <%- include('navbar', { title: 'Errore' , page: 'errore' }) %>
+    <section class="hero-section">
+
+      <!-- Inizio contenitore errori -->
+      <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area">
+
+          <!-- Inizio contenitore sinistro -->
+          <div class="col-md-5 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
+            <p class="text-white fs-2 left-box-title">What I Watched</p>
+            <div class="featured-image mb-3">
+              <img src="/images/static/error_icon.png" class="img-fluid left-box-img">
+            </div>
+            <small class="text-white text-wrap text-center left-box-subtitle">
+              Si è verificato un errore,<br>
+              ci scusiamo per il disagio</small>
+          </div>
+          <!-- Fine contenitore sinistro -->
+
+          <!-- Inizio contenitore destro -->
+          <div class="col-md-7 right-box d-flex flex-column">
+            <div class="row align-items-start">
+              <div class="header-text mb-4 text-center w-100">
+                <h1><b>ERRORE</b></h1>
+              </div>
+            </div>
+            <div class="row align-items-center flex-grow-1">
+              <div class="header-text mb-4 text-center w-100">
+                <h3>
+                  <%= message %>
+                </h3>
+              </div>
+            </div>
+            <div class="row align-items-end">
+              <div class="input-group mb-3 w-100">
+                <% if (buttonAction==='Home' ) { %>
+                  <button class="btn btn-lg btn-primary w-100 fs-6" onclick="window.location.href='/'">Torna alla
+                    home</button>
+                  <% } else if (buttonAction==='Back' ) { %>
+                    <button class="btn btn-lg btn-primary w-100 fs-6" onclick="window.history.back()">Torna
+                      indietro</button>
+                    <% } %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fine contenitore destro -->
+
+        </div>
+      </div>
+      <!-- Fine contenitore contatti -->
+    </section>
+
+    <%- include('modal'); -%>
+      <%- include('footer'); -%>

@@ -1,0 +1,496 @@
+.navbar {
+  background-color: #fff;
+  height: 80px;
+  margin: 20px;
+  border-radius: 16px;
+  padding: 0.5rem;
+}
+
+.navbar-brand {
+  font-weight: 500;
+  color: red;
+  font-size: 24px;
+  transition: 0.3s color;
+}
+
+.login-button {
+  background-color: #008744;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: 0.3s background-color;
+}
+
+.login-button:hover {
+  background-color: #00b383;
+}
+
+.add-button {
+  background-color: #0d6efd;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: 0.3s background-color;
+}
+
+.navbar-nav {
+  margin-left: 0rem;
+}
+
+.navbar-toggler {
+  border: none;
+  font-size: 1.25rem;
+}
+
+.navbar-toggler:focus,
+.btn-close {
+  box-shadow: none;
+  outline: none;
+}
+
+.nav-link {
+  color: #666777;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #000;
+}
+
+@media (min-width: 991px) {
+  .nav-link::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    visibility: hidden;
+    transition: 0.1 s ease-in-out;
+  }
+
+  .nav-link:hover::before,
+  .nav-link.active::before {
+    width: 100%;
+    visibility: visible;
+  }
+}
+
+.hero-section {
+  background: url(/images/static/cinema.png) no-repeat center;
+  background-size: cover;
+  width: 100%;
+  min-height: 120vh; 
+  position: relative; 
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .hero-section {
+    height: 500vh;
+  }
+}
+
+#hover-logo {
+  display: none;
+}
+
+#logo:hover #normal-logo {
+  display: none;
+}
+
+#logo:hover #hover-logo {
+  display: inline-block;
+}
+
+.contact-form {
+  margin-top: 15rem;
+  width: 100%;
+}
+
+.box-area {
+  width: 930px;
+}
+
+
+.right-box {
+  padding: 40px 30px 40px 40px;
+}
+
+::placeholder {
+  font-size: 16px;
+}
+
+.rounded-4 {
+  border-radius: 20px;
+}
+
+.rounded-5 {
+  border-radius: 30px;
+}
+
+.left-box {
+  background: #0d6efd;
+}
+
+.left-box-visual {
+  background: rgb(32, 32, 36);
+}
+
+.left-box-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 600;
+}
+
+.left-box-img {
+  width: 250px;
+}
+
+.left-box-img-visual {
+  width: 300px;
+}
+
+.left-box-subtitle {
+  width: 100%;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+@media only screen and (max-width: 768px) {
+  .box-area {
+    margin: 0 10px;
+  }
+
+  .left-box {
+    height: 100px;
+    overflow: hidden;
+  }
+
+  .left-box-visual {
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .right-box {
+    padding: 20px;
+  }
+}
+
+.film-serie-check {
+  font-weight: 600;
+}
+.card {
+  width: 17rem;
+  height: 23rem;
+  background: rgb(0, 0, 0);
+  transition: all 0.4s;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  font-size: 30px;
+  font-weight: 900;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.card:hover {
+  border-radius: 15px; 
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  background: rgb(32, 32, 36);
+}
+
+.card-content {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px; 
+  transition: all 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+}
+
+.card-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px; 
+}
+
+.card-content-profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px; 
+}
+
+.card:hover .card-content {
+  height: 0px;
+  opacity: 0;
+}
+
+.card-profile {
+  width: 10rem;
+  background: rgb(0, 0, 0);
+  transition: all 0.4s;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  font-size: 30px;
+  font-weight: 900;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.cards-wrapper {
+  display: flex;
+}
+
+.card-content-profile {
+  width: 100%;
+  height: 15rem; 
+  border-radius: 10px;
+  transition: all 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
+}
+
+.card-profile:hover {
+  border-radius: 15px;
+  cursor: pointer;
+  transform: scale(1.25);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  background: rgb(32, 32, 36);
+}
+
+#titoli-herosection {
+  color: white;
+  position: relative;
+  margin-top: 8rem;
+  font-weight: 1000;
+}
+
+.card .second-content {
+  border-radius: 15px; 
+  overflow: hidden; 
+  height: 0%;
+  width: 100%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s;
+  transform: rotate(90deg) scale(-1);
+}
+
+.card:hover .second-content {
+  opacity: 1;
+  height: 100%;
+  font-size: 1.8rem;
+  transform: rotate(0deg);
+}
+
+.btn-altro {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.card-inner {
+  color: white;
+}
+
+.text-container {
+  color: white;
+  max-width: 80%;
+  max-height: 80%;
+  margin: 0 auto;
+  font-size: small;
+  scrollbar-width: none;
+}
+
+#hover-logo {
+  display: none;
+}
+
+#logo:hover #normal-logo {
+  display: none;
+}
+
+#logo:hover #hover-logo {
+  display: inline-block;
+}
+
+#card-section-top-3 {
+  margin-top: -5rem;
+}
+
+#prev-cont {
+  position: absolute;
+  transform: translateX(-60%);
+}
+#next-cont{
+  position: absolute;
+  transform: translateX(+60%);
+}
+
+.small-image {
+  width: 80px !important;  
+  height: auto !important; 
+}
+
+.contact-form {
+  margin-top: 15rem;
+  width: 100%;
+}
+
+.box-area {
+  width: 930px;
+}
+
+
+.right-box {
+  padding: 40px 30px 40px 40px;
+}
+
+::placeholder {
+  font-size: 16px;
+}
+
+.rounded-4 {
+  border-radius: 20px;
+}
+
+.rounded-5 {
+  border-radius: 30px;
+}
+
+.left-box {
+  background: #0d6efd;
+}
+
+.left-box-visual {
+  background: rgb(32, 32, 36);
+}
+
+.left-box-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 600;
+}
+
+.left-box-img {
+  width: 250px;
+}
+
+.left-box-img-visual {
+  width: 300px;
+}
+
+.left-box-subtitle {
+  width: 100%;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+@media only screen and (max-width: 768px) {
+  .box-area {
+    margin: 0 10px;
+  }
+
+  .left-box {
+    height: 100px;
+    overflow: hidden;
+  }
+
+  .left-box-visual {
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .right-box {
+    padding: 20px;
+  }
+}
+
+.film-serie-check {
+  font-weight: 600;
+}
+
+.box-trama {
+  max-height: 250px;
+}
+
+.box-area-contenuto {
+  margin-top: 10rem;
+  width: 1000px;
+}
+
+.box-area-profilo {
+  margin-top: 10rem;
+  width: 100%;
+}
+
+.rating {
+  display: inline-block;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.rating label:before {
+  content: '\2605';
+  font-size: 30px;
+}
+
+.rating input:checked~label,
+.rating label:hover,
+.rating label:hover~label {
+  color: rgb(233, 233, 30);
+  transition: color 0.3s;
+}
+
+.carousel-control-prev-icon {
+  background-color: black;
+}
+
+.carousel-control-next-icon {
+  background-color: black;
+}
+
+.img-commento {
+  width: 2.8rem;
+}
+
+#serieTitle{
+  margin-top: 2rem;
+}
+
+.carousel-control-prev {
+  position: absolute;
+  transform: translateX(-35%);
+}
+
+.carousel-control-next{
+  position: absolute;
+  transform: translateX(+35%);
+}
+
+.btn-pencil-square a {
+  color: inherit; 
+  text-decoration: none; 
+}

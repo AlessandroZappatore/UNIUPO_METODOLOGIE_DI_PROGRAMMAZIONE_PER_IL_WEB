@@ -1,0 +1,73 @@
+'use strict';
+
+const express = require('express');
+const router = express.Router();
+const contentDao = require('../models/content-dao.js');
+const userDao = require('../models/user-dao.js');
+
+router.get('/film', async (req, res) => {
+  try {
+    const movies = await contentDao.getAllMovies();
+    res.render('contenuti', { title: 'FILM', page: 'film', contents: movies });
+  } catch (error) {
+    console.error('Errore recupero film', error);
+    res.status(500).render("error", { message: "Errore durante il recupero dei film", buttonAction: "Home" });
+  }
+});
+
+router.get('/serieTV', async (req, res) => {
+  try {
+    const series = await contentDao.getAllSeries();
+    res.render('contenuti', { title: 'SERIE TV', page: 'serieTV', contents: series });
+  } catch (error) {
+    console.error('Errore recupero serie TV', error);
+    res.status(500).render("error", { message: "Errore durante il recupero delle serie TV", buttonAction: "Home" });
+  }
+});
+
+router.get('/visualizza_contenuto/:Titolo', async (req, res) => {
+  const titolo = req.params.Titolo;
+  try {
+    const result = await contentDao.getContentByTitolo(titolo);
+    const commenti = await contentDao.getAllComments(titolo);
+    const hasWatched = req.user ? await userDao.hasWatched(req.user.email, titolo) : false;
+    const rating = req.user ? await userDao.getRatingByUser(req.user.email, titolo) : false;
+    const avgRating = await contentDao.getAvgRating(titolo);
+    if (result.error) {
+      res.status(404).render("error", { message: result.error, buttonAction: "Home" });
+    } else {
+      res.render('visualizza_contenuto', { contenuto: result, comments: commenti, hasWatched: hasWatched, rating: rating, avgRating: avgRating });
+    }
+  } catch (error) {
+    console.error('Errore durante la visualizzazione di un contenuto:', error);
+    res.status(500).render("error", { message: error, buttonAction: "Home" });
+  }
+});
+
+router.get('/search_no_log', async (req, res) => {
+  const query = req.query.query;
+  const searchBy = "titolo";
+
+  try {
+    let result = await contentDao.getAllContent();
+
+    if (result.error) return res.status(404).render("error", { message: result.error, buttonAction: "Home" });
+
+    result = filterData(searchBy, query, result);
+    res.render('contenuti', { title: `Risultati per: ${query}`, page: 'search', contents: result });
+  } catch (error) {
+    console.error('Errore durante la ricerca:', error);
+    res.status(500).render("error", { message: error, buttonAction: "Home" });
+  }
+});
+
+function filterData(searchBy, query, data) {
+  if (!searchBy || !query) return data;
+
+  return data.filter(row => {
+    if (row[searchBy] === undefined) return false;
+    return row[searchBy].toLowerCase().includes(query.toLowerCase());
+  });
+}
+
+module.exports = router;

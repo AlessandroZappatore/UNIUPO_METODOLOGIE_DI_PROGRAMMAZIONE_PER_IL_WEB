@@ -1,0 +1,20 @@
+Credenziali 
+utente standard:
+    email = margherita.celeste@gmail.com
+    Password = marghe
+utente amministratore:
+    email = virginio.scotti@libero.it
+    Password = Edoardo92
+
+    email = test@uniupo.it
+    Password = Test
+
+Link al video: https://youtu.be/ytT47XTQCzs
+
+
+Istruzioni per far partire il server:
+entrare nella cartella Progetto_ZappatoreAlessandro
+npm install
+npm start
+
+Il sito sarà disponibile nel local host sulla porta 3000

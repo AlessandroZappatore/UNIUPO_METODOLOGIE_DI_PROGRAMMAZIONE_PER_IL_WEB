@@ -212,7 +212,7 @@ exports.updateContent = function (id, updatedContent) {
         console.error('Errore aggiornamento contenuto:', err);
         reject(err);
       } else {
-        +        resolve();
+        resolve();
       }
     });
   });

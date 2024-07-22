@@ -202,7 +202,7 @@ function redirectToModifica(contenutoId) {
 }
 
 function redirectToModificaProfilo(userId) {
-    var urlMwodifica = "/modifica-profilo/" + userId;
+    var urlModifica = "/modifica-profilo/" + userId;
     window.location.href = urlModifica;
 }
 

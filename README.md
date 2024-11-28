@@ -2,7 +2,6 @@
 
 ## 🌐 Corso di **METODOLOGIE DI PROGRAMMAZIONE PER IL WEB**  
 Anno accademico 2023/24 (secondo semestre) presso l'Università del Piemonte Orientale.  
-Esercitazioni di laboratorio e progetto d'esame.
 
 ### 📋 Programma del Corso:  
 - 💻 **Concetti base di programmazione e progettazione per il web**  
@@ -17,4 +16,4 @@ Esercitazioni di laboratorio e progetto d'esame.
 - 🛠️ **Strumenti di sviluppo, dentro e fuori dal browser**  
 
 ### 📂 Contenuto della Repository:  
-Nella repository sono presenti gli esercizi svolti e il mio progetto d'esame.
+Nella repository sono presenti gli esercizi svolti durante il corso e il mio progetto d'esame.
